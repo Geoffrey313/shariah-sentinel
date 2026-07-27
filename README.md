@@ -40,9 +40,15 @@ selective debt manipulation. Recalibrated on each authority's reference sample,
 the same detector stack applies to all five regimes with no further
 modification.
 
-For the raw source data (Compustat and market data), which cannot be
-redistributed here for licensing reasons, contact
-geoffrey.ducournau@111dimtech.com.
+## Raw data
+
+The raw firm-level financials used to build the panels come from S&P Global
+Compustat. The Compustat license does not permit us to redistribute the
+underlying vendor data, so this repository ships only the reconstructed panels
+derived from it, not the raw source. Access to the raw data can therefore only
+be granted on a motivated request: state who you are and the intended research
+use, and send it to geoffrey.ducournau@111dimtech.com. Data will be shared to
+the extent the S&P Compustat license allows.
 
 ## Layout
 
