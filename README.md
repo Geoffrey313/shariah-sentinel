@@ -32,6 +32,30 @@ five countries with no change to the method.
 statements, placed on one common scale, merged into five summary scores, and
 turned into a GREEN, AMBER, or RED verdict for each company-quarter.*
 
+## Takeaway
+
+You can check a Sharia-compliant label using only public accounts, and the same
+check works across five countries with no change to the method. It reads the
+reported figures of firms that are labelled compliant and points out the ones
+that do not look like an honest firm's accounts. A flag is not proof of
+wrongdoing; it tells a human reviewer where to look. Gaming the check is hard:
+turning a flagged firm into an unflagged one takes coordinated edits to several
+income-statement lines at once, not a single number, and a direct attack on the
+score fails.
+
+## Flag rate by country
+
+Among the screened firm-quarters (those whose reported ratios sit within their
+country's caps), the share flagged as anomalous is highest in the smaller
+markets and lowest in the large anchor panel (Malaysia). Qatar and the UAE sit on
+top, but their samples are also the smallest, so their rates carry more noise.
+
+![Share of screened firm-quarters flagged, by country, sorted](assets/flag_rate_by_country.png)
+
+*Figure 2. Share of screened firm-quarters flagged as anomalous (p < 0.01), by
+country, sorted from most to least. Numbers are regenerated from the panels in
+this repository.*
+
 ## About the paper
 
 Sharia screening assigns a binary compliance label to listed firms using ratio
