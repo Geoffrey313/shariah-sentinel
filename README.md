@@ -8,6 +8,30 @@ does not include the application and serving code, the unit-test suite, or the
 raw vendor data; only the reconstructed panels needed for reproduction are
 versioned here.
 
+## In plain terms
+
+Sharia screening decides whether a listed company can be labelled Sharia
+compliant. The decision uses simple caps on a few financial ratios, for example
+how much debt a company carries relative to its assets. Because these caps are
+public, a company sitting just inside a cap has a reason to make its reported
+numbers look better than they are.
+
+This project is a statistical second opinion on those reported numbers. It runs
+eight independent checks on a company's public quarterly financial statements:
+whether the leading digits look natural, whether the figures stay consistent
+across statements and over time, whether the company looks like its industry
+peers, and so on. Each check is placed on the same scale, and the checks are
+combined into a single score. A high score means the reported figures look
+unusual and deserve a closer look by a human reviewer. It does not prove
+wrongdoing; it points to the firms worth examining. The same checks run across
+five countries with no change to the method.
+
+![Screening pipeline from eight detectors to a colour verdict](assets/pipeline.png)
+
+*Figure 1. The screening pipeline. Eight detectors are computed from the public
+statements, placed on one common scale, merged into five summary scores, and
+turned into a GREEN, AMBER, or RED verdict for each company-quarter.*
+
 ## About the paper
 
 Sharia screening assigns a binary compliance label to listed firms using ratio
