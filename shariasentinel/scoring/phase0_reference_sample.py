@@ -40,7 +40,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from shariasentinel.panel.methodology import thresholds_for_panel
+from shariasentinel.panel.methodology import screening_thresholds_for_panel
 
 from .config import AnalysisSettings
 
@@ -150,7 +150,7 @@ def _build_inclusion_mask(
         # bounds (NaN = pass). Thresholds resolve per the panel's
         # methodology (SAC 33/33/5, DFM 30/30/10) — never hardcoded here.
         ratio_ok = pd.Series(True, index=panel.index, dtype=bool)
-        for col, cap in thresholds_for_panel(panel).items():
+        for col, cap in screening_thresholds_for_panel(panel).items():
             if col in panel.columns:
                 exceeds = panel[col] > cap
                 ratio_ok &= ~exceeds.fillna(False)

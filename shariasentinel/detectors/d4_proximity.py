@@ -24,7 +24,7 @@ import logging
 import numpy as np
 import pandas as pd
 
-from shariasentinel.panel.methodology import SAC_MY, thresholds_for_panel
+from shariasentinel.panel.methodology import SAC_MY, screening_thresholds_for_panel
 
 from .pit import pit_empirical
 
@@ -32,7 +32,7 @@ log = logging.getLogger(__name__)
 
 # Legacy aliases — the actual per-country thresholds are resolved at
 # detection time from the panel's ``methodology_key`` column via
-# ``thresholds_for_panel`` (SAC fallback keeps MYS behaviour identical).
+# ``screening_thresholds_for_panel`` (SAC fallback keeps MYS behaviour identical).
 # Kept for external callers that imported these constants.
 THRESHOLD_DEBT: float = SAC_MY.threshold_debt
 THRESHOLD_CASH: float = SAC_MY.threshold_cash
@@ -152,7 +152,7 @@ def detect_threshold_proximity(df: pd.DataFrame) -> pd.Series:
         log.warning("detect_threshold_proximity: missing `gvkey`; returning NaN.")
         return pd.Series(np.nan, index=df.index)
 
-    thresholds = thresholds_for_panel(df)
+    thresholds = screening_thresholds_for_panel(df)
     ratios = _get_ratio_matrix(df, thresholds)
     if ratios.empty:
         log.warning(

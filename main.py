@@ -46,6 +46,16 @@ def load_panel(settings: AnalysisSettings) -> pd.DataFrame:
 
 
 # ── subcommands ─────────────────────────────────────────────────────────────
+def cmd_ablation(args) -> None:
+    """Detector-ablation table: rerun the pipeline under the full model and the
+    four ablations (no annual disaggregation, no z5/z7 merge, no Monte-Carlo
+    Benford, no empirical PIT) and write ablation_results.csv."""
+    from ablation import run_ablation_study
+    print(f"[ablation] {args.country}: running full model + 4 ablations", flush=True)
+    run_ablation_study(args.country)
+    print("[ablation] done", flush=True)
+
+
 def cmd_pipeline(args) -> None:
     """Full phase 0-7 pipeline from the reconstructed panel: reference sample
     (with the ratio-compliance screen), z-scores, composites + bootstrap, and
@@ -146,6 +156,7 @@ def main() -> None:
         sp.add_argument("--country", default="mys", choices=COUNTRIES)
 
     sp = sub.add_parser("pipeline", help="full phase 0-7 (ref sample, z-scores, composites, FDR)"); add_common(sp); sp.set_defaults(func=cmd_pipeline)
+    sp = sub.add_parser("ablation", help="detector-ablation table (full model + 4 ablations)"); add_common(sp); sp.set_defaults(func=cmd_ablation)
     sp = sub.add_parser("score", help="compute detector z-scores"); add_common(sp); sp.set_defaults(func=cmd_score)
     sp = sub.add_parser("benchmark", help="robustness benchmark (families 1-4)"); add_common(sp)
     sp.add_argument("--no-resume", action="store_true"); sp.set_defaults(func=cmd_benchmark)

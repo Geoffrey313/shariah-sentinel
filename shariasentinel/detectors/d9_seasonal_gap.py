@@ -24,7 +24,7 @@ import logging
 import numpy as np
 import pandas as pd
 
-from shariasentinel.panel.methodology import SAC_MY, thresholds_for_panel
+from shariasentinel.panel.methodology import SAC_MY, screening_thresholds_for_panel
 
 from .pit import pit_empirical
 
@@ -73,7 +73,7 @@ def _seasonal_gap_vectorized(df: pd.DataFrame, thresholds: dict[str, float]) -> 
         df: Panel containing ``gvkey``, ``fqtr``, and the canonical Sharia
             ratio columns (same input contract as ``detect_seasonal_gap``).
         thresholds: Per-country ratio-threshold map (from
-            ``thresholds_for_panel``); only its keys are used here, to
+            ``screening_thresholds_for_panel``); only its keys are used here, to
             select which ratio columns participate.
 
     Returns:
@@ -165,7 +165,7 @@ def detect_seasonal_gap(df: pd.DataFrame) -> pd.Series:
             log.warning("detect_seasonal_gap: missing %s; returning NaN.", col)
             return pd.Series(np.nan, index=df.index)
 
-    thresholds = thresholds_for_panel(df)
+    thresholds = screening_thresholds_for_panel(df)
     available_ratios = [c for c in thresholds if c in df.columns]
     if not available_ratios:
         log.warning("detect_seasonal_gap: no Sharia ratios available; returning NaN.")

@@ -14,9 +14,10 @@ aligned when adding a country.
 
 Threshold routing at scoring time is **panel-driven**: the builder stamps a
 ``methodology_key`` column on every non-MYS panel, and downstream consumers
-call :func:`thresholds_for_panel` to resolve the right cutoffs. A panel
-without the column (every MYS artefact ever built) resolves to SAC — this
-fallback is what keeps the MYS pipeline byte-identical.
+call :func:`thresholds_for_panel` for all canonical cutoffs or
+:func:`screening_thresholds_for_panel` for the active ratios an authority
+actually screens. A panel without the column (every MYS artefact ever built)
+resolves to SAC — this fallback is what keeps the MYS pipeline byte-identical.
 """
 from __future__ import annotations
 
@@ -62,13 +63,29 @@ class CountryCompliancePolicy:
     # unaffected. Defaults True (MYS/UAE/SAU corporate-scope series).
     apply_sukuk_adjustment: bool = True
 
+    # Whether the authority applies a cash / liquid-assets screen at all.
+    # Some regimes have a genuine two-ratio methodology. Indonesia's DES, for
+    # example, screens debt and non-permissible income but has no cash cap; this
+    # flag prevents a placeholder cap from becoming an accidental filter.
+    cash_screen_enabled: bool = True
+
     def ratio_thresholds(self) -> dict[str, float]:
-        """Canonical ratio-column → threshold map used by detectors/phases."""
+        """All canonical ratio-column → threshold values for this authority."""
         return {
             "ratio_debt_adj": self.threshold_debt,
             "ratio_cash_adj": self.threshold_cash,
             "ratio_income": self.threshold_income,
         }
+
+    def screening_thresholds(self) -> dict[str, float]:
+        """Ratio-column → threshold map for actual compliance screening."""
+        thresholds = {
+            "ratio_debt_adj": self.threshold_debt,
+            "ratio_income": self.threshold_income,
+        }
+        if self.cash_screen_enabled:
+            thresholds["ratio_cash_adj"] = self.threshold_cash
+        return thresholds
 
 
 SAC_MY = CountryCompliancePolicy(
@@ -175,8 +192,7 @@ DES_IDN = CountryCompliancePolicy(
     # Indonesia's DES screen (OJK, POJK 35/2017) is a TWO-ratio test that
     # differs from the GCC/MSCI bands: interest-based debt / total assets
     # <= 45% and non-permissible income / revenue <= 10%. There is NO cash
-    # screen, so the cash cap is set non-binding (1.0) — a genuine
-    # cross-jurisdiction heterogeneity, not an omission.
+    # screen — a genuine cross-jurisdiction heterogeneity, not an omission.
     threshold_debt=0.45,
     threshold_cash=1.00,
     threshold_income=0.10,
@@ -187,6 +203,7 @@ DES_IDN = CountryCompliancePolicy(
     # korporasi" sukuk vs conventional), R_t low (~3-11%); apply it like
     # MYS/PAK. Cash connector (Islamic deposit share ~6-8%) also applied.
     apply_sukuk_adjustment=True,
+    cash_screen_enabled=False,
 )
 
 POLICIES: dict[str, CountryCompliancePolicy] = {
@@ -260,9 +277,18 @@ def policy_for_panel(df: pd.DataFrame) -> CountryCompliancePolicy:
 
 
 def thresholds_for_panel(df: pd.DataFrame) -> dict[str, float]:
-    """Ratio-column → threshold map for the panel's methodology.
+    """All canonical ratio-column thresholds for the panel's methodology.
 
-    The one accessor detectors and scoring phases should use instead of
-    hardcoding SAC numbers.
+    Use :func:`screening_thresholds_for_panel` when defining the compliant
+    population, because some authorities do not screen every canonical ratio.
     """
     return policy_for_panel(df).ratio_thresholds()
+
+
+def screening_thresholds_for_panel(df: pd.DataFrame) -> dict[str, float]:
+    """Active screening thresholds for the panel's methodology.
+
+    Unlike :func:`thresholds_for_panel`, this omits ratio columns that the
+    authority does not screen. Use it when defining the compliant population.
+    """
+    return policy_for_panel(df).screening_thresholds()
