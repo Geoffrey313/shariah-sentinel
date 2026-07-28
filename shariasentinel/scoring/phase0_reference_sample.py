@@ -56,7 +56,7 @@ REASON_INCLUDED: str = "included"
 REASON_NOT_SAC_COMPLIANT: str = "sac_shariah != 1"
 REASON_NOT_CLEAN_SAMPLE: str = "clean_sample != 1"
 REASON_MISSING_REQUIRED_COLUMN: str = "missing_required_column"
-REASON_RATIO_VIOLATION: str = "ratio exceeds SAC threshold"
+REASON_RATIO_VIOLATION: str = "ratio exceeds active authority threshold"
 
 SPLIT_LABEL_INCLUDED: str = "C"
 SPLIT_LABEL_EXCLUDED: str = "NOT_C"

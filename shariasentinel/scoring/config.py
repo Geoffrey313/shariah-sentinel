@@ -125,7 +125,7 @@ class ReferenceSampleSettings(BaseModel):
         "analysis_plan_v2.md — no delisting flag exists today.",
     )
     require_ratio_compliance: bool = Field(
-        default=False,
+        default=True,
         description="When True, exclude from C any SAC-labeled row whose "
         "recomputed ratios exceed the official SAC thresholds "
         "(ratio_debt_adj > 0.33, ratio_cash_adj > 0.33, "

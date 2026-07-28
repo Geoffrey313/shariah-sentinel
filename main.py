@@ -6,6 +6,7 @@ the whole pipeline. This repository is reproduction-only: no unit tests, no raw
 data, no application/serving code.
 
 Examples:
+  python main.py pipeline    --country mys
   python main.py score       --country mys
   python main.py benchmark   --country mys
   python main.py family3-cf  --country mys --rows 500 --near-boundary
@@ -26,7 +27,7 @@ sys.path.insert(0, str(REPO))
 
 from shariasentinel.scoring.config import AnalysisSettings  # noqa: E402
 
-COUNTRIES = ("mys", "uae", "qat", "sau", "pak", "kwt")
+COUNTRIES = ("mys", "idn", "uae", "qat", "sau", "pak", "kwt")
 SAC4 = ("dlttq", "dlcq", "cheq", "iditq")  # SAC-ratio raw columns (PGD attack surface)
 
 
@@ -45,6 +46,19 @@ def load_panel(settings: AnalysisSettings) -> pd.DataFrame:
 
 
 # ── subcommands ─────────────────────────────────────────────────────────────
+def cmd_pipeline(args) -> None:
+    """Full phase 0-7 pipeline from the reconstructed panel: reference sample
+    (with the ratio-compliance screen), z-scores, composites + bootstrap, and
+    the firm-level FDR. This reproduces the flag rate, calibration, and
+    false-discovery tables of the paper."""
+    from shariasentinel.scoring.run_analysis import run_full_analysis
+    s = settings_for(args.country)
+    print(f"[pipeline] {args.country}: running phases 0-7", flush=True)
+    run_full_analysis(settings=s)
+    print("[pipeline] done", flush=True)
+
+
+
 def cmd_score(args) -> None:
     from shariasentinel.scoring.compute_zscores import compute_zscores
     s = settings_for(args.country)
@@ -131,6 +145,7 @@ def main() -> None:
     def add_common(sp):
         sp.add_argument("--country", default="mys", choices=COUNTRIES)
 
+    sp = sub.add_parser("pipeline", help="full phase 0-7 (ref sample, z-scores, composites, FDR)"); add_common(sp); sp.set_defaults(func=cmd_pipeline)
     sp = sub.add_parser("score", help="compute detector z-scores"); add_common(sp); sp.set_defaults(func=cmd_score)
     sp = sub.add_parser("benchmark", help="robustness benchmark (families 1-4)"); add_common(sp)
     sp.add_argument("--no-resume", action="store_true"); sp.set_defaults(func=cmd_benchmark)

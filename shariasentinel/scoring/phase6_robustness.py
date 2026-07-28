@@ -63,6 +63,13 @@ COMPOSITE_P_COLS: tuple[str, ...] = (
     COL_P_Z_PLUS, COL_P_Z_PLUS_RENORM, COL_P_Z_MAHALANOBIS, COL_P_T_IUT,
     COL_P_Z_PLUS_SOFTMAX, COL_P_Z_PLUS_ORTH,
 )
+# The RED verdict is defined on the four primary composites only (the
+# softmax/orthogonal variants are reporting extensions, not part of the
+# headline verdict). The sector-level RED rate must use the same definition
+# as the flag rate and the FDR so the three are mutually consistent.
+VERDICT_P_COLS: tuple[str, ...] = (
+    COL_P_Z_PLUS, COL_P_Z_PLUS_RENORM, COL_P_Z_MAHALANOBIS, COL_P_T_IUT,
+)
 # ``p_breadth`` is intentionally excluded: breadth only takes a small discrete
 # set of values, so its bootstrap p-values are not very informative for the
 # continuous-style robustness checks used in Phase 6.
@@ -178,7 +185,7 @@ def _sector_false_positive(
     if c_rows.empty:
         return pd.DataFrame()
 
-    c_rows["min_p"] = c_rows[list(COMPOSITE_P_COLS)].min(axis=1)
+    c_rows["min_p"] = c_rows[list(VERDICT_P_COLS)].min(axis=1)
     c_rows["is_red"] = c_rows["min_p"] < rob.red_threshold
 
     grouped = (
