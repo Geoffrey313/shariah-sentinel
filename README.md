@@ -1,6 +1,6 @@
 # Below the Line: Detecting Accounting Anomalies in Shariah-Compliant Equities
 
-**Collin, R., Ducournau, G., Mussard, S., Condevaux, C., Li, J.**
+**Colin, R., Ducournau, G., Mussard, S., Condevaux, C., Li, J.**
 
 This repository (*ShariaSentinel*) reproduces the empirical results of the paper on
 statistical anomaly screening for Sharia compliance. It ships the scoring and
