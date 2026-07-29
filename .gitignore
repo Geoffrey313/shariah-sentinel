@@ -23,3 +23,12 @@ data/scores/*/phase7_*/
 data/scores/*/robustness_benchmark/
 data/scores/*/dashboard/
 data/scores/*/figures/
+data/scores/*/phase4b_confidence/
+data/scores/*/qualitative/
+data/scores/*/contamination/
+# Phase-0 deliverables are regenerated; only the reference split is shipped.
+data/scores/*/phase0_reference_sample/*
+!data/scores/*/phase0_reference_sample/panel_with_split.parquet
+
+# Verification manifest — regenerate with `python dump_paper_numbers.py`.
+numbers_manifest.json
