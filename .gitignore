@@ -32,3 +32,6 @@ data/scores/*/phase0_reference_sample/*
 
 # Verification manifest — regenerate with `python dump_paper_numbers.py`.
 numbers_manifest.json
+
+# Regenerated paper figure-data CSVs — run `python dump_paper_figure_data.py`.
+figures/data/
