@@ -1,9 +1,10 @@
-# Below the Line: Detecting Accounting Anomalies in Shariah-Compliant Equities
+# No News Before the News: Detecting Accounting Anomalies in Shariah-Compliant Equities
 
 **Colin, R., Ducournau, G., Mussard, S., Condevaux, C., Li, J.**
 
-This repository (*ShariaSentinel*) reproduces the empirical results of the paper on
-statistical anomaly screening for Sharia compliance. It ships the scoring and
+Reproduction repository for *No News Before the News*. This repository
+(*ShariaSentinel*) reproduces the empirical results of the paper on statistical
+anomaly screening for Sharia compliance. It ships the scoring and
 robustness pipeline together with the reconstructed per-country panels, so the
 tables and figures in the paper can be regenerated from a single command. It
 does not include the application and serving code, the unit-test suite, or the
