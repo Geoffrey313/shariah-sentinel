@@ -1,0 +1,36 @@
+# Caches and environments
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.DS_Store
+.venv/
+venv/
+
+# Manuscripts live in the workspace but are NEVER published (EN, FR, journal versions)
+manuscript/
+
+# Internal working dir: audit outputs, notes, drafts, reviews
+docs/internal/
+review/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.out
+*.toc
+*.synctex.gz
+
+# Data is NOT shipped. The reconstructed panels carry licensed S&P Compustat
+# fields, so neither they nor any run output are tracked. Obtain the panels on
+# motivated request (see the README) and place them under data/ to reproduce.
+# Only data/README.md, which documents the expected schema, is versioned.
+data/*
+!data/README.md
+
+# Generated results are reproducible by the code, never stored
+results/
