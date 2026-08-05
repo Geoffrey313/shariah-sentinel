@@ -1,0 +1,2118 @@
+{
+  "anchor_country": "mys",
+  "anchor": {
+    "reference_and_fdr": {
+      "reference_sample_size": 13086,
+      "phase0": {
+        "inclusion_rule": {
+          "require_sac_compliant": true,
+          "require_clean_sample": true,
+          "require_ratio_compliance": true
+        },
+        "authority_label": {
+          "column": "sac_shariah",
+          "compliant_1": 16233,
+          "noncompliant_0": 76639,
+          "unknown_na": 0
+        },
+        "panel": {
+          "n_rows": 92872,
+          "n_firms": 1356
+        },
+        "global": {
+          "size": 13086,
+          "n_firms": 1312,
+          "min_required": 30
+        },
+        "sector": {
+          "n_sectors": 12,
+          "min_sector_size": 27,
+          "n_meets_min_sector_size": 12
+        },
+        "peer_groups": {
+          "peer_group_column": "sector",
+          "n_groups": 12,
+          "peer_group_min_size": 9,
+          "n_meets_peer_group_min_size": 12
+        },
+        "exclusion_breakdown": {
+          "sac_shariah != 1": 76639,
+          "ratio exceeds active authority threshold": 2372,
+          "clean_sample != 1": 775
+        }
+      },
+      "firm_quarters": 92872,
+      "firms": 1356,
+      "fdr_firm_level": {
+        "p_z_plus": {
+          "q<=0.05": 793,
+          "q<=0.01": 206
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 882,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 744,
+          "q<=0.01": 204
+        },
+        "p_t_iut": {
+          "q<=0.05": 661,
+          "q<=0.01": 319
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 906,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 953,
+          "q<=0.01": 0
+        }
+      },
+      "fdr_row_level": {
+        "p_z_plus": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 137,
+          "q<=0.01": 0
+        },
+        "p_t_iut": {
+          "q<=0.05": 1248,
+          "q<=0.01": 0
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      },
+      "fdr_firm_level_sensitivity": {
+        "sidak": {
+          "p_t_iut": {
+            "q<=0.01": 0,
+            "q<=0.05": 0
+          },
+          "p_z_plus": {
+            "q<=0.01": 0,
+            "q<=0.05": 0
+          },
+          "p_z_mahalanobis_sq": {
+            "q<=0.01": 0,
+            "q<=0.05": 0
+          }
+        },
+        "fisher": {
+          "p_t_iut": {
+            "q<=0.01": 383,
+            "q<=0.05": 452
+          },
+          "p_z_plus": {
+            "q<=0.01": 184,
+            "q<=0.05": 220
+          },
+          "p_z_mahalanobis_sq": {
+            "q<=0.01": 315,
+            "q<=0.05": 372
+          }
+        },
+        "cauchy": {
+          "p_t_iut": {
+            "q<=0.01": 0,
+            "q<=0.05": 134
+          },
+          "p_z_plus": {
+            "q<=0.01": 0,
+            "q<=0.05": 0
+          },
+          "p_z_mahalanobis_sq": {
+            "q<=0.01": 0,
+            "q<=0.05": 0
+          }
+        }
+      }
+    },
+    "calibration": {
+      "c_rows": 13086,
+      "per_detector": {
+        "z_benford": {
+          "code": "z1",
+          "moments": {
+            "n": 13003,
+            "mean": 0.34786423248341236,
+            "std": 1.893067657269763,
+            "skew": 2.0066765208958772,
+            "excess_kurtosis": 3.8571188607725437
+          },
+          "ks_pvalue": 4.611113318824309e-79,
+          "verdict": "biased,mis_scaled,non_normal",
+          "forced_bootstrap": true
+        },
+        "z_zipf": {
+          "code": "z2",
+          "moments": {
+            "n": 13073,
+            "mean": 0.19225777915231668,
+            "std": 2.2945163572896345,
+            "skew": 0.2212215674931653,
+            "excess_kurtosis": -0.017080661542203668
+          },
+          "ks_pvalue": 0.0,
+          "verdict": "biased,mis_scaled,non_normal",
+          "forced_bootstrap": true
+        },
+        "z_mscore": {
+          "code": "z3",
+          "moments": {
+            "n": 12851,
+            "mean": 0.00046671908953401696,
+            "std": 1.0007462729060153,
+            "skew": 0.015356654912527913,
+            "excess_kurtosis": 0.06768305245476292
+          },
+          "ks_pvalue": 1.0,
+          "verdict": "ok",
+          "forced_bootstrap": false
+        },
+        "z_threshold": {
+          "code": "z4",
+          "moments": {
+            "n": 13068,
+            "mean": -0.23808483687356027,
+            "std": 1.0300211953223979,
+            "skew": 0.04707689183363117,
+            "excess_kurtosis": -0.1855446845962665
+          },
+          "ks_pvalue": 1.8415352074315195e-123,
+          "verdict": "biased,non_normal",
+          "forced_bootstrap": true
+        },
+        "z_temporal": {
+          "code": "z6",
+          "moments": {
+            "n": 12201,
+            "mean": 1.15227246099664,
+            "std": 2.247035640807772,
+            "skew": 0.8090622699126693,
+            "excess_kurtosis": -0.14831684313443638
+          },
+          "ks_pvalue": 0.0,
+          "verdict": "biased,mis_scaled,non_normal",
+          "forced_bootstrap": true
+        },
+        "z_cod": {
+          "code": "z8",
+          "moments": {
+            "n": 10455,
+            "mean": 0.0005736783375993805,
+            "std": 1.0009359515935932,
+            "skew": 0.0188656394104898,
+            "excess_kurtosis": 0.0842235165022065
+          },
+          "ks_pvalue": 1.0,
+          "verdict": "ok",
+          "forced_bootstrap": false
+        },
+        "z_fused": {
+          "code": "z57",
+          "moments": {
+            "n": 13038,
+            "mean": 0.02322475391185003,
+            "std": 1.0954518468713053,
+            "skew": 0.9893607106506974,
+            "excess_kurtosis": 5.084489192232994
+          },
+          "ks_pvalue": 0.518456211141066,
+          "verdict": "mis_scaled",
+          "forced_bootstrap": true
+        }
+      },
+      "ledoit_wolf_shrinkage": 0.001903554251051019,
+      "complete_rows": 9979,
+      "k_eff": 6
+    },
+    "qualitative": {
+      "verdict_by_sector": [
+        {
+          "sector": "Financials",
+          "n_rows": 2716,
+          "n_firms": 53,
+          "n_red": 584,
+          "red_share": 0.2150220913107511
+        },
+        {
+          "sector": "Unknown",
+          "n_rows": 472,
+          "n_firms": 16,
+          "n_red": 51,
+          "red_share": 0.1080508474576271
+        },
+        {
+          "sector": "Communication Services",
+          "n_rows": 2070,
+          "n_firms": 28,
+          "n_red": 217,
+          "red_share": 0.1048309178743961
+        },
+        {
+          "sector": "Utilities",
+          "n_rows": 1481,
+          "n_firms": 20,
+          "n_red": 132,
+          "red_share": 0.0891289669142471
+        },
+        {
+          "sector": "Health Care",
+          "n_rows": 2582,
+          "n_firms": 39,
+          "n_red": 229,
+          "red_share": 0.0886909372579395
+        },
+        {
+          "sector": "Industrials",
+          "n_rows": 26020,
+          "n_firms": 390,
+          "n_red": 2251,
+          "red_share": 0.0865103766333589
+        },
+        {
+          "sector": "Information Technology",
+          "n_rows": 10223,
+          "n_firms": 157,
+          "n_red": 868,
+          "red_share": 0.0849065831947569
+        },
+        {
+          "sector": "Energy",
+          "n_rows": 3239,
+          "n_firms": 49,
+          "n_red": 275,
+          "red_share": 0.0849027477616548
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "n_rows": 12432,
+          "n_firms": 184,
+          "n_red": 994,
+          "red_share": 0.0799549549549549
+        },
+        {
+          "sector": "Real Estate",
+          "n_rows": 8563,
+          "n_firms": 98,
+          "n_red": 649,
+          "red_share": 0.0757911946747635
+        },
+        {
+          "sector": "Materials",
+          "n_rows": 12151,
+          "n_firms": 166,
+          "n_red": 901,
+          "red_share": 0.0741502756974734
+        },
+        {
+          "sector": "Consumer Staples",
+          "n_rows": 10923,
+          "n_firms": 156,
+          "n_red": 746,
+          "red_share": 0.0682962556074338
+        }
+      ],
+      "verdict_by_firm_size": [
+        {
+          "atq_quartile": "Q1 small",
+          "n_rows": 22578,
+          "median_atq": 59.0385,
+          "n_red": 1903,
+          "red_share": 0.0842855877402781
+        },
+        {
+          "atq_quartile": "Q2",
+          "n_rows": 22577,
+          "median_atq": 168.781,
+          "n_red": 1547,
+          "red_share": 0.0685210612570314
+        },
+        {
+          "atq_quartile": "Q3",
+          "n_rows": 22578,
+          "median_atq": 446.95295,
+          "n_red": 1574,
+          "red_share": 0.06971388076889
+        },
+        {
+          "atq_quartile": "Q4 large",
+          "n_rows": 22577,
+          "median_atq": 1863.346,
+          "n_red": 1728,
+          "red_share": 0.0765380697169686
+        },
+        {
+          "atq_quartile": NaN,
+          "n_rows": 2562,
+          "median_atq": NaN,
+          "n_red": 1145,
+          "red_share": 0.4469164715066354
+        }
+      ],
+      "verdict_by_debt_level": [
+        {
+          "debt_quartile": "Q1 low debt",
+          "n_rows": 15793,
+          "median_debt_ratio": 0.0122435163805855,
+          "n_red": 1574,
+          "red_share": 0.0996644082821503
+        },
+        {
+          "debt_quartile": "Q2",
+          "n_rows": 15792,
+          "median_debt_ratio": 0.0730577323019062,
+          "n_red": 791,
+          "red_share": 0.0500886524822695
+        },
+        {
+          "debt_quartile": "Q3",
+          "n_rows": 15792,
+          "median_debt_ratio": 0.1523801569317889,
+          "n_red": 678,
+          "red_share": 0.0429331306990881
+        },
+        {
+          "debt_quartile": "Q4 high debt",
+          "n_rows": 15793,
+          "median_debt_ratio": 0.2913226458256795,
+          "n_red": 1674,
+          "red_share": 0.1059963274868612
+        }
+      ],
+      "verdict_persistence": [
+        {
+          "persistence": "never",
+          "n_firms": 352,
+          "mean_red_share": 0.0011443734295728
+        },
+        {
+          "persistence": "episodic (<10%)",
+          "n_firms": 602,
+          "mean_red_share": 0.048270138878659
+        },
+        {
+          "persistence": "intermittent (10-30%)",
+          "n_firms": 339,
+          "mean_red_share": 0.1691447226238864
+        },
+        {
+          "persistence": "chronic (>30%)",
+          "n_firms": 63,
+          "mean_red_share": 0.4587996187239432
+        }
+      ],
+      "chronic_red_firms_n": 63,
+      "ablation_results": [
+        {
+          "model": "FULL MODEL",
+          "zmah_finite": 55005,
+          "tiut_power_d2": 0.53,
+          "tiut_gap_d2": -0.413,
+          "fdr_zmah_q05": 744,
+          "fdr_tiut_q05": 661,
+          "tiut_jaccard": 0.887
+        },
+        {
+          "model": "A1: no annual cash-flow recovery",
+          "zmah_finite": 55005,
+          "tiut_power_d2": 0.528,
+          "tiut_gap_d2": -0.415,
+          "fdr_zmah_q05": 744,
+          "fdr_tiut_q05": 643,
+          "tiut_jaccard": 0.887
+        },
+        {
+          "model": "A2: no z5/z7 merge",
+          "zmah_finite": 33406,
+          "tiut_power_d2": 0.636,
+          "tiut_gap_d2": -0.314,
+          "fdr_zmah_q05": 547,
+          "fdr_tiut_q05": 796,
+          "tiut_jaccard": 0.887
+        },
+        {
+          "model": "A3: no MC Benford",
+          "zmah_finite": 28369,
+          "tiut_power_d2": 0.592,
+          "tiut_gap_d2": -0.351,
+          "fdr_zmah_q05": 340,
+          "fdr_tiut_q05": 633,
+          "tiut_jaccard": 0.515
+        },
+        {
+          "model": "A4: no empirical PIT",
+          "zmah_finite": 55005,
+          "tiut_power_d2": 0.542,
+          "tiut_gap_d2": -0.401,
+          "fdr_zmah_q05": 742,
+          "fdr_tiut_q05": 700,
+          "tiut_jaccard": 0.887
+        }
+      ]
+    },
+    "contamination_and_family3": {
+      "contamination_auc_zmah": [
+        {
+          "Mechanism": "abn_disx_partial",
+          "$\\rho = 1\\%$": 0.484493180878414,
+          "$\\rho = 5\\%$": 0.4847376807082837,
+          "$\\rho = 10\\%$": 0.4923367896153171
+        },
+        {
+          "Mechanism": "abn_prod_full",
+          "$\\rho = 1\\%$": 0.4696420425936855,
+          "$\\rho = 5\\%$": 0.4848906160039075,
+          "$\\rho = 10\\%$": 0.4791720251141031
+        },
+        {
+          "Mechanism": "benford_m3_v2",
+          "$\\rho = 1\\%$": 0.8581582623292119,
+          "$\\rho = 5\\%$": 0.8694782001587921,
+          "$\\rho = 10\\%$": 0.8741843544083153
+        },
+        {
+          "Mechanism": "interstatement_m4_v2",
+          "$\\rho = 1\\%$": 0.7053812681082661,
+          "$\\rho = 5\\%$": 0.6547793717296103,
+          "$\\rho = 10\\%$": 0.6149146318955088
+        },
+        {
+          "Mechanism": "m5_cod_break",
+          "$\\rho = 1\\%$": 0.5085546522430546,
+          "$\\rho = 5\\%$": 0.4954660458127939,
+          "$\\rho = 10\\%$": 0.5265085976689637
+        },
+        {
+          "Mechanism": "m6_seasonal",
+          "$\\rho = 1\\%$": 0.4692852811716239,
+          "$\\rho = 5\\%$": 0.5159379541222799,
+          "$\\rho = 10\\%$": 0.5009926202217792
+        },
+        {
+          "Mechanism": "temporal_spike_m2b",
+          "$\\rho = 1\\%$": 0.5667602978743733,
+          "$\\rho = 5\\%$": 0.5548805524871196,
+          "$\\rho = 10\\%$": 0.5548805524871196
+        },
+        {
+          "Mechanism": "threshold_clustering_m1_v2",
+          "$\\rho = 1\\%$": 0.6552154116719067,
+          "$\\rho = 5\\%$": 0.6519438317668163,
+          "$\\rho = 10\\%$": 0.6683414483758089
+        }
+      ],
+      "family3_evasion_summary": [
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_green",
+          "target_score_name": "breadth",
+          "target_score_family": "composite",
+          "success": 0.8,
+          "evasion_rate": 0.8,
+          "median_cost": 0.1563314431963276,
+          "p90_cost": 0.1999044636343194,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.1563314431963276,
+          "p90_row_cost": 0.1999044636343194,
+          "loss_total": 0.2644325646124629,
+          "loss_l1_term": 0.1105036305542463,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.2644325646124629,
+          "objective_loss_score_term": 0.1539289340582165,
+          "objective_loss_l1_term": 0.1105036305542463,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.2644325646124629,
+          "row_loss_score_term": 0.1539289340582165,
+          "row_loss_l1_term": 0.1105036305542463,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_green",
+          "target_score_name": "t_iut",
+          "target_score_family": "composite",
+          "success": 0.2,
+          "evasion_rate": 0.2,
+          "median_cost": 0.0331802568638526,
+          "p90_cost": 0.11,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.0331802568638526,
+          "p90_row_cost": 0.11,
+          "loss_total": 0.3687080019952415,
+          "loss_l1_term": 0.0466360513727705,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.3687080019952415,
+          "objective_loss_score_term": 0.322071950622471,
+          "objective_loss_l1_term": 0.0466360513727705,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.3687080019952415,
+          "row_loss_score_term": 0.322071950622471,
+          "row_loss_l1_term": 0.0466360513727705,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_green",
+          "target_score_name": "z_mahalanobis_sq",
+          "target_score_family": "composite",
+          "success": 0.4,
+          "evasion_rate": 0.4,
+          "median_cost": 0.077333150927868,
+          "p90_cost": 0.1447448512239376,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.077333150927868,
+          "p90_row_cost": 0.1447448512239376,
+          "loss_total": 0.2261486757294251,
+          "loss_l1_term": 0.0899554000029909,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.2261486757294251,
+          "objective_loss_score_term": 0.1361932757264342,
+          "objective_loss_l1_term": 0.0899554000029909,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.2261486757294251,
+          "row_loss_score_term": 0.1361932757264342,
+          "row_loss_l1_term": 0.0899554000029909,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_green",
+          "target_score_name": "z_plus",
+          "target_score_family": "composite",
+          "success": 0.4,
+          "evasion_rate": 0.4,
+          "median_cost": 0.05,
+          "p90_cost": 0.0594937474013771,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.05,
+          "p90_row_cost": 0.0594937474013771,
+          "loss_total": 0.195493060094667,
+          "loss_l1_term": 0.0394664281706304,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.195493060094667,
+          "objective_loss_score_term": 0.1560266319240366,
+          "objective_loss_l1_term": 0.0394664281706304,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.195493060094667,
+          "row_loss_score_term": 0.1560266319240366,
+          "row_loss_l1_term": 0.0394664281706304,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_green",
+          "target_score_name": "z_plus_renorm",
+          "target_score_family": "composite",
+          "success": 0.2,
+          "evasion_rate": 0.2,
+          "median_cost": 0.0171369868867866,
+          "p90_cost": 0.1406153846153846,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.0171369868867866,
+          "p90_row_cost": 0.1406153846153846,
+          "loss_total": 0.4114622093715313,
+          "loss_l1_term": 0.0569658589158188,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.4114622093715313,
+          "objective_loss_score_term": 0.3544963504557124,
+          "objective_loss_l1_term": 0.0569658589158188,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.4114622093715313,
+          "row_loss_score_term": 0.3544963504557124,
+          "row_loss_l1_term": 0.0569658589158188,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 1,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_red",
+          "target_score_name": "breadth",
+          "target_score_family": NaN,
+          "success": NaN,
+          "evasion_rate": NaN,
+          "median_cost": NaN,
+          "p90_cost": NaN,
+          "median_l2_cost": NaN,
+          "p90_l2_cost": NaN,
+          "median_row_cost": NaN,
+          "p90_row_cost": NaN,
+          "loss_total": NaN,
+          "loss_l1_term": NaN,
+          "loss_l2_term": NaN,
+          "objective_loss_total": NaN,
+          "objective_loss_score_term": NaN,
+          "objective_loss_l1_term": NaN,
+          "objective_loss_l2_term": NaN,
+          "row_loss_total": NaN,
+          "row_loss_score_term": NaN,
+          "row_loss_l1_term": NaN,
+          "row_loss_l2_term": NaN
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_red",
+          "target_score_name": "t_iut",
+          "target_score_family": "composite",
+          "success": 0.0,
+          "evasion_rate": 0.0,
+          "median_cost": 0.15,
+          "p90_cost": 0.261347372194096,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.15,
+          "p90_row_cost": 0.261347372194096,
+          "loss_total": 1.1343791059719384,
+          "loss_l1_term": 0.1282351937164399,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 1.1343791059719384,
+          "objective_loss_score_term": 1.0061439122554985,
+          "objective_loss_l1_term": 0.1282351937164399,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 1.1343791059719384,
+          "row_loss_score_term": 1.0061439122554985,
+          "row_loss_l1_term": 0.1282351937164399,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_red",
+          "target_score_name": "z_mahalanobis_sq",
+          "target_score_family": "composite",
+          "success": 0.8,
+          "evasion_rate": 0.8,
+          "median_cost": 0.15,
+          "p90_cost": 0.1651860845017708,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.15,
+          "p90_row_cost": 0.1651860845017708,
+          "loss_total": 0.262172550262339,
+          "loss_l1_term": 0.1107296771779157,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.262172550262339,
+          "objective_loss_score_term": 0.1514428730844232,
+          "objective_loss_l1_term": 0.1107296771779157,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.262172550262339,
+          "row_loss_score_term": 0.1514428730844232,
+          "row_loss_l1_term": 0.1107296771779157,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_red",
+          "target_score_name": "z_plus",
+          "target_score_family": "composite",
+          "success": 0.2,
+          "evasion_rate": 0.2,
+          "median_cost": 0.05,
+          "p90_cost": 0.0639365446184057,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.05,
+          "p90_row_cost": 0.0639365446184057,
+          "loss_total": 0.3171097088535014,
+          "loss_l1_term": 0.0350040864448213,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.3171097088535014,
+          "objective_loss_score_term": 0.2821056224086801,
+          "objective_loss_l1_term": 0.0350040864448213,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.3171097088535014,
+          "row_loss_score_term": 0.2821056224086801,
+          "row_loss_l1_term": 0.0350040864448213,
+          "row_loss_l2_term": 0.0
+        },
+        {
+          "n_rows": 5,
+          "method": "adversarial_evasion",
+          "mode": "global_per_row",
+          "direction": "to_red",
+          "target_score_name": "z_plus_renorm",
+          "target_score_family": "composite",
+          "success": 0.0,
+          "evasion_rate": 0.0,
+          "median_cost": 0.05,
+          "p90_cost": 0.1299625729900347,
+          "median_l2_cost": 0.0,
+          "p90_l2_cost": 0.0,
+          "median_row_cost": 0.05,
+          "p90_row_cost": 0.1299625729900347,
+          "loss_total": 0.2733736503883934,
+          "loss_l1_term": 0.0566541909966782,
+          "loss_l2_term": 0.0,
+          "objective_loss_total": 0.2733736503883934,
+          "objective_loss_score_term": 0.2167194593917151,
+          "objective_loss_l1_term": 0.0566541909966782,
+          "objective_loss_l2_term": 0.0,
+          "row_loss_total": 0.2733736503883934,
+          "row_loss_score_term": 0.2167194593917151,
+          "row_loss_l1_term": 0.0566541909966782,
+          "row_loss_l2_term": 0.0
+        }
+      ],
+      "robustness_summary": {
+        "methods": [
+          "correlated_gaussian",
+          "threshold_clustering_m1_v2",
+          "adversarial_evasion",
+          "anoshift"
+        ],
+        "alpha": 0.05,
+        "rho_grid": [
+          0.01,
+          0.05,
+          0.1
+        ],
+        "delta_grid": [
+          0.05,
+          0.1,
+          0.15,
+          0.2,
+          0.3
+        ],
+        "bootstrap_replicates": 500,
+        "key_variable_coverage": [
+          {
+            "column": "cogsq",
+            "present_in_panel": true,
+            "n_nonnull": 64888,
+            "pct_nonnull": 69.87
+          },
+          {
+            "column": "xrdq",
+            "present_in_panel": true,
+            "n_nonnull": 0,
+            "pct_nonnull": 0.0
+          },
+          {
+            "column": "xsgaq",
+            "present_in_panel": true,
+            "n_nonnull": 46735,
+            "pct_nonnull": 50.32
+          },
+          {
+            "column": "invtq",
+            "present_in_panel": true,
+            "n_nonnull": 76277,
+            "pct_nonnull": 82.13
+          },
+          {
+            "column": "oibdpq",
+            "present_in_panel": true,
+            "n_nonnull": 69883,
+            "pct_nonnull": 75.25
+          },
+          {
+            "column": "revtq",
+            "present_in_panel": true,
+            "n_nonnull": 79097,
+            "pct_nonnull": 85.17
+          },
+          {
+            "column": "dlttq",
+            "present_in_panel": true,
+            "n_nonnull": 79974,
+            "pct_nonnull": 86.11
+          },
+          {
+            "column": "dlcq",
+            "present_in_panel": true,
+            "n_nonnull": 84345,
+            "pct_nonnull": 90.82
+          },
+          {
+            "column": "cheq",
+            "present_in_panel": true,
+            "n_nonnull": 90203,
+            "pct_nonnull": 97.13
+          },
+          {
+            "column": "iditq",
+            "present_in_panel": true,
+            "n_nonnull": 49342,
+            "pct_nonnull": 53.13
+          }
+        ],
+        "family_rows": {
+          "family1_correlated_gaussian": 105,
+          "family2_threshold_clustering": 1890,
+          "family3_adversarial_evasion": 46,
+          "family4_anoshift": 2796
+        }
+      },
+      "counterfactual": {
+        "source": "family3_cf_to_green_z_plus_renorm_top500.csv",
+        "n_rows": 115,
+        "targeted_score": {
+          "n": 31,
+          "rate": 0.26956521739130435,
+          "median_vars": 5.0,
+          "share_ge5_vars_pct": 64.51612903225806
+        },
+        "global_green": {
+          "n": 11,
+          "rate": 0.09565217391304348,
+          "median_vars": 6.0,
+          "share_ge5_vars_pct": 90.9
+        },
+        "final_status_counts": {
+          "ORANGE": 84,
+          "RED": 20,
+          "GREEN": 11
+        },
+        "baseline_status_counts": {
+          "ORANGE": 87,
+          "RED": 28
+        }
+      }
+    },
+    "figure_reductions": {
+      "flag_rate_by_country": [
+        {
+          "country": "Pakistan",
+          "flag_pct": 7.8,
+          "screened_n": 25315
+        },
+        {
+          "country": "UAE",
+          "flag_pct": 7.3,
+          "screened_n": 6827
+        },
+        {
+          "country": "Malaysia",
+          "flag_pct": 5.3,
+          "screened_n": 79733
+        },
+        {
+          "country": "Indonesia",
+          "flag_pct": 5.3,
+          "screened_n": 41592
+        },
+        {
+          "country": "Saudi Ar.",
+          "flag_pct": 4.7,
+          "screened_n": 15852
+        }
+      ],
+      "integrity_jaccard": [
+        {
+          "composite": "z_plus_renorm",
+          "label": "$Z^+_{\\mathrm{renorm}}$",
+          "jaccard_top_n": 0.3245033112582781
+        },
+        {
+          "composite": "z_plus_softmax",
+          "label": "z_plus_softmax",
+          "jaccard_top_n": 0.3245033112582781
+        },
+        {
+          "composite": "z_plus_orth",
+          "label": "z_plus_orth",
+          "jaccard_top_n": 0.3422818791946309
+        },
+        {
+          "composite": "z_plus",
+          "label": "$Z^+$",
+          "jaccard_top_n": 0.639344262295082
+        },
+        {
+          "composite": "breadth",
+          "label": "$B_{\\mathcal{A}}$",
+          "jaccard_top_n": 0.8181818181818182
+        },
+        {
+          "composite": "z_mahalanobis_sq",
+          "label": "$Z^2_{\\mathrm{Mah}}$",
+          "jaccard_top_n": 0.8691588785046729
+        },
+        {
+          "composite": "t_iut",
+          "label": "$T_{\\mathrm{IUT}}$",
+          "jaccard_top_n": 0.8867924528301887
+        }
+      ],
+      "ushape_fit_summary": [
+        {
+          "panel": "compliant",
+          "r2": 0.766,
+          "x_min": 0.169,
+          "y_min": 3.39,
+          "red_lo": 3.7,
+          "red_hi": 12.6,
+          "n_bins": 20
+        },
+        {
+          "panel": "noncompliant",
+          "r2": 0.985,
+          "x_min": 0.422,
+          "y_min": 9.95,
+          "red_lo": 7.3,
+          "red_hi": 92.0,
+          "n_bins": 17
+        }
+      ],
+      "ushape_compliant_points": [
+        {
+          "mid": 0.0046663213049634,
+          "red_pct": 12.572909915748545,
+          "n": 9258
+        },
+        {
+          "mid": 0.0240990396466429,
+          "red_pct": 6.442754541613857,
+          "n": 4734
+        },
+        {
+          "mid": 0.0413395526160631,
+          "red_pct": 5.564497585651874,
+          "n": 4349
+        },
+        {
+          "mid": 0.0574595476317238,
+          "red_pct": 5.192409066947812,
+          "n": 3794
+        },
+        {
+          "mid": 0.0743025988888211,
+          "red_pct": 5.489130434782609,
+          "n": 3680
+        },
+        {
+          "mid": 0.0907686445472395,
+          "red_pct": 4.940327504857064,
+          "n": 3603
+        },
+        {
+          "mid": 0.1071838312391091,
+          "red_pct": 3.6666666666666665,
+          "n": 3300
+        },
+        {
+          "mid": 0.1235822094333666,
+          "red_pct": 4.385423100679431,
+          "n": 3238
+        },
+        {
+          "mid": 0.1400826064516523,
+          "red_pct": 4.553415061295972,
+          "n": 2855
+        },
+        {
+          "mid": 0.156578864503563,
+          "red_pct": 3.947368421052632,
+          "n": 2584
+        },
+        {
+          "mid": 0.1729845254821816,
+          "red_pct": 4.1852905323039415,
+          "n": 2461
+        },
+        {
+          "mid": 0.1892613342944701,
+          "red_pct": 4.768041237113402,
+          "n": 2328
+        },
+        {
+          "mid": 0.2060417447876761,
+          "red_pct": 4.140587385652383,
+          "n": 2077
+        },
+        {
+          "mid": 0.2225161150015515,
+          "red_pct": 4.662126767941331,
+          "n": 1909
+        },
+        {
+          "mid": 0.2390453414028553,
+          "red_pct": 4.703726328649969,
+          "n": 1637
+        },
+        {
+          "mid": 0.2556477211274003,
+          "red_pct": 6.498951781970649,
+          "n": 1431
+        },
+        {
+          "mid": 0.2722449180244147,
+          "red_pct": 5.9870550161812295,
+          "n": 1236
+        },
+        {
+          "mid": 0.2884638927876126,
+          "red_pct": 6.44883920894239,
+          "n": 1163
+        },
+        {
+          "mid": 0.3049561764607256,
+          "red_pct": 7.106598984771575,
+          "n": 985
+        },
+        {
+          "mid": 0.3216657770194788,
+          "red_pct": 7.119021134593993,
+          "n": 899
+        }
+      ],
+      "ushape_noncompliant_points": [
+        {
+          "mid": 0.3459702963038196,
+          "red_pct": 11.646586345381529,
+          "n": 1494
+        },
+        {
+          "mid": 0.3780285091938339,
+          "red_pct": 10.687732342007434,
+          "n": 1076
+        },
+        {
+          "mid": 0.4119661950585175,
+          "red_pct": 13.971539456662354,
+          "n": 773
+        },
+        {
+          "mid": 0.4457200593189733,
+          "red_pct": 9.854014598540148,
+          "n": 548
+        },
+        {
+          "mid": 0.4797041556981652,
+          "red_pct": 9.808612440191387,
+          "n": 418
+        },
+        {
+          "mid": 0.5112203697411638,
+          "red_pct": 10.780669144981411,
+          "n": 269
+        },
+        {
+          "mid": 0.5439392943563299,
+          "red_pct": 7.262569832402235,
+          "n": 179
+        },
+        {
+          "mid": 0.5762045510708803,
+          "red_pct": 20.388349514563107,
+          "n": 103
+        },
+        {
+          "mid": 0.6110567448670738,
+          "red_pct": 35.64356435643564,
+          "n": 101
+        },
+        {
+          "mid": 0.640189014989776,
+          "red_pct": 34.72222222222222,
+          "n": 72
+        },
+        {
+          "mid": 0.6788883861415457,
+          "red_pct": 41.46341463414634,
+          "n": 41
+        },
+        {
+          "mid": 0.7091942343723385,
+          "red_pct": 45.94594594594595,
+          "n": 37
+        },
+        {
+          "mid": 0.7422627249164871,
+          "red_pct": 45.71428571428572,
+          "n": 35
+        },
+        {
+          "mid": 0.7791733975378952,
+          "red_pct": 61.11111111111112,
+          "n": 36
+        },
+        {
+          "mid": 0.815391382772485,
+          "red_pct": 85.0,
+          "n": 20
+        },
+        {
+          "mid": 0.8424193086284228,
+          "red_pct": 91.17647058823528,
+          "n": 34
+        },
+        {
+          "mid": 0.8827066736926938,
+          "red_pct": 92.0,
+          "n": 25
+        }
+      ],
+      "near_red_composition": [
+        {
+          "variable": "Non-operating income",
+          "share_pct": 50.63311764410682
+        },
+        {
+          "variable": "Assets",
+          "share_pct": 11.07558713526206
+        },
+        {
+          "variable": "Operating cash flow",
+          "share_pct": 9.47180172822926
+        },
+        {
+          "variable": "Cash",
+          "share_pct": 7.5431041987126495
+        },
+        {
+          "variable": "Income before extra.",
+          "share_pct": 6.63097907271372
+        },
+        {
+          "variable": "Operating income (EBITDA)",
+          "share_pct": 4.315885857433172
+        }
+      ],
+      "iut_gap": [
+        {
+          "delta": 0.5,
+          "empirical_t_iut_power": 0.158,
+          "theoretical_t_iut_power": 0.2354594949214663,
+          "gap_pp": -7.7459494921466305
+        },
+        {
+          "delta": 1.0,
+          "empirical_t_iut_power": 0.308,
+          "theoretical_t_iut_power": 0.548485580979005,
+          "gap_pp": -24.048558097900504
+        },
+        {
+          "delta": 1.5,
+          "empirical_t_iut_power": 0.43,
+          "theoretical_t_iut_power": 0.8117215899930615,
+          "gap_pp": -38.17215899930616
+        },
+        {
+          "delta": 2.0,
+          "empirical_t_iut_power": 0.53,
+          "theoretical_t_iut_power": 0.9425434241002764,
+          "gap_pp": -41.25434241002763
+        },
+        {
+          "delta": 3.0,
+          "empirical_t_iut_power": 0.62,
+          "theoretical_t_iut_power": 0.9975588399055936,
+          "gap_pp": -37.75588399055936
+        }
+      ],
+      "anoshift_fpr": [
+        {
+          "entity_name": "z_plus",
+          "far": 0.0434782608695652,
+          "iid": 0.0555555555555555,
+          "near": 0.0453615279672578
+        },
+        {
+          "entity_name": "z_plus_renorm",
+          "far": 0.0498582230623818,
+          "iid": 0.0707729468599033,
+          "near": 0.0688949522510232
+        },
+        {
+          "entity_name": "z_mahalanobis_sq",
+          "far": 0.0326086956521739,
+          "iid": 0.0425120772946859,
+          "near": 0.0310368349249658
+        },
+        {
+          "entity_name": "t_iut",
+          "far": 0.0425330812854442,
+          "iid": 0.0483091787439613,
+          "near": 0.0487721691678035
+        },
+        {
+          "entity_name": "breadth",
+          "far": 0.0085066162570888,
+          "iid": 0.0089371980676328,
+          "near": 0.0092087312414733
+        }
+      ],
+      "power_scale_shift": [
+        {
+          "delta": 0.5,
+          "z_plus": 0.11,
+          "z_plus_renorm": 0.0482897384305835,
+          "z_mahalanobis_sq": 0.062,
+          "t_iut": 0.102,
+          "breadth": 0.022
+        },
+        {
+          "delta": 1.0,
+          "z_plus": 0.174,
+          "z_plus_renorm": 0.068,
+          "z_mahalanobis_sq": 0.122,
+          "t_iut": 0.166,
+          "breadth": 0.046
+        },
+        {
+          "delta": 1.5,
+          "z_plus": 0.324,
+          "z_plus_renorm": 0.088,
+          "z_mahalanobis_sq": 0.288,
+          "t_iut": 0.2,
+          "breadth": 0.08
+        },
+        {
+          "delta": 2.0,
+          "z_plus": 0.51,
+          "z_plus_renorm": 0.158,
+          "z_mahalanobis_sq": 0.51,
+          "t_iut": 0.22,
+          "breadth": 0.108
+        },
+        {
+          "delta": 3.0,
+          "z_plus": 0.914,
+          "z_plus_renorm": 0.424,
+          "z_mahalanobis_sq": 0.968,
+          "t_iut": 0.25,
+          "breadth": 0.126
+        }
+      ],
+      "power_peer_gaming": [
+        {
+          "delta": 0.5,
+          "z_plus": 0.092,
+          "z_plus_renorm": 0.0501002004008016,
+          "z_mahalanobis_sq": 0.06,
+          "t_iut": 0.08,
+          "breadth": 0.018
+        },
+        {
+          "delta": 1.0,
+          "z_plus": 0.134,
+          "z_plus_renorm": 0.024,
+          "z_mahalanobis_sq": 0.126,
+          "t_iut": 0.152,
+          "breadth": 0.052
+        },
+        {
+          "delta": 1.5,
+          "z_plus": 0.196,
+          "z_plus_renorm": 0.044,
+          "z_mahalanobis_sq": 0.236,
+          "t_iut": 0.154,
+          "breadth": 0.074
+        },
+        {
+          "delta": 2.0,
+          "z_plus": 0.316,
+          "z_plus_renorm": 0.092,
+          "z_mahalanobis_sq": 0.468,
+          "t_iut": 0.168,
+          "breadth": 0.074
+        },
+        {
+          "delta": 3.0,
+          "z_plus": 0.618,
+          "z_plus_renorm": 0.218,
+          "z_mahalanobis_sq": 0.934,
+          "t_iut": 0.208,
+          "breadth": 0.106
+        }
+      ],
+      "power_systematic": [
+        {
+          "delta": 0.5,
+          "z_plus": 0.13,
+          "z_plus_renorm": 0.04,
+          "z_mahalanobis_sq": 0.076,
+          "t_iut": 0.158,
+          "breadth": 0.052
+        },
+        {
+          "delta": 1.0,
+          "z_plus": 0.236,
+          "z_plus_renorm": 0.04,
+          "z_mahalanobis_sq": 0.136,
+          "t_iut": 0.308,
+          "breadth": 0.12
+        },
+        {
+          "delta": 1.5,
+          "z_plus": 0.534,
+          "z_plus_renorm": 0.098,
+          "z_mahalanobis_sq": 0.326,
+          "t_iut": 0.43,
+          "breadth": 0.25
+        },
+        {
+          "delta": 2.0,
+          "z_plus": 0.732,
+          "z_plus_renorm": 0.154,
+          "z_mahalanobis_sq": 0.526,
+          "t_iut": 0.53,
+          "breadth": 0.376
+        },
+        {
+          "delta": 3.0,
+          "z_plus": 0.998,
+          "z_plus_renorm": 0.642,
+          "z_mahalanobis_sq": 0.99,
+          "t_iut": 0.62,
+          "breadth": 0.466
+        }
+      ],
+      "power_threshold_clustering": [
+        {
+          "delta": 0.5,
+          "z_plus": 0.044,
+          "z_plus_renorm": 0.032064128256513,
+          "z_mahalanobis_sq": 0.044,
+          "t_iut": 0.052,
+          "breadth": 0.014
+        },
+        {
+          "delta": 1.0,
+          "z_plus": 0.112,
+          "z_plus_renorm": 0.0481927710843373,
+          "z_mahalanobis_sq": 0.092,
+          "t_iut": 0.108,
+          "breadth": 0.038
+        },
+        {
+          "delta": 1.5,
+          "z_plus": 0.138,
+          "z_plus_renorm": 0.034,
+          "z_mahalanobis_sq": 0.124,
+          "t_iut": 0.112,
+          "breadth": 0.046
+        },
+        {
+          "delta": 2.0,
+          "z_plus": 0.192,
+          "z_plus_renorm": 0.058,
+          "z_mahalanobis_sq": 0.228,
+          "t_iut": 0.108,
+          "breadth": 0.052
+        },
+        {
+          "delta": 3.0,
+          "z_plus": 0.354,
+          "z_plus_renorm": 0.168,
+          "z_mahalanobis_sq": 0.614,
+          "t_iut": 0.114,
+          "breadth": 0.036
+        }
+      ],
+      "power_round_number": [
+        {
+          "delta": 0.5,
+          "z_plus": 0.056,
+          "z_plus_renorm": 0.028169014084507,
+          "z_mahalanobis_sq": 0.044,
+          "t_iut": 0.066,
+          "breadth": 0.016
+        },
+        {
+          "delta": 1.0,
+          "z_plus": 0.108,
+          "z_plus_renorm": 0.056,
+          "z_mahalanobis_sq": 0.094,
+          "t_iut": 0.108,
+          "breadth": 0.038
+        },
+        {
+          "delta": 1.5,
+          "z_plus": 0.11,
+          "z_plus_renorm": 0.048,
+          "z_mahalanobis_sq": 0.092,
+          "t_iut": 0.114,
+          "breadth": 0.022
+        },
+        {
+          "delta": 2.0,
+          "z_plus": 0.202,
+          "z_plus_renorm": 0.086,
+          "z_mahalanobis_sq": 0.142,
+          "t_iut": 0.13,
+          "breadth": 0.028
+        },
+        {
+          "delta": 3.0,
+          "z_plus": 0.302,
+          "z_plus_renorm": 0.17,
+          "z_mahalanobis_sq": 0.178,
+          "t_iut": 0.092,
+          "breadth": 0.028
+        }
+      ],
+      "power_temporal_smoothing": [
+        {
+          "delta": 0.5,
+          "z_plus": 0.056,
+          "z_plus_renorm": 0.0608519269776876,
+          "z_mahalanobis_sq": 0.05,
+          "t_iut": 0.062,
+          "breadth": 0.012
+        },
+        {
+          "delta": 1.0,
+          "z_plus": 0.074,
+          "z_plus_renorm": 0.0581162324649298,
+          "z_mahalanobis_sq": 0.068,
+          "t_iut": 0.064,
+          "breadth": 0.01
+        },
+        {
+          "delta": 1.5,
+          "z_plus": 0.086,
+          "z_plus_renorm": 0.082,
+          "z_mahalanobis_sq": 0.082,
+          "t_iut": 0.056,
+          "breadth": 0.018
+        },
+        {
+          "delta": 2.0,
+          "z_plus": 0.118,
+          "z_plus_renorm": 0.098,
+          "z_mahalanobis_sq": 0.108,
+          "t_iut": 0.056,
+          "breadth": 0.004
+        },
+        {
+          "delta": 3.0,
+          "z_plus": 0.15,
+          "z_plus_renorm": 0.154,
+          "z_mahalanobis_sq": 0.184,
+          "t_iut": 0.066,
+          "breadth": 0.006
+        }
+      ]
+    },
+    "sector_false_positive": {
+      "rows": [
+        {
+          "sector": "Financials",
+          "n_rows": 212,
+          "n_red": 17,
+          "red_share": 0.080188679245283,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Unknown",
+          "n_rows": 65,
+          "n_red": 3,
+          "red_share": 0.0461538461538461,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Communication Services",
+          "n_rows": 282,
+          "n_red": 13,
+          "red_share": 0.0460992907801418,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Consumer Staples",
+          "n_rows": 1551,
+          "n_red": 65,
+          "red_share": 0.0419084461637653,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Materials",
+          "n_rows": 1760,
+          "n_red": 72,
+          "red_share": 0.0409090909090909,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Health Care",
+          "n_rows": 397,
+          "n_red": 16,
+          "red_share": 0.0403022670025188,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Utilities",
+          "n_rows": 191,
+          "n_red": 7,
+          "red_share": 0.0366492146596858,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Information Technology",
+          "n_rows": 1464,
+          "n_red": 53,
+          "red_share": 0.0362021857923497,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Industrials",
+          "n_rows": 3725,
+          "n_red": 130,
+          "red_share": 0.0348993288590604,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Real Estate",
+          "n_rows": 1263,
+          "n_red": 44,
+          "red_share": 0.0348376880443388,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "n_rows": 1695,
+          "n_red": 54,
+          "red_share": 0.031858407079646,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Energy",
+          "n_rows": 481,
+          "n_red": 13,
+          "red_share": 0.027027027027027,
+          "is_n_sufficient": true
+        }
+      ]
+    }
+  },
+  "jurisdictions": {
+    "mys": {
+      "reference_sample_size": 13086,
+      "phase0": {
+        "inclusion_rule": {
+          "require_sac_compliant": true,
+          "require_clean_sample": true,
+          "require_ratio_compliance": true
+        },
+        "authority_label": {
+          "column": "sac_shariah",
+          "compliant_1": 16233,
+          "noncompliant_0": 76639,
+          "unknown_na": 0
+        },
+        "panel": {
+          "n_rows": 92872,
+          "n_firms": 1356
+        },
+        "global": {
+          "size": 13086,
+          "n_firms": 1312,
+          "min_required": 30
+        },
+        "sector": {
+          "n_sectors": 12,
+          "min_sector_size": 27,
+          "n_meets_min_sector_size": 12
+        },
+        "peer_groups": {
+          "peer_group_column": "sector",
+          "n_groups": 12,
+          "peer_group_min_size": 9,
+          "n_meets_peer_group_min_size": 12
+        },
+        "exclusion_breakdown": {
+          "sac_shariah != 1": 76639,
+          "ratio exceeds active authority threshold": 2372,
+          "clean_sample != 1": 775
+        }
+      },
+      "firm_quarters": 92872,
+      "firms": 1356,
+      "fdr_firm_level": {
+        "p_z_plus": {
+          "q<=0.05": 793,
+          "q<=0.01": 206
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 882,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 744,
+          "q<=0.01": 204
+        },
+        "p_t_iut": {
+          "q<=0.05": 661,
+          "q<=0.01": 319
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 906,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 953,
+          "q<=0.01": 0
+        }
+      },
+      "fdr_row_level": {
+        "p_z_plus": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 137,
+          "q<=0.01": 0
+        },
+        "p_t_iut": {
+          "q<=0.05": 1248,
+          "q<=0.01": 0
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      }
+    },
+    "idn": {
+      "reference_sample_size": 3860,
+      "phase0": {
+        "inclusion_rule": {
+          "require_sac_compliant": true,
+          "require_clean_sample": true,
+          "require_ratio_compliance": true
+        },
+        "authority_label": {
+          "column": "compliance_shariah",
+          "compliant_1": 4551,
+          "noncompliant_0": 0,
+          "unknown_na": 53481
+        },
+        "panel": {
+          "n_rows": 58032,
+          "n_firms": 1038
+        },
+        "global": {
+          "size": 3860,
+          "n_firms": 766,
+          "min_required": 30
+        },
+        "sector": {
+          "n_sectors": 12,
+          "min_sector_size": 27,
+          "n_meets_min_sector_size": 12
+        },
+        "peer_groups": {
+          "peer_group_column": "sector",
+          "n_groups": 12,
+          "peer_group_min_size": 9,
+          "n_meets_peer_group_min_size": 12
+        },
+        "exclusion_breakdown": {
+          "compliance_shariah != 1": 53481,
+          "clean_sample != 1": 350,
+          "ratio exceeds active authority threshold": 341
+        }
+      },
+      "firm_quarters": 58032,
+      "firms": 1038,
+      "fdr_firm_level": {
+        "p_z_plus": {
+          "q<=0.05": 668,
+          "q<=0.01": 215
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 779,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 504,
+          "q<=0.01": 178
+        },
+        "p_t_iut": {
+          "q<=0.05": 585,
+          "q<=0.01": 358
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 733,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 729,
+          "q<=0.01": 0
+        }
+      },
+      "fdr_row_level": {
+        "p_z_plus": {
+          "q<=0.05": 140,
+          "q<=0.01": 0
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 2527,
+          "q<=0.01": 801
+        },
+        "p_t_iut": {
+          "q<=0.05": 580,
+          "q<=0.01": 0
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      }
+    },
+    "pak": {
+      "reference_sample_size": 927,
+      "phase0": {
+        "inclusion_rule": {
+          "require_sac_compliant": true,
+          "require_clean_sample": true,
+          "require_ratio_compliance": true
+        },
+        "authority_label": {
+          "column": "compliance_shariah",
+          "compliant_1": 1476,
+          "noncompliant_0": 666,
+          "unknown_na": 40736
+        },
+        "panel": {
+          "n_rows": 42878,
+          "n_firms": 521
+        },
+        "global": {
+          "size": 927,
+          "n_firms": 275,
+          "min_required": 30
+        },
+        "sector": {
+          "n_sectors": 12,
+          "min_sector_size": 27,
+          "n_meets_min_sector_size": 8
+        },
+        "peer_groups": {
+          "peer_group_column": "sector",
+          "n_groups": 12,
+          "peer_group_min_size": 9,
+          "n_meets_peer_group_min_size": 12
+        },
+        "exclusion_breakdown": {
+          "compliance_shariah != 1": 41402,
+          "ratio exceeds active authority threshold": 466,
+          "clean_sample != 1": 83
+        }
+      },
+      "firm_quarters": 42878,
+      "firms": 521,
+      "fdr_firm_level": {
+        "p_z_plus": {
+          "q<=0.05": 399,
+          "q<=0.01": 142
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 443,
+          "q<=0.01": 166
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 353,
+          "q<=0.01": 85
+        },
+        "p_t_iut": {
+          "q<=0.05": 349,
+          "q<=0.01": 229
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 416,
+          "q<=0.01": 111
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 198,
+          "q<=0.01": 108
+        }
+      },
+      "fdr_row_level": {
+        "p_z_plus": {
+          "q<=0.05": 380,
+          "q<=0.01": 0
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 239,
+          "q<=0.01": 239
+        },
+        "p_t_iut": {
+          "q<=0.05": 1275,
+          "q<=0.01": 1275
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      }
+    },
+    "sau": {
+      "reference_sample_size": 744,
+      "phase0": {
+        "inclusion_rule": {
+          "require_sac_compliant": true,
+          "require_clean_sample": true,
+          "require_ratio_compliance": true
+        },
+        "authority_label": {
+          "column": "compliance_shariah",
+          "compliant_1": 957,
+          "noncompliant_0": 0,
+          "unknown_na": 18338
+        },
+        "panel": {
+          "n_rows": 19295,
+          "n_firms": 396
+        },
+        "global": {
+          "size": 744,
+          "n_firms": 206,
+          "min_required": 30
+        },
+        "sector": {
+          "n_sectors": 11,
+          "min_sector_size": 27,
+          "n_meets_min_sector_size": 8
+        },
+        "peer_groups": {
+          "peer_group_column": "sector",
+          "n_groups": 11,
+          "peer_group_min_size": 9,
+          "n_meets_peer_group_min_size": 10
+        },
+        "exclusion_breakdown": {
+          "compliance_shariah != 1": 18338,
+          "ratio exceeds active authority threshold": 149,
+          "clean_sample != 1": 64
+        }
+      },
+      "firm_quarters": 19295,
+      "firms": 396,
+      "fdr_firm_level": {
+        "p_z_plus": {
+          "q<=0.05": 218,
+          "q<=0.01": 68
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 217,
+          "q<=0.01": 94
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 157,
+          "q<=0.01": 42
+        },
+        "p_t_iut": {
+          "q<=0.05": 181,
+          "q<=0.01": 74
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 210,
+          "q<=0.01": 115
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 252,
+          "q<=0.01": 170
+        }
+      },
+      "fdr_row_level": {
+        "p_z_plus": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 192,
+          "q<=0.01": 192
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 620,
+          "q<=0.01": 600
+        },
+        "p_t_iut": {
+          "q<=0.05": 157,
+          "q<=0.01": 0
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 490,
+          "q<=0.01": 490
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 245,
+          "q<=0.01": 245
+        }
+      }
+    },
+    "uae": {
+      "reference_sample_size": 264,
+      "phase0": {
+        "inclusion_rule": {
+          "require_sac_compliant": true,
+          "require_clean_sample": true,
+          "require_ratio_compliance": true
+        },
+        "authority_label": {
+          "column": "compliance_shariah",
+          "compliant_1": 412,
+          "noncompliant_0": 0,
+          "unknown_na": 11087
+        },
+        "panel": {
+          "n_rows": 11499,
+          "n_firms": 183
+        },
+        "global": {
+          "size": 264,
+          "n_firms": 42,
+          "min_required": 30
+        },
+        "sector": {
+          "n_sectors": 7,
+          "min_sector_size": 27,
+          "n_meets_min_sector_size": 4
+        },
+        "peer_groups": {
+          "peer_group_column": "sector",
+          "n_groups": 7,
+          "peer_group_min_size": 9,
+          "n_meets_peer_group_min_size": 7
+        },
+        "exclusion_breakdown": {
+          "compliance_shariah != 1": 11087,
+          "ratio exceeds active authority threshold": 109,
+          "clean_sample != 1": 39
+        }
+      },
+      "firm_quarters": 11499,
+      "firms": 183,
+      "fdr_firm_level": {
+        "p_z_plus": {
+          "q<=0.05": 119,
+          "q<=0.01": 72
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 159,
+          "q<=0.01": 129
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 133,
+          "q<=0.01": 118
+        },
+        "p_t_iut": {
+          "q<=0.05": 103,
+          "q<=0.01": 48
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 156,
+          "q<=0.01": 106
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 154,
+          "q<=0.01": 66
+        }
+      },
+      "fdr_row_level": {
+        "p_z_plus": {
+          "q<=0.05": 481,
+          "q<=0.01": 481
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 1208,
+          "q<=0.01": 1208
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 1779,
+          "q<=0.01": 1331
+        },
+        "p_t_iut": {
+          "q<=0.05": 118,
+          "q<=0.01": 118
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 896,
+          "q<=0.01": 896
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 241,
+          "q<=0.01": 241
+        }
+      }
+    }
+  },
+  "cross_country_totals": {
+    "firms": 3494,
+    "firm_quarters": 224576
+  },
+  "detector_symbol_map": {
+    "z1": "z_benford",
+    "z2": "z_zipf",
+    "z3": "z_mscore",
+    "z4": "z_threshold",
+    "z6": "z_temporal",
+    "z8": "z_cod",
+    "z57": "z_fused"
+  },
+  "provenance": {
+    "note": "This repository is code-only. These numbers come from the internal E5 re-freeze, the source of truth reconciled by the papers; the reconstructed panels that produced them carry licensed S&P Compustat fields and are not shipped, so this manifest cannot be regenerated from this repository alone. Obtain the panels on motivated request (see the README), place them under data/, and run the pipeline to reproduce.",
+    "source_run_commit": "fdcac15cfbaf18502c61203e2b75e220eb712138",
+    "source_run_reference_mtime": "2026-08-03T13:36:06.715833+00:00",
+    "seeds_note": "All randomness is seeded in AnalysisSettings (monte_carlo_seed / bootstrap.random_seed / injection.random_seed / robustness_benchmark.random_seed), so the run is deterministic.",
+    "reproduce_commands": [
+      "python reproduce.py pipeline   --country mys",
+      "python reproduce.py benchmark  --country mys",
+      "python reproduce.py family3-cf --country mys --rows 500 --near-boundary",
+      "python reproduce.py family3-pgd --country mys --rows 5",
+      "python reproduce.py ablation   --country mys",
+      "python reproduce.py pipeline   --country {idn,pak,sau,uae}",
+      "python dump_paper_numbers.py"
+    ],
+    "m6_note": "The family3 counterfactual RED verdict targets only the four primary composites (eq. 13); softmax/orthogonal variants were removed from the family3 flag (M6). This changes only the family3 status labeling and the global-GREEN transition rate; phase-7 FDR (T_IUT 319 / Z+ 206 / Z2Mah 204) and the flag rate (5.3%) are unaffected."
+  }
+}
