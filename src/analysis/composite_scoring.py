@@ -70,6 +70,46 @@ COL_P_Z_PLUS_SOFTMAX: str = "p_z_plus_softmax"
 COL_P_Z_PLUS_ORTH: str = "p_z_plus_orth"
 
 
+# RED/AMBER cutoff on min(p) across the four scoring composites, Holm/Bonferroni-
+# corrected for the m=4 joint tests (see :func:`compute_verdict`). Centralised
+# here so every verdict consumer (figures, sector FPR, qualitative, Family-3
+# status, robustness) uses one definition, mutually consistent with the flag
+# rate and the FDR. ``p_breadth`` and the softmax/orthogonal variants are
+# reporting extensions, not part of the headline verdict.
+VERDICT_P_COLS: tuple[str, ...] = (
+    COL_P_Z_PLUS,
+    COL_P_Z_PLUS_RENORM,
+    COL_P_Z_MAHALANOBIS,
+    COL_P_T_IUT,
+)
+
+
+def compute_verdict(
+    p_values: pd.DataFrame,
+    p_cols: tuple[str, ...] = VERDICT_P_COLS,
+    red_threshold: float = 0.01,
+    amber_threshold: float = 0.05,
+) -> pd.Series:
+    """RED/AMBER/GREEN verdict, Holm/Bonferroni-corrected over ``len(p_cols)`` composites.
+
+    Comparing ``min(p)`` across m correlated composites to a single-test alpha
+    inflates the per-row false-positive rate (~m*alpha for small alpha). Holm's
+    step-down rejects the smallest p at ``alpha/m``, so the corrected rule is
+    ``min(p) < threshold / m``. Returns RED/AMBER/GREEN, or NO_DATA when every
+    composite is missing. This does NOT recompute any p-value; it only reads them.
+    """
+    present = [c for c in p_cols if c in p_values.columns]
+    m = len(p_cols)
+    min_p = p_values[present].min(axis=1) if present else pd.Series(np.nan, index=p_values.index)
+    red_cut = red_threshold / m
+    amber_cut = amber_threshold / m
+    verdict = pd.Series("GREEN", index=p_values.index, dtype="object")
+    verdict[min_p < amber_cut] = "AMBER"
+    verdict[min_p < red_cut] = "RED"
+    verdict[min_p.isna()] = "NO_DATA"
+    return verdict
+
+
 @dataclass(frozen=True)
 class Phase4Outcome:
     """Return value of :func:`run_phase4`."""

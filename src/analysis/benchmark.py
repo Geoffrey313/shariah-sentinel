@@ -18,6 +18,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.analysis.composite_scoring import compute_verdict
 from src.analysis.contamination_config import ContaminationSettings
 from src.analysis.contamination_mechanisms import apply_m5, apply_m6
 from src.analysis.contamination import (
@@ -461,9 +462,7 @@ def _detector_contribution_table(
     work.index = panel.index
     comp = composites.copy()
     comp.index = panel.index
-    min_p = comp[p_cols].min(axis=1)
-    red_threshold = settings.robustness.red_threshold
-    red_mask = min_p < red_threshold
+    red_mask = compute_verdict(comp, p_cols=tuple(p_cols), red_threshold=settings.robustness.red_threshold) == "RED"
     if not red_mask.any():
         return pd.DataFrame()
     red_z = work.loc[red_mask, det_cols].apply(pd.to_numeric, errors="coerce")
@@ -504,8 +503,7 @@ def _detector_red_profile_table(
     work.index = panel.index
     comp = composites.copy()
     comp.index = panel.index
-    min_p = comp[p_cols].min(axis=1)
-    red_mask = min_p < settings.robustness.red_threshold
+    red_mask = compute_verdict(comp, p_cols=tuple(p_cols), red_threshold=settings.robustness.red_threshold) == "RED"
     c_mask = pd.Series(panel["_split"] == SPLIT_LABEL_INCLUDED, index=panel.index) if "_split" in panel.columns else pd.Series(False, index=panel.index)
     if not red_mask.any():
         return pd.DataFrame()
@@ -542,7 +540,8 @@ def _top_red_cases_table(
     comp = composites.copy()
     comp.index = panel.index
     comp["_min_p"] = comp[p_cols].min(axis=1)
-    top = comp[comp["_min_p"] < settings.robustness.red_threshold].copy()
+    red_mask = compute_verdict(comp, p_cols=tuple(p_cols), red_threshold=settings.robustness.red_threshold) == "RED"
+    top = comp[red_mask].copy()
     top = top.sort_values("_min_p", ascending=True).head(top_n)
     if top.empty:
         return pd.DataFrame()

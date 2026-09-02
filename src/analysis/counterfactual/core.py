@@ -32,13 +32,25 @@ def family3_target_score_kind(score_name: str) -> str:
     return "composite" if score_name in COMPOSITE_VALUE_COLUMNS else "base"
 
 
-def family3_status_from_p(pvalue: float, settings) -> str:
+def family3_flag_cutoffs(settings) -> tuple[float, float]:
+    """Holm/Bonferroni-corrected (RED, ORANGE) cutoffs for the Family-3 flag p-value.
+
+    ``family3_flag_pvalues`` returns ``min(p)`` over the ``VERDICT_P_COLUMNS``
+    battery -- the same statistic the headline verdict thresholds -- so the flag
+    status uses the same ``alpha/m`` correction (m = number of verdict composites).
+    """
     rb = settings.robustness_benchmark
+    m = len(VERDICT_P_COLUMNS)
+    return rb.family3_p_red / m, rb.family3_p_orange / m
+
+
+def family3_status_from_p(pvalue: float, settings) -> str:
     if not np.isfinite(pvalue):
         return "UNKNOWN"
-    if pvalue < rb.family3_p_red:
+    red_cut, orange_cut = family3_flag_cutoffs(settings)
+    if pvalue < red_cut:
         return "RED"
-    if pvalue < rb.family3_p_orange:
+    if pvalue < orange_cut:
         return "ORANGE"
     return "GREEN"
 
@@ -177,6 +189,30 @@ def family3_flag_pvalue(
     if row_index not in values.index:
         return float("nan")
     return _coerce_float(values.loc[row_index])
+
+
+def select_near_boundary_flagged(composites: pd.DataFrame, settings, n: int) -> pd.Index:
+    """Top-``n`` non-GREEN rows (corrected verdict) nearest the GREEN frontier.
+
+    Contract of the ``--near-boundary`` cohort:
+    1. ``flag_p = min(p)`` over the four ``VERDICT_P_COLUMNS`` composites -- the
+       same statistic the headline verdict thresholds;
+    2. corrected cutoffs from :func:`family3_flag_cutoffs` (Holm/Bonferroni alpha/m);
+    3. keep only rows initially non-GREEN (``flag_p < orange_cut``);
+    4. rank by ``flag_p`` descending (closest to the GREEN frontier);
+    5. take the top ``n``.
+
+    ``target_candidate_index`` then applies its own univariate, UNcorrected
+    ``target_p`` criteria. The cohort is "flagged / non-GREEN", never RED-only.
+    Deterministic (stable sort on flag_p preserves index order on ties).
+    """
+    _, orange_cut = family3_flag_cutoffs(settings)
+    p_cols = [c for c in VERDICT_P_COLUMNS if c in composites.columns]
+    if not p_cols:
+        return composites.index[:0]
+    flag_p = composites[p_cols].apply(pd.to_numeric, errors="coerce").min(axis=1)
+    non_green = flag_p[flag_p < orange_cut].sort_values(ascending=False, kind="stable")
+    return non_green.index[:n]
 
 
 def family3_normalized_delta(
@@ -1878,7 +1914,8 @@ def sample_orange_index(
     rb = settings.robustness_benchmark
     baseline_snapshot = family3_snapshot(panel, settings, base_ctx=base_ctx)
     flag_p = family3_flag_pvalues(baseline_snapshot)
-    orange_mask = (flag_p >= rb.family3_p_red) & (flag_p < rb.family3_p_orange)
+    _red_cut, _orange_cut = family3_flag_cutoffs(settings)
+    orange_mask = (flag_p >= _red_cut) & (flag_p < _orange_cut)
     candidate_rows = baseline_snapshot.panel.loc[orange_mask]
     if candidate_index is not None:
         return pd.Index(candidate_rows.index.intersection(candidate_index))

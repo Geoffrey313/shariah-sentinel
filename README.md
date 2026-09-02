@@ -46,15 +46,16 @@ score fails.
 ## Flag rate by country
 
 Among the screened firm-quarters (those whose reported ratios sit within their
-country's caps), the flagged share stays in the same single-digit band
-everywhere, from Saudi Arabia at the bottom to Pakistan at the top. The large
-anchor panel (Malaysia) sits in the middle of the range, alongside Indonesia.
+country's caps), the flagged share stays in the same low single-digit band
+everywhere, from Malaysia at the bottom to the UAE at the top. The large
+anchor panel (Malaysia) sits at the low end of the range, alongside Indonesia.
 
 ![Share of screened firm-quarters flagged, by country, sorted](assets/flag_rate_by_country.png)
 
-*Figure 2. Share of screened firm-quarters flagged as anomalous (p < 0.01), by
-country, sorted from most to least. Numbers are regenerated from the panels in
-this repository.*
+*Figure 2. Share of screened firm-quarters flagged as anomalous (RED under the
+Holm/Bonferroni-corrected verdict: min-p over the four composites below the
+per-test level divided by the four joint tests), by country, sorted from most to
+least. Numbers are regenerated from the panels in this repository.*
 
 ## About the paper
 
@@ -80,10 +81,11 @@ the UAE (DFM). Together these span 3,494 firms and 224,576 firm-quarters, two
 list conventions (authorities that publish non-compliant verdicts and
 authorities that publish only compliant constituents), and debt caps ranging
 from 30% to 45%. On the 27-year Malaysian anchor panel (1,356 firms, 92,872
-firm-quarters), the framework flags 5.3% of ratio-compliant firm-quarters as
+firm-quarters), the framework flags 2.0% of ratio-compliant firm-quarters as
 anomalous, and under firm-level Benjamini-Hochberg control the unanimity test
-flags 319 firms (23.5%) at q below 0.01. A controlled injection study yields at least 93%
-detection power at three-sigma on realistic archetypes, and an end-to-end
+flags 319 firms (23.5%) at q below 0.01. A controlled injection study yields
+detection power that is heterogeneous across archetypes, up to 99% at three-sigma
+on the systematic, scale-shift and peer-gaming archetypes, and an end-to-end
 contamination study reports an AUC of 0.86 for digit distortions, while
 synthetic cost-of-debt breaks stay near chance. Recalibrated on each authority's reference sample,
 the same detector stack applies to all five regimes with no further
@@ -299,12 +301,13 @@ Two read-only tools turn a finished run into something you can compare against
 the published results. Neither recomputes anything.
 
 ```bash
-python dump_paper_numbers.py       # -> a manifest of your reproduced numbers
-python dump_paper_figure_data.py   # -> figures/data/*.csv behind the paper's figures
+python reproduce.py numbers        # -> numbers_manifest.local.json (your reproduced numbers)
+python reproduce.py figure-data    # -> figures/data/*.csv behind the paper's figures
 ```
 
-`numbers_manifest.json` in this repository is the published manifest: diff your
-own against it to confirm the reproduction matches. Sections this repository
+`numbers_manifest.json` in this repository is the published reference; `numbers`
+writes your run to `numbers_manifest.local.json`, so diff the two to confirm the
+reproduction matches. Sections this repository
 generates on demand rather than shipping (the counterfactual and the end-to-end
 contamination table) stay marked missing until you run the matching command.
 Run `pipeline` first, then `benchmark` and `family3-cf` if you want the

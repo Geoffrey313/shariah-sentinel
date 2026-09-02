@@ -6,16 +6,14 @@ qualitative cross-sections, the ablation table, family3) plus the per-country
 reference/FDR headline for the jurisdictions table. A reader can diff the manifest
 against the published one to confirm their reproduction matches.
 
-This is a pure read + centralise step; it does not recompute anything. It is the
-`paper-repro` twin of the product's ``scripts/dump_paper_numbers.py``: same logic,
-`src.*` imports and the ``data/`` root. Sections that this minimal repo
-generates on demand rather than shipping (the counterfactual ``family3_cf_*`` and
-the end-to-end contamination table) show ``_missing`` until the matching
-``reproduce.py`` command is run; the figure-derived reductions (U-shape, IUT gap,
-integrity Jaccard, power matrix) are not covered here.
+This is a pure read + centralise step; it does not recompute anything. Sections
+that this minimal repo generates on demand rather than shipping (the counterfactual
+``family3_cf_*`` and the end-to-end contamination table) show ``_missing`` until the
+matching ``reproduce.py`` command is run; the figure-derived reductions (U-shape,
+IUT gap, integrity Jaccard, power matrix) are not covered here.
 
-Run from the repo root:
-    python dump_paper_numbers.py            # mys anchor + 5-country table
+Entry point (mys anchor + 5-country table):
+    python reproduce.py numbers
 """
 from __future__ import annotations
 
@@ -30,11 +28,9 @@ sys.path.insert(0, str(REPO))
 
 from src.common.config import AnalysisSettings  # noqa: E402
 
-OUT = REPO / "numbers_manifest.json"
-
-# Records (path, mtime) for every artifact read, so the manifest carries provenance
-# and can flag any source not written by the current frozen run.
-_PROV: list[tuple[str, float]] = []
+# A fresh reproduction writes here; the committed numbers_manifest.json is the
+# reference to diff against, so a data-less run never clobbers it.
+OUT = REPO / "numbers_manifest.local.json"
 
 # Anchor panel (all heavy studies) + the five jurisdictions of the cross-country table.
 ANCHOR = "mys"
@@ -66,14 +62,9 @@ def _rel(path: Path) -> str:
         return str(path)
 
 
-def _record(path: Path) -> None:
-    _PROV.append((_rel(path), path.stat().st_mtime))
-
-
 def _load_json(path: Path):
     if not path.exists():
         return {"_missing": _rel(path)}
-    _record(path)
     return json.loads(path.read_text())
 
 
@@ -81,52 +72,7 @@ def _load_csv(path: Path):
     """CSV -> list of row dicts, or a missing marker."""
     if not path.exists():
         return {"_missing": _rel(path)}
-    _record(path)
     return pd.read_csv(path).to_dict(orient="records")
-
-
-def _sha256(path: str) -> str:
-    import hashlib
-
-    h = hashlib.sha256()
-    with open(REPO / path, "rb") as fh:
-        for chunk in iter(lambda: fh.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def _git_head() -> str:
-    """Current commit of the working tree, read without shelling out to git."""
-    try:
-        head = (REPO / ".git/HEAD").read_text().strip()
-        if head.startswith("ref:"):
-            return (REPO / ".git").joinpath(head[5:]).read_text().strip()
-        return head
-    except OSError:
-        return "unknown"
-
-
-def _git_dirty() -> dict:
-    """Working-tree state, so the manifest is honest that HEAD may not contain the
-    exact code/data that produced it (e.g. an untracked dump script)."""
-    import subprocess
-
-    try:
-        out = subprocess.run(
-            ["git", "status", "--porcelain"],
-            capture_output=True, text=True, timeout=30, cwd=REPO,
-        ).stdout.strip()
-    except (OSError, subprocess.SubprocessError):
-        return {"available": False}
-    entries = [ln for ln in out.splitlines() if ln.strip()]
-    return {
-        "available": True,
-        "clean": not entries,
-        "uncommitted_count": len(entries),
-        "this_script_committed": not any(
-            "dump_paper_numbers.py" in ln for ln in entries
-        ),
-    }
 
 
 REPRODUCE_COMMANDS = [
@@ -136,44 +82,25 @@ REPRODUCE_COMMANDS = [
     "python reproduce.py family3-pgd --country mys --rows 5",
     "python reproduce.py ablation   --country mys",
     "python reproduce.py pipeline   --country {idn,pak,sau,uae}",
-    "python dump_paper_numbers.py",
+    "python reproduce.py figure-data",
+    "python reproduce.py numbers",
 ]
 
 
 def provenance() -> dict:
-    """Every source file with its mtime AND content hash, flagging any older than
-    the frozen run, plus the git commit — so ``stale_sources: []`` is backed by
-    content, not just timestamps.
-
-    The reference time is the anchor Phase 0 output — the first thing the frozen
-    run writes — so anything predating it was NOT produced by this run.
-    """
-    ref = _layout(ANCHOR).phase0_dir() / "reference_sample.json"
-    ref_mtime = ref.stat().st_mtime if ref.exists() else 0.0
-    from datetime import datetime, timezone
-
-    def _iso(ts: float) -> str:
-        return datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
-
-    files = sorted(set(_PROV))
-    sources = [
-        {"path": p, "mtime": _iso(t), "sha256": _sha256(p)} for p, t in files
-    ]
+    """Honest, stable metadata for the reference manifest: how it is reproduced
+    and how randomness is fixed. No timestamps, machine paths, or run-specific
+    state, so the manifest keeps a stable digest across machines and re-runs."""
     return {
-        "frozen_run_reference_mtime": _iso(ref_mtime),
-        "source_run_commit": _git_head(),
-        "source_run_commit_note": (
-            "Commit of the internal compute run that produced these numbers "
-            "(the frozen re-freeze); it is not part of the published repository "
-            "history, so this hash does not resolve in the released repo."
+        "reproduced_from": (
+            "The transformed panels are obtained on request (see data/README.md), "
+            "placed under data/, and processed by the commands below. This manifest "
+            "is the reference output to diff a fresh reproduction against."
         ),
-        "source_run_working_tree": _git_dirty(),
         "seeds_note": "All randomness is seeded in AnalysisSettings "
         "(monte_carlo_seed / bootstrap.random_seed / injection.random_seed / "
         "robustness_benchmark.random_seed), so the run is deterministic.",
         "reproduce_commands": REPRODUCE_COMMANDS,
-        "stale_sources": [s for s, (p, t) in zip(sources, files) if t < ref_mtime - 1],
-        "all_sources": sources,
     }
 
 
@@ -273,7 +200,6 @@ def _counterfactual_summary(rb: Path) -> dict:
     if not hits:
         return {"_missing": "family3_cf_*top*.csv"}
     freshest = max(hits, key=lambda p: p.stat().st_mtime)
-    _record(freshest)
     df = pd.read_csv(freshest)
     delta_cols = [c for c in df.columns if c.startswith("delta_")]
     changed = (df[delta_cols].fillna(0).abs() > 1e-9).sum(axis=1)

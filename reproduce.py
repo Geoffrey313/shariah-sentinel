@@ -90,7 +90,7 @@ def cmd_benchmark(args) -> None:
 
 def cmd_family3_cf(args) -> None:
     from src.analysis.benchmark import _score_panel_family3
-    from src.analysis.counterfactual.core import run_family3_xai
+    from src.analysis.counterfactual.core import run_family3_xai, select_near_boundary_flagged
     s = settings_for(args.country)
     rb = s.robustness_benchmark.model_copy(update={
         "family3_max_rows": args.rows,
@@ -103,10 +103,8 @@ def cmd_family3_cf(args) -> None:
     base_ctx = _score_panel_family3(panel, s)
     candidate_index = None
     if args.near_boundary:
-        comp = base_ctx.composites.copy()
-        comp["_p"] = pd.to_numeric(comp[rb.primary_composite], errors="coerce")
-        candidate_index = comp[comp["_p"] < rb.alpha].sort_values("_p", ascending=False).index[: args.rows]
-        print(f"[family3-cf] near-boundary RED cohort: {len(candidate_index)} rows", flush=True)
+        candidate_index = select_near_boundary_flagged(base_ctx.composites, s, args.rows)
+        print(f"[family3-cf] near-boundary non-GREEN cohort: {len(candidate_index)} rows", flush=True)
     summary, _ = run_family3_xai(panel, s, base_ctx, method_name="reproduction", candidate_index=candidate_index)
     n = int(summary["success"].sum()) if "success" in summary else 0
     print(f"[family3-cf] {summary.shape[0]} attacked, {n} flips "
@@ -148,6 +146,20 @@ def cmd_all(args) -> None:
     cmd_benchmark(args)
 
 
+def cmd_numbers(args) -> None:
+    """Collect this repo's reproduced numbers into ``numbers_manifest.json`` (a
+    read-only centralise step; diff it against the published manifest)."""
+    from src.figures.numbers import main as numbers_main
+    numbers_main()
+
+
+def cmd_figure_data(args) -> None:
+    """Regenerate ``figures/data/*.csv`` behind the paper's figures from the
+    reproduced phase outputs (a read-only reshape; recomputes nothing)."""
+    from src.figures.figure_data import main as figure_data_main
+    figure_data_main()
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -168,6 +180,8 @@ def main() -> None:
     sp.add_argument("--rows", type=int, default=5); sp.set_defaults(func=cmd_family3_pgd)
     sp = sub.add_parser("all", help="score + benchmark"); add_common(sp)
     sp.add_argument("--no-resume", action="store_true"); sp.set_defaults(func=cmd_all)
+    sub.add_parser("numbers", help="collect reproduced numbers -> numbers_manifest.json (read-only)").set_defaults(func=cmd_numbers)
+    sub.add_parser("figure-data", help="regenerate figures/data/*.csv from reproduced outputs (read-only)").set_defaults(func=cmd_figure_data)
 
     args = p.parse_args()
     args.func(args)
