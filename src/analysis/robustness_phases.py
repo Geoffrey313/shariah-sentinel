@@ -50,6 +50,7 @@ from src.analysis.composite_scoring import (
     COL_P_Z_PLUS_RENORM, COL_P_Z_PLUS_SOFTMAX,
     COL_T_IUT, COL_Z_MAHALANOBIS, COL_Z_PLUS, COL_Z_PLUS_ORTH,
     COL_Z_PLUS_RENORM, COL_Z_PLUS_SOFTMAX,
+    VERDICT_P_COLS, compute_verdict,
 )
 
 log = logging.getLogger(__name__)
@@ -63,13 +64,11 @@ COMPOSITE_P_COLS: tuple[str, ...] = (
     COL_P_Z_PLUS, COL_P_Z_PLUS_RENORM, COL_P_Z_MAHALANOBIS, COL_P_T_IUT,
     COL_P_Z_PLUS_SOFTMAX, COL_P_Z_PLUS_ORTH,
 )
-# The RED verdict is defined on the four primary composites only (the
-# softmax/orthogonal variants are reporting extensions, not part of the
-# headline verdict). The sector-level RED rate must use the same definition
-# as the flag rate and the FDR so the three are mutually consistent.
-VERDICT_P_COLS: tuple[str, ...] = (
-    COL_P_Z_PLUS, COL_P_Z_PLUS_RENORM, COL_P_Z_MAHALANOBIS, COL_P_T_IUT,
-)
+# The RED verdict is defined on the four primary composites only (``VERDICT_P_COLS``,
+# imported from composite_scoring — the softmax/orthogonal variants are reporting
+# extensions, not part of the headline verdict). The sector-level RED rate uses the
+# same Holm-corrected definition (compute_verdict) as the flag rate and the FDR so
+# the three are mutually consistent.
 # ``p_breadth`` is intentionally excluded: breadth only takes a small discrete
 # set of values, so its bootstrap p-values are not very informative for the
 # continuous-style robustness checks used in Phase 6.
@@ -186,7 +185,7 @@ def _sector_false_positive(
         return pd.DataFrame()
 
     c_rows["min_p"] = c_rows[list(VERDICT_P_COLS)].min(axis=1)
-    c_rows["is_red"] = c_rows["min_p"] < rob.red_threshold
+    c_rows["is_red"] = compute_verdict(c_rows, red_threshold=rob.red_threshold) == "RED"
 
     grouped = (
         c_rows.groupby(schema.sector, dropna=False)

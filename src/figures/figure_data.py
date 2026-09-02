@@ -1,16 +1,12 @@
 """Regenerate the paper's figure-data CSVs from this repo's reproduced outputs.
 
-The `paper-repro` twin of the product's `scripts/dump_paper_figure_data.py`: same
-data reductions (power curves, IUT gap, integrity Jaccard, AnoShift FPR, U-shape
-fit, near-red composition), but self-contained — `src.*` imports, the
-`data/` root, and the handful of `client.figures` helpers inlined here so no
-plotting stack is needed. Pure read + reshape; recomputes nothing.
+Self-contained data reductions (power curves, IUT gap, integrity Jaccard, AnoShift
+FPR, U-shape fit, near-red composition): pure read + reshape, recomputes nothing,
+no plotting stack required. Entry point: ``python reproduce.py figure-data``.
 
-Run AFTER `reproduce.py pipeline` (+ `benchmark`, and `family3-cf` for the near-red
-figure) so the phase outputs exist:
-    python dump_paper_figure_data.py
-Writes CSVs to `figures/data/`; each figure is emitted independently and skips with
-a note if its input is not present.
+Run AFTER ``reproduce.py pipeline`` (+ ``benchmark``, and ``family3-cf`` for the
+near-red figure) so the phase outputs exist. Writes CSVs to ``figures/data/``;
+each figure is emitted independently and skips with a note if its input is absent.
 """
 from __future__ import annotations
 
@@ -24,11 +20,11 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 
 from src.common.config import AnalysisSettings  # noqa: E402
+from src.analysis.composite_scoring import compute_verdict  # noqa: E402
 
 OUT = REPO / "figures" / "data"
 OUT.mkdir(parents=True, exist_ok=True)
 
-# ── Inlined from client.figures / client.style / scripts.family3_cf_paper_outputs ──
 _P_COLS = ["p_z_plus", "p_z_plus_renorm", "p_z_mahalanobis_sq", "p_t_iut"]
 COMPOSITE_LABELS = {
     "z_plus": r"$Z^+$",
@@ -55,12 +51,9 @@ def _settings():
 
 
 def _verdict(composites: pd.DataFrame, red_thr: float, amber_thr: float) -> pd.Series:
-    present = [c for c in _P_COLS if c in composites.columns]
-    min_p = composites[present].min(axis=1)
-    v = pd.Series("GREEN", index=composites.index)
-    v[min_p < amber_thr] = "AMBER"
-    v[min_p < red_thr] = "RED"
-    return v
+    """Holm/Bonferroni-corrected RED/AMBER/GREEN (see ``compute_verdict``):
+    ``min(p) < red_thr/m`` / ``< amber_thr/m`` with ``m = len(_P_COLS)``."""
+    return compute_verdict(composites, p_cols=tuple(_P_COLS), red_threshold=red_thr, amber_threshold=amber_thr)
 
 
 def _cf_mean_share(csv: Path) -> pd.Series:
@@ -150,8 +143,7 @@ def main() -> None:
     p0_path = o.phase0_dir() / "panel_with_split.parquet"
     if comp_path.exists() and p0_path.exists():
         comp = pd.read_parquet(comp_path)
-        present = [c for c in _P_COLS if c in comp.columns]
-        comp["is_red"] = (comp[present].min(axis=1) < red_thr).astype(float)
+        comp["is_red"] = (_verdict(comp, red_thr, amber_thr) == "RED").astype(float)
         ratio_df = pd.read_parquet(p0_path, columns=["gvkey", "datacqtr", "ratio_debt_adj"])
         comp = comp.merge(ratio_df, on=["gvkey", "datacqtr"], how="left")
         fit_rows = []

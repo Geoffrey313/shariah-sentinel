@@ -12,20 +12,21 @@ import numpy as np
 import pandas as pd
 
 from src.common.config import AnalysisSettings
+from src.analysis.composite_scoring import VERDICT_P_COLS, compute_verdict
 
 log = logging.getLogger(__name__)
 
-_P_COLS = ("p_z_plus", "p_z_plus_renorm", "p_z_mahalanobis_sq", "p_t_iut")
+_P_COLS = VERDICT_P_COLS
 
 
 def _add_verdict(df: pd.DataFrame, red: float = 0.01) -> pd.DataFrame:
+    """Attach the Holm/Bonferroni-corrected RED/AMBER/GREEN verdict (see
+    :func:`compute_verdict`): RED at ``min(p) < red/m``, AMBER at ``< 0.05/m``,
+    with ``m = len(VERDICT_P_COLS)``. Keeps ``min_p`` for downstream reporting."""
     present = [c for c in _P_COLS if c in df.columns]
     df = df.copy()
     df["min_p"] = df[present].min(axis=1)
-    df["verdict"] = "GREEN"
-    df.loc[df["min_p"] < 0.05, "verdict"] = "AMBER"
-    df.loc[df["min_p"] < red, "verdict"] = "RED"
-    df.loc[df["min_p"].isna(), "verdict"] = "NO_DATA"
+    df["verdict"] = compute_verdict(df, p_cols=tuple(_P_COLS), red_threshold=red, amber_threshold=0.05)
     df["is_red"] = (df["verdict"] == "RED").astype(int)
     return df
 
@@ -40,7 +41,7 @@ def run_qualitative(
     settings = settings or AnalysisSettings()
     schema = settings.panel_schema
 
-    from .phase0_reference_sample import resolve_label_column
+    from .reference_sample import resolve_label_column
 
     label_col = resolve_label_column(panel, settings)
     df = composites.merge(

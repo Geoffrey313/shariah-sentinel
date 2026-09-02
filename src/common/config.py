@@ -1303,7 +1303,7 @@ class RobustnessBenchmarkSettings(BaseModel):
 # Sprint 5 — Phase 7 multiple-testing correction
 # ─────────────────────────────────────────────────────────────────────────────
 
-    # ── Family-3 counterfactual (XAI) knobs — from dev/remi ──────────────
+    # ── Family-3 counterfactual (XAI) knobs ──────────────────────────────
     family3_max_rows: int = Field(
         default=5,
         ge=1,

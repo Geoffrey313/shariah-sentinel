@@ -94,50 +94,6 @@
           "q<=0.05": 0,
           "q<=0.01": 0
         }
-      },
-      "fdr_firm_level_sensitivity": {
-        "sidak": {
-          "p_t_iut": {
-            "q<=0.01": 0,
-            "q<=0.05": 0
-          },
-          "p_z_plus": {
-            "q<=0.01": 0,
-            "q<=0.05": 0
-          },
-          "p_z_mahalanobis_sq": {
-            "q<=0.01": 0,
-            "q<=0.05": 0
-          }
-        },
-        "fisher": {
-          "p_t_iut": {
-            "q<=0.01": 383,
-            "q<=0.05": 452
-          },
-          "p_z_plus": {
-            "q<=0.01": 184,
-            "q<=0.05": 220
-          },
-          "p_z_mahalanobis_sq": {
-            "q<=0.01": 315,
-            "q<=0.05": 372
-          }
-        },
-        "cauchy": {
-          "p_t_iut": {
-            "q<=0.01": 0,
-            "q<=0.05": 134
-          },
-          "p_z_plus": {
-            "q<=0.01": 0,
-            "q<=0.05": 0
-          },
-          "p_z_mahalanobis_sq": {
-            "q<=0.01": 0,
-            "q<=0.05": 0
-          }
-        }
       }
     },
     "calibration": {
@@ -245,85 +201,85 @@
           "sector": "Financials",
           "n_rows": 2716,
           "n_firms": 53,
-          "n_red": 584,
-          "red_share": 0.2150220913107511
+          "n_red": 334,
+          "red_share": 0.1229749631811487
         },
         {
           "sector": "Unknown",
           "n_rows": 472,
           "n_firms": 16,
-          "n_red": 51,
-          "red_share": 0.1080508474576271
-        },
-        {
-          "sector": "Communication Services",
-          "n_rows": 2070,
-          "n_firms": 28,
-          "n_red": 217,
-          "red_share": 0.1048309178743961
-        },
-        {
-          "sector": "Utilities",
-          "n_rows": 1481,
-          "n_firms": 20,
-          "n_red": 132,
-          "red_share": 0.0891289669142471
-        },
-        {
-          "sector": "Health Care",
-          "n_rows": 2582,
-          "n_firms": 39,
-          "n_red": 229,
-          "red_share": 0.0886909372579395
-        },
-        {
-          "sector": "Industrials",
-          "n_rows": 26020,
-          "n_firms": 390,
-          "n_red": 2251,
-          "red_share": 0.0865103766333589
+          "n_red": 26,
+          "red_share": 0.0550847457627118
         },
         {
           "sector": "Information Technology",
           "n_rows": 10223,
           "n_firms": 157,
-          "n_red": 868,
-          "red_share": 0.0849065831947569
+          "n_red": 388,
+          "red_share": 0.0379536339626332
         },
         {
-          "sector": "Energy",
-          "n_rows": 3239,
-          "n_firms": 49,
-          "n_red": 275,
-          "red_share": 0.0849027477616548
-        },
-        {
-          "sector": "Consumer Discretionary",
-          "n_rows": 12432,
-          "n_firms": 184,
-          "n_red": 994,
-          "red_share": 0.0799549549549549
-        },
-        {
-          "sector": "Real Estate",
-          "n_rows": 8563,
-          "n_firms": 98,
-          "n_red": 649,
-          "red_share": 0.0757911946747635
+          "sector": "Communication Services",
+          "n_rows": 2070,
+          "n_firms": 28,
+          "n_red": 63,
+          "red_share": 0.0304347826086956
         },
         {
           "sector": "Materials",
           "n_rows": 12151,
           "n_firms": 166,
-          "n_red": 901,
-          "red_share": 0.0741502756974734
+          "n_red": 358,
+          "red_share": 0.0294625956711381
+        },
+        {
+          "sector": "Industrials",
+          "n_rows": 26020,
+          "n_firms": 390,
+          "n_red": 696,
+          "red_share": 0.0267486548808608
+        },
+        {
+          "sector": "Utilities",
+          "n_rows": 1481,
+          "n_firms": 20,
+          "n_red": 39,
+          "red_share": 0.0263335584064821
         },
         {
           "sector": "Consumer Staples",
           "n_rows": 10923,
           "n_firms": 156,
-          "n_red": 746,
-          "red_share": 0.0682962556074338
+          "n_red": 267,
+          "red_share": 0.0244438341115078
+        },
+        {
+          "sector": "Real Estate",
+          "n_rows": 8563,
+          "n_firms": 98,
+          "n_red": 203,
+          "red_share": 0.0237066448674529
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "n_rows": 12432,
+          "n_firms": 184,
+          "n_red": 293,
+          "red_share": 0.023568211068211
+        },
+        {
+          "sector": "Energy",
+          "n_rows": 3239,
+          "n_firms": 49,
+          "n_red": 72,
+          "red_share": 0.0222290830503241
+        },
+        {
+          "sector": "Health Care",
+          "n_rows": 2582,
+          "n_firms": 39,
+          "n_red": 38,
+          "red_share": 0.0147172734314484
         }
       ],
       "verdict_by_firm_size": [
@@ -331,36 +287,36 @@
           "atq_quartile": "Q1 small",
           "n_rows": 22578,
           "median_atq": 59.0385,
-          "n_red": 1903,
-          "red_share": 0.0842855877402781
+          "n_red": 534,
+          "red_share": 0.0236513420143502
         },
         {
           "atq_quartile": "Q2",
           "n_rows": 22577,
           "median_atq": 168.781,
-          "n_red": 1547,
-          "red_share": 0.0685210612570314
+          "n_red": 412,
+          "red_share": 0.0182486601408513
         },
         {
           "atq_quartile": "Q3",
           "n_rows": 22578,
           "median_atq": 446.95295,
-          "n_red": 1574,
-          "red_share": 0.06971388076889
+          "n_red": 423,
+          "red_share": 0.018735051820356
         },
         {
           "atq_quartile": "Q4 large",
           "n_rows": 22577,
           "median_atq": 1863.346,
-          "n_red": 1728,
-          "red_share": 0.0765380697169686
+          "n_red": 572,
+          "red_share": 0.025335518447978
         },
         {
           "atq_quartile": NaN,
           "n_rows": 2562,
           "median_atq": NaN,
-          "n_red": 1145,
-          "red_share": 0.4469164715066354
+          "n_red": 836,
+          "red_share": 0.3263075722092115
         }
       ],
       "verdict_by_debt_level": [
@@ -368,54 +324,54 @@
           "debt_quartile": "Q1 low debt",
           "n_rows": 15793,
           "median_debt_ratio": 0.0122435163805855,
-          "n_red": 1574,
-          "red_share": 0.0996644082821503
+          "n_red": 434,
+          "red_share": 0.0274805293484455
         },
         {
           "debt_quartile": "Q2",
           "n_rows": 15792,
           "median_debt_ratio": 0.0730577323019062,
-          "n_red": 791,
-          "red_share": 0.0500886524822695
+          "n_red": 165,
+          "red_share": 0.0104483282674772
         },
         {
           "debt_quartile": "Q3",
           "n_rows": 15792,
           "median_debt_ratio": 0.1523801569317889,
-          "n_red": 678,
-          "red_share": 0.0429331306990881
+          "n_red": 140,
+          "red_share": 0.0088652482269503
         },
         {
           "debt_quartile": "Q4 high debt",
           "n_rows": 15793,
           "median_debt_ratio": 0.2913226458256795,
-          "n_red": 1674,
-          "red_share": 0.1059963274868612
+          "n_red": 589,
+          "red_share": 0.0372950041157474
         }
       ],
       "verdict_persistence": [
         {
           "persistence": "never",
-          "n_firms": 352,
-          "mean_red_share": 0.0011443734295728
+          "n_firms": 852,
+          "mean_red_share": 0.0006566024181332
         },
         {
           "persistence": "episodic (<10%)",
-          "n_firms": 602,
-          "mean_red_share": 0.048270138878659
+          "n_firms": 376,
+          "mean_red_share": 0.0388680609721101
         },
         {
           "persistence": "intermittent (10-30%)",
-          "n_firms": 339,
-          "mean_red_share": 0.1691447226238864
+          "n_firms": 110,
+          "mean_red_share": 0.160605141257234
         },
         {
           "persistence": "chronic (>30%)",
-          "n_firms": 63,
-          "mean_red_share": 0.4587996187239432
+          "n_firms": 18,
+          "mean_red_share": 0.5088273092662379
         }
       ],
-      "chronic_red_firms_n": 63,
+      "chronic_red_firms_n": 18,
       "ablation_results": [
         {
           "model": "FULL MODEL",
@@ -879,731 +835,112 @@
       },
       "counterfactual": {
         "source": "family3_cf_to_green_z_plus_renorm_top500.csv",
-        "n_rows": 115,
+        "n_rows": 166,
         "targeted_score": {
           "n": 31,
-          "rate": 0.26956521739130435,
-          "median_vars": 5.0,
-          "share_ge5_vars_pct": 64.51612903225806
+          "rate": 0.18674698795180722,
+          "median_vars": 6.0,
+          "share_ge5_vars_pct": 58.06451612903226
         },
         "global_green": {
-          "n": 11,
-          "rate": 0.09565217391304348,
-          "median_vars": 6.0,
-          "share_ge5_vars_pct": 90.9
+          "n": 65,
+          "rate": 0.39156626506024095,
+          "median_vars": 7.0,
+          "share_ge5_vars_pct": 73.84615384615385
         },
         "final_status_counts": {
-          "ORANGE": 84,
-          "RED": 20,
-          "GREEN": 11
+          "ORANGE": 101,
+          "GREEN": 65
         },
         "baseline_status_counts": {
-          "ORANGE": 87,
-          "RED": 28
+          "ORANGE": 166
         }
       }
-    },
-    "figure_reductions": {
-      "flag_rate_by_country": [
-        {
-          "country": "Pakistan",
-          "flag_pct": 7.8,
-          "screened_n": 25315
-        },
-        {
-          "country": "UAE",
-          "flag_pct": 7.3,
-          "screened_n": 6827
-        },
-        {
-          "country": "Malaysia",
-          "flag_pct": 5.3,
-          "screened_n": 79733
-        },
-        {
-          "country": "Indonesia",
-          "flag_pct": 5.3,
-          "screened_n": 41592
-        },
-        {
-          "country": "Saudi Ar.",
-          "flag_pct": 4.7,
-          "screened_n": 15852
-        }
-      ],
-      "integrity_jaccard": [
-        {
-          "composite": "z_plus_renorm",
-          "label": "$Z^+_{\\mathrm{renorm}}$",
-          "jaccard_top_n": 0.3245033112582781
-        },
-        {
-          "composite": "z_plus_softmax",
-          "label": "z_plus_softmax",
-          "jaccard_top_n": 0.3245033112582781
-        },
-        {
-          "composite": "z_plus_orth",
-          "label": "z_plus_orth",
-          "jaccard_top_n": 0.3422818791946309
-        },
-        {
-          "composite": "z_plus",
-          "label": "$Z^+$",
-          "jaccard_top_n": 0.639344262295082
-        },
-        {
-          "composite": "breadth",
-          "label": "$B_{\\mathcal{A}}$",
-          "jaccard_top_n": 0.8181818181818182
-        },
-        {
-          "composite": "z_mahalanobis_sq",
-          "label": "$Z^2_{\\mathrm{Mah}}$",
-          "jaccard_top_n": 0.8691588785046729
-        },
-        {
-          "composite": "t_iut",
-          "label": "$T_{\\mathrm{IUT}}$",
-          "jaccard_top_n": 0.8867924528301887
-        }
-      ],
-      "ushape_fit_summary": [
-        {
-          "panel": "compliant",
-          "r2": 0.766,
-          "x_min": 0.169,
-          "y_min": 3.39,
-          "red_lo": 3.7,
-          "red_hi": 12.6,
-          "n_bins": 20
-        },
-        {
-          "panel": "noncompliant",
-          "r2": 0.985,
-          "x_min": 0.422,
-          "y_min": 9.95,
-          "red_lo": 7.3,
-          "red_hi": 92.0,
-          "n_bins": 17
-        }
-      ],
-      "ushape_compliant_points": [
-        {
-          "mid": 0.0046663213049634,
-          "red_pct": 12.572909915748545,
-          "n": 9258
-        },
-        {
-          "mid": 0.0240990396466429,
-          "red_pct": 6.442754541613857,
-          "n": 4734
-        },
-        {
-          "mid": 0.0413395526160631,
-          "red_pct": 5.564497585651874,
-          "n": 4349
-        },
-        {
-          "mid": 0.0574595476317238,
-          "red_pct": 5.192409066947812,
-          "n": 3794
-        },
-        {
-          "mid": 0.0743025988888211,
-          "red_pct": 5.489130434782609,
-          "n": 3680
-        },
-        {
-          "mid": 0.0907686445472395,
-          "red_pct": 4.940327504857064,
-          "n": 3603
-        },
-        {
-          "mid": 0.1071838312391091,
-          "red_pct": 3.6666666666666665,
-          "n": 3300
-        },
-        {
-          "mid": 0.1235822094333666,
-          "red_pct": 4.385423100679431,
-          "n": 3238
-        },
-        {
-          "mid": 0.1400826064516523,
-          "red_pct": 4.553415061295972,
-          "n": 2855
-        },
-        {
-          "mid": 0.156578864503563,
-          "red_pct": 3.947368421052632,
-          "n": 2584
-        },
-        {
-          "mid": 0.1729845254821816,
-          "red_pct": 4.1852905323039415,
-          "n": 2461
-        },
-        {
-          "mid": 0.1892613342944701,
-          "red_pct": 4.768041237113402,
-          "n": 2328
-        },
-        {
-          "mid": 0.2060417447876761,
-          "red_pct": 4.140587385652383,
-          "n": 2077
-        },
-        {
-          "mid": 0.2225161150015515,
-          "red_pct": 4.662126767941331,
-          "n": 1909
-        },
-        {
-          "mid": 0.2390453414028553,
-          "red_pct": 4.703726328649969,
-          "n": 1637
-        },
-        {
-          "mid": 0.2556477211274003,
-          "red_pct": 6.498951781970649,
-          "n": 1431
-        },
-        {
-          "mid": 0.2722449180244147,
-          "red_pct": 5.9870550161812295,
-          "n": 1236
-        },
-        {
-          "mid": 0.2884638927876126,
-          "red_pct": 6.44883920894239,
-          "n": 1163
-        },
-        {
-          "mid": 0.3049561764607256,
-          "red_pct": 7.106598984771575,
-          "n": 985
-        },
-        {
-          "mid": 0.3216657770194788,
-          "red_pct": 7.119021134593993,
-          "n": 899
-        }
-      ],
-      "ushape_noncompliant_points": [
-        {
-          "mid": 0.3459702963038196,
-          "red_pct": 11.646586345381529,
-          "n": 1494
-        },
-        {
-          "mid": 0.3780285091938339,
-          "red_pct": 10.687732342007434,
-          "n": 1076
-        },
-        {
-          "mid": 0.4119661950585175,
-          "red_pct": 13.971539456662354,
-          "n": 773
-        },
-        {
-          "mid": 0.4457200593189733,
-          "red_pct": 9.854014598540148,
-          "n": 548
-        },
-        {
-          "mid": 0.4797041556981652,
-          "red_pct": 9.808612440191387,
-          "n": 418
-        },
-        {
-          "mid": 0.5112203697411638,
-          "red_pct": 10.780669144981411,
-          "n": 269
-        },
-        {
-          "mid": 0.5439392943563299,
-          "red_pct": 7.262569832402235,
-          "n": 179
-        },
-        {
-          "mid": 0.5762045510708803,
-          "red_pct": 20.388349514563107,
-          "n": 103
-        },
-        {
-          "mid": 0.6110567448670738,
-          "red_pct": 35.64356435643564,
-          "n": 101
-        },
-        {
-          "mid": 0.640189014989776,
-          "red_pct": 34.72222222222222,
-          "n": 72
-        },
-        {
-          "mid": 0.6788883861415457,
-          "red_pct": 41.46341463414634,
-          "n": 41
-        },
-        {
-          "mid": 0.7091942343723385,
-          "red_pct": 45.94594594594595,
-          "n": 37
-        },
-        {
-          "mid": 0.7422627249164871,
-          "red_pct": 45.71428571428572,
-          "n": 35
-        },
-        {
-          "mid": 0.7791733975378952,
-          "red_pct": 61.11111111111112,
-          "n": 36
-        },
-        {
-          "mid": 0.815391382772485,
-          "red_pct": 85.0,
-          "n": 20
-        },
-        {
-          "mid": 0.8424193086284228,
-          "red_pct": 91.17647058823528,
-          "n": 34
-        },
-        {
-          "mid": 0.8827066736926938,
-          "red_pct": 92.0,
-          "n": 25
-        }
-      ],
-      "near_red_composition": [
-        {
-          "variable": "Non-operating income",
-          "share_pct": 50.63311764410682
-        },
-        {
-          "variable": "Assets",
-          "share_pct": 11.07558713526206
-        },
-        {
-          "variable": "Operating cash flow",
-          "share_pct": 9.47180172822926
-        },
-        {
-          "variable": "Cash",
-          "share_pct": 7.5431041987126495
-        },
-        {
-          "variable": "Income before extra.",
-          "share_pct": 6.63097907271372
-        },
-        {
-          "variable": "Operating income (EBITDA)",
-          "share_pct": 4.315885857433172
-        }
-      ],
-      "iut_gap": [
-        {
-          "delta": 0.5,
-          "empirical_t_iut_power": 0.158,
-          "theoretical_t_iut_power": 0.2354594949214663,
-          "gap_pp": -7.7459494921466305
-        },
-        {
-          "delta": 1.0,
-          "empirical_t_iut_power": 0.308,
-          "theoretical_t_iut_power": 0.548485580979005,
-          "gap_pp": -24.048558097900504
-        },
-        {
-          "delta": 1.5,
-          "empirical_t_iut_power": 0.43,
-          "theoretical_t_iut_power": 0.8117215899930615,
-          "gap_pp": -38.17215899930616
-        },
-        {
-          "delta": 2.0,
-          "empirical_t_iut_power": 0.53,
-          "theoretical_t_iut_power": 0.9425434241002764,
-          "gap_pp": -41.25434241002763
-        },
-        {
-          "delta": 3.0,
-          "empirical_t_iut_power": 0.62,
-          "theoretical_t_iut_power": 0.9975588399055936,
-          "gap_pp": -37.75588399055936
-        }
-      ],
-      "anoshift_fpr": [
-        {
-          "entity_name": "z_plus",
-          "far": 0.0434782608695652,
-          "iid": 0.0555555555555555,
-          "near": 0.0453615279672578
-        },
-        {
-          "entity_name": "z_plus_renorm",
-          "far": 0.0498582230623818,
-          "iid": 0.0707729468599033,
-          "near": 0.0688949522510232
-        },
-        {
-          "entity_name": "z_mahalanobis_sq",
-          "far": 0.0326086956521739,
-          "iid": 0.0425120772946859,
-          "near": 0.0310368349249658
-        },
-        {
-          "entity_name": "t_iut",
-          "far": 0.0425330812854442,
-          "iid": 0.0483091787439613,
-          "near": 0.0487721691678035
-        },
-        {
-          "entity_name": "breadth",
-          "far": 0.0085066162570888,
-          "iid": 0.0089371980676328,
-          "near": 0.0092087312414733
-        }
-      ],
-      "power_scale_shift": [
-        {
-          "delta": 0.5,
-          "z_plus": 0.11,
-          "z_plus_renorm": 0.0482897384305835,
-          "z_mahalanobis_sq": 0.062,
-          "t_iut": 0.102,
-          "breadth": 0.022
-        },
-        {
-          "delta": 1.0,
-          "z_plus": 0.174,
-          "z_plus_renorm": 0.068,
-          "z_mahalanobis_sq": 0.122,
-          "t_iut": 0.166,
-          "breadth": 0.046
-        },
-        {
-          "delta": 1.5,
-          "z_plus": 0.324,
-          "z_plus_renorm": 0.088,
-          "z_mahalanobis_sq": 0.288,
-          "t_iut": 0.2,
-          "breadth": 0.08
-        },
-        {
-          "delta": 2.0,
-          "z_plus": 0.51,
-          "z_plus_renorm": 0.158,
-          "z_mahalanobis_sq": 0.51,
-          "t_iut": 0.22,
-          "breadth": 0.108
-        },
-        {
-          "delta": 3.0,
-          "z_plus": 0.914,
-          "z_plus_renorm": 0.424,
-          "z_mahalanobis_sq": 0.968,
-          "t_iut": 0.25,
-          "breadth": 0.126
-        }
-      ],
-      "power_peer_gaming": [
-        {
-          "delta": 0.5,
-          "z_plus": 0.092,
-          "z_plus_renorm": 0.0501002004008016,
-          "z_mahalanobis_sq": 0.06,
-          "t_iut": 0.08,
-          "breadth": 0.018
-        },
-        {
-          "delta": 1.0,
-          "z_plus": 0.134,
-          "z_plus_renorm": 0.024,
-          "z_mahalanobis_sq": 0.126,
-          "t_iut": 0.152,
-          "breadth": 0.052
-        },
-        {
-          "delta": 1.5,
-          "z_plus": 0.196,
-          "z_plus_renorm": 0.044,
-          "z_mahalanobis_sq": 0.236,
-          "t_iut": 0.154,
-          "breadth": 0.074
-        },
-        {
-          "delta": 2.0,
-          "z_plus": 0.316,
-          "z_plus_renorm": 0.092,
-          "z_mahalanobis_sq": 0.468,
-          "t_iut": 0.168,
-          "breadth": 0.074
-        },
-        {
-          "delta": 3.0,
-          "z_plus": 0.618,
-          "z_plus_renorm": 0.218,
-          "z_mahalanobis_sq": 0.934,
-          "t_iut": 0.208,
-          "breadth": 0.106
-        }
-      ],
-      "power_systematic": [
-        {
-          "delta": 0.5,
-          "z_plus": 0.13,
-          "z_plus_renorm": 0.04,
-          "z_mahalanobis_sq": 0.076,
-          "t_iut": 0.158,
-          "breadth": 0.052
-        },
-        {
-          "delta": 1.0,
-          "z_plus": 0.236,
-          "z_plus_renorm": 0.04,
-          "z_mahalanobis_sq": 0.136,
-          "t_iut": 0.308,
-          "breadth": 0.12
-        },
-        {
-          "delta": 1.5,
-          "z_plus": 0.534,
-          "z_plus_renorm": 0.098,
-          "z_mahalanobis_sq": 0.326,
-          "t_iut": 0.43,
-          "breadth": 0.25
-        },
-        {
-          "delta": 2.0,
-          "z_plus": 0.732,
-          "z_plus_renorm": 0.154,
-          "z_mahalanobis_sq": 0.526,
-          "t_iut": 0.53,
-          "breadth": 0.376
-        },
-        {
-          "delta": 3.0,
-          "z_plus": 0.998,
-          "z_plus_renorm": 0.642,
-          "z_mahalanobis_sq": 0.99,
-          "t_iut": 0.62,
-          "breadth": 0.466
-        }
-      ],
-      "power_threshold_clustering": [
-        {
-          "delta": 0.5,
-          "z_plus": 0.044,
-          "z_plus_renorm": 0.032064128256513,
-          "z_mahalanobis_sq": 0.044,
-          "t_iut": 0.052,
-          "breadth": 0.014
-        },
-        {
-          "delta": 1.0,
-          "z_plus": 0.112,
-          "z_plus_renorm": 0.0481927710843373,
-          "z_mahalanobis_sq": 0.092,
-          "t_iut": 0.108,
-          "breadth": 0.038
-        },
-        {
-          "delta": 1.5,
-          "z_plus": 0.138,
-          "z_plus_renorm": 0.034,
-          "z_mahalanobis_sq": 0.124,
-          "t_iut": 0.112,
-          "breadth": 0.046
-        },
-        {
-          "delta": 2.0,
-          "z_plus": 0.192,
-          "z_plus_renorm": 0.058,
-          "z_mahalanobis_sq": 0.228,
-          "t_iut": 0.108,
-          "breadth": 0.052
-        },
-        {
-          "delta": 3.0,
-          "z_plus": 0.354,
-          "z_plus_renorm": 0.168,
-          "z_mahalanobis_sq": 0.614,
-          "t_iut": 0.114,
-          "breadth": 0.036
-        }
-      ],
-      "power_round_number": [
-        {
-          "delta": 0.5,
-          "z_plus": 0.056,
-          "z_plus_renorm": 0.028169014084507,
-          "z_mahalanobis_sq": 0.044,
-          "t_iut": 0.066,
-          "breadth": 0.016
-        },
-        {
-          "delta": 1.0,
-          "z_plus": 0.108,
-          "z_plus_renorm": 0.056,
-          "z_mahalanobis_sq": 0.094,
-          "t_iut": 0.108,
-          "breadth": 0.038
-        },
-        {
-          "delta": 1.5,
-          "z_plus": 0.11,
-          "z_plus_renorm": 0.048,
-          "z_mahalanobis_sq": 0.092,
-          "t_iut": 0.114,
-          "breadth": 0.022
-        },
-        {
-          "delta": 2.0,
-          "z_plus": 0.202,
-          "z_plus_renorm": 0.086,
-          "z_mahalanobis_sq": 0.142,
-          "t_iut": 0.13,
-          "breadth": 0.028
-        },
-        {
-          "delta": 3.0,
-          "z_plus": 0.302,
-          "z_plus_renorm": 0.17,
-          "z_mahalanobis_sq": 0.178,
-          "t_iut": 0.092,
-          "breadth": 0.028
-        }
-      ],
-      "power_temporal_smoothing": [
-        {
-          "delta": 0.5,
-          "z_plus": 0.056,
-          "z_plus_renorm": 0.0608519269776876,
-          "z_mahalanobis_sq": 0.05,
-          "t_iut": 0.062,
-          "breadth": 0.012
-        },
-        {
-          "delta": 1.0,
-          "z_plus": 0.074,
-          "z_plus_renorm": 0.0581162324649298,
-          "z_mahalanobis_sq": 0.068,
-          "t_iut": 0.064,
-          "breadth": 0.01
-        },
-        {
-          "delta": 1.5,
-          "z_plus": 0.086,
-          "z_plus_renorm": 0.082,
-          "z_mahalanobis_sq": 0.082,
-          "t_iut": 0.056,
-          "breadth": 0.018
-        },
-        {
-          "delta": 2.0,
-          "z_plus": 0.118,
-          "z_plus_renorm": 0.098,
-          "z_mahalanobis_sq": 0.108,
-          "t_iut": 0.056,
-          "breadth": 0.004
-        },
-        {
-          "delta": 3.0,
-          "z_plus": 0.15,
-          "z_plus_renorm": 0.154,
-          "z_mahalanobis_sq": 0.184,
-          "t_iut": 0.066,
-          "breadth": 0.006
-        }
-      ]
     },
     "sector_false_positive": {
       "rows": [
         {
           "sector": "Financials",
           "n_rows": 212,
-          "n_red": 17,
-          "red_share": 0.080188679245283,
+          "n_red": 7,
+          "red_share": 0.0330188679245283,
           "is_n_sufficient": true
         },
         {
           "sector": "Unknown",
           "n_rows": 65,
-          "n_red": 3,
-          "red_share": 0.0461538461538461,
+          "n_red": 1,
+          "red_share": 0.0153846153846153,
           "is_n_sufficient": true
         },
         {
           "sector": "Communication Services",
           "n_rows": 282,
-          "n_red": 13,
-          "red_share": 0.0460992907801418,
-          "is_n_sufficient": true
-        },
-        {
-          "sector": "Consumer Staples",
-          "n_rows": 1551,
-          "n_red": 65,
-          "red_share": 0.0419084461637653,
+          "n_red": 4,
+          "red_share": 0.0141843971631205,
           "is_n_sufficient": true
         },
         {
           "sector": "Materials",
           "n_rows": 1760,
-          "n_red": 72,
-          "red_share": 0.0409090909090909,
+          "n_red": 22,
+          "red_share": 0.0125,
           "is_n_sufficient": true
         },
         {
-          "sector": "Health Care",
-          "n_rows": 397,
-          "n_red": 16,
-          "red_share": 0.0403022670025188,
-          "is_n_sufficient": true
-        },
-        {
-          "sector": "Utilities",
-          "n_rows": 191,
-          "n_red": 7,
-          "red_share": 0.0366492146596858,
-          "is_n_sufficient": true
-        },
-        {
-          "sector": "Information Technology",
-          "n_rows": 1464,
-          "n_red": 53,
-          "red_share": 0.0362021857923497,
+          "sector": "Consumer Staples",
+          "n_rows": 1551,
+          "n_red": 17,
+          "red_share": 0.0109606705351386,
           "is_n_sufficient": true
         },
         {
           "sector": "Industrials",
           "n_rows": 3725,
-          "n_red": 130,
-          "red_share": 0.0348993288590604,
+          "n_red": 28,
+          "red_share": 0.0075167785234899,
           "is_n_sufficient": true
         },
         {
           "sector": "Real Estate",
           "n_rows": 1263,
-          "n_red": 44,
-          "red_share": 0.0348376880443388,
+          "n_red": 9,
+          "red_share": 0.007125890736342,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Information Technology",
+          "n_rows": 1464,
+          "n_red": 10,
+          "red_share": 0.0068306010928961,
           "is_n_sufficient": true
         },
         {
           "sector": "Consumer Discretionary",
           "n_rows": 1695,
-          "n_red": 54,
-          "red_share": 0.031858407079646,
+          "n_red": 10,
+          "red_share": 0.0058997050147492,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Health Care",
+          "n_rows": 397,
+          "n_red": 2,
+          "red_share": 0.0050377833753148,
           "is_n_sufficient": true
         },
         {
           "sector": "Energy",
           "n_rows": 481,
-          "n_red": 13,
-          "red_share": 0.027027027027027,
+          "n_red": 1,
+          "red_share": 0.002079002079002,
+          "is_n_sufficient": true
+        },
+        {
+          "sector": "Utilities",
+          "n_rows": 191,
+          "n_red": 0,
+          "red_share": 0.0,
           "is_n_sufficient": true
         }
       ]
@@ -2100,9 +1437,7 @@
     "z57": "z_fused"
   },
   "provenance": {
-    "note": "This repository is code-only. These numbers come from the internal E5 re-freeze, the source of truth reconciled by the papers; the reconstructed panels that produced them carry licensed S&P Compustat fields and are not shipped, so this manifest cannot be regenerated from this repository alone. Obtain the panels on motivated request (see the README), place them under data/, and run the pipeline to reproduce.",
-    "source_run_commit": "fdcac15cfbaf18502c61203e2b75e220eb712138",
-    "source_run_reference_mtime": "2026-08-03T13:36:06.715833+00:00",
+    "reproduced_from": "The transformed panels are obtained on request (see data/README.md), placed under data/, and processed by the commands below. This manifest is the reference output to diff a fresh reproduction against.",
     "seeds_note": "All randomness is seeded in AnalysisSettings (monte_carlo_seed / bootstrap.random_seed / injection.random_seed / robustness_benchmark.random_seed), so the run is deterministic.",
     "reproduce_commands": [
       "python reproduce.py pipeline   --country mys",
@@ -2111,8 +1446,8 @@
       "python reproduce.py family3-pgd --country mys --rows 5",
       "python reproduce.py ablation   --country mys",
       "python reproduce.py pipeline   --country {idn,pak,sau,uae}",
-      "python dump_paper_numbers.py"
-    ],
-    "m6_note": "The family3 counterfactual RED verdict targets only the four primary composites (eq. 13); softmax/orthogonal variants were removed from the family3 flag (M6). This changes only the family3 status labeling and the global-GREEN transition rate; phase-7 FDR (T_IUT 319 / Z+ 206 / Z2Mah 204) and the flag rate (5.3%) are unaffected."
+      "python reproduce.py figure-data",
+      "python reproduce.py numbers"
+    ]
   }
 }
