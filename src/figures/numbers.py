@@ -117,7 +117,13 @@ def reference_and_fdr(country: str) -> dict:
         "phase0": p0,
         "firm_quarters": p7.get("row_count") if isinstance(p7, dict) else None,
         "firms": p7.get("firm_count") if isinstance(p7, dict) else None,
-        "fdr_firm_level": p7.get("firm_level_discoveries") if isinstance(p7, dict) else None,
+        # Firm-level HEADLINE: the valid episodic-exceedance test.
+        "fdr_firm_level_headline": p7.get("firm_level_headline") if isinstance(p7, dict) else None,
+        "fdr_firm_level_panel": p7.get("firm_level_panel") if isinstance(p7, dict) else None,
+        # min-p per-composite is kept only as a diagnostic (anti-conservative), never the headline.
+        "fdr_firm_level_minp_diagnostic": (
+            p7.get("firm_level_discoveries") if isinstance(p7, dict) else None
+        ),
         "fdr_row_level": p7.get("row_level_discoveries") if isinstance(p7, dict) else None,
     }
 
@@ -255,11 +261,16 @@ def main() -> None:
     # Echo the load-bearing headline numbers for a quick eyeball.
     rf = manifest["anchor"]["reference_and_fdr"]
     cal = manifest["anchor"]["calibration"]
-    fl = rf["fdr_firm_level"] or {}
+    hl = rf.get("fdr_firm_level_headline") or {}
+    dg = rf.get("fdr_firm_level_minp_diagnostic") or {}
     print(f"  |C|={rf['reference_sample_size']}  firms={rf['firms']}  fq={rf['firm_quarters']}")
     print(f"  lambda={cal['ledoit_wolf_shrinkage']}  complete_rows={cal['complete_rows']}  K_eff={cal['k_eff']}")
-    if "p_t_iut" in fl:
-        print(f"  FDR t_iut q<=0.01={fl['p_t_iut'].get('q<=0.01')}  z_mah q<=0.01={fl['p_z_mahalanobis_sq'].get('q<=0.01')}")
+    if hl:
+        print(f"  firm HEADLINE (exceedance) q<=0.01={hl.get('primary_claim', {}).get('q<=0.01')}  "
+              f"q<=0.05={hl.get('secondary', {}).get('q<=0.05')}  [{hl.get('composite')}]")
+    if "p_t_iut" in dg:
+        print(f"  [min-p DIAGNOSTIC, not headline] t_iut q<=0.01={dg['p_t_iut'].get('q<=0.01')}  "
+              f"z_mah q<=0.01={dg['p_z_mahalanobis_sq'].get('q<=0.01')}")
     print(f"  cross-country: {manifest['cross_country_totals']}")
 
 

@@ -32,6 +32,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.analysis.pvalue_merging import bonferroni, harmonic, harmonic_sharp, hommel
 from src.common.config import AnalysisSettings
 
 log = logging.getLogger(__name__)
@@ -86,13 +87,10 @@ def _firm_aggregate(
     raise ValueError(f"unknown firm_aggregation {method!r}.")
 
 
-# M4 — alternative firm-level aggregations, reported as a SENSITIVITY only; the
-# headline stays ``min_pvalue``/BH. ``sidak`` corrects the min-p for the firm's
-# within-firm multiplicity; ``fisher`` is the omnibus over all the firm's
-# quarters; ``cauchy`` is the dependence-robust ACAT combination.
-_SENSITIVITY_METHODS: tuple[str, ...] = ("sidak", "fisher", "cauchy")
-
-
+# Alternative firm-level p-mergers used in the sensitivity panel. ``sidak`` corrects
+# the min-p for within-firm multiplicity (independence-ish, NOT arbitrary-dependence);
+# ``fisher`` is the omnibus over the firm's quarters (independence-only); ``cauchy`` is
+# the dependence-robust ACAT combination (heavy-tail, sensitivity only).
 def _firm_aggregate_variant(
     df: pd.DataFrame,
     p_col: str,
@@ -130,6 +128,104 @@ def _discovery_counts(
     return {
         f"q<={q:.3g}": int((finite <= q).sum()) for q in q_levels
     }
+
+
+# ── Firm-level HEADLINE: episodic exceedance test ────────────────────────────
+# A firm is flagged for suspicious *episodes*, not for being anomalous almost every
+# quarter. Statistic: S_i = max over a pre-registered tau grid of the standardized
+# exceedance count N_i(tau) = #{quarters with p <= tau}, calibrated under a
+# dependence-preserving AR(1) null (rho_cal, set conservatively above the reference
+# sample estimate). Empirical firm p-value p_i = (1 + #{S_null >= S_obs})/(B+1), then
+# BH across firms.
+
+# Firm-level aggregator labels — the panel is reported so no single aggregator
+# silently defines the scientific question.
+_FIRM_LABELS: dict[str, str] = {
+    "exceedance": "HEADLINE — episodic exceedance, dependence-calibrated (firm-aggregation stage)",
+    "min_pvalue": "diagnostic — min-p over quarters (anti-conservative, not valid)",
+    "bonferroni": "valid, arbitrary-dependence, any-quarter (sparse)",
+    "hommel": "valid, arbitrary-dependence, any-quarter (sparse)",
+    "harmonic": "valid, persistence (Vovk-Wang harmonic, conservative e*ln K)",
+    "harmonic_sharp": "valid, persistence (Vovk-Wang harmonic, sharp finite a_{-1,K})",
+    "fisher": "independence-only (not valid under dependence)",
+    "cauchy": "sensitivity / heavy-tail (not a headline guarantee without local calibration)",
+}
+
+
+def _exceedance_S(pvec: np.ndarray, taus: np.ndarray) -> tuple[float, int]:
+    """Standardized max-exceedance statistic ``S = max_tau (N(tau)-K*tau)/sqrt(K*tau*(1-tau))``
+    and the firm's quarter count ``K`` (finite p-values only)."""
+    p = pvec[np.isfinite(pvec)]
+    K = p.size
+    if K == 0:
+        return float("nan"), 0
+    N = (p[:, None] <= taus[None, :]).sum(0)
+    z = (N - K * taus) / np.sqrt(K * taus * (1.0 - taus))
+    return float(z.max()), K
+
+
+def _ar1_uniform(M: int, K: int, rho: float, rng: np.random.Generator) -> np.ndarray:
+    """``M`` draws of a length-``K`` uniform sequence with an AR(1) Gaussian copula of
+    autocorrelation ``rho`` (uniform marginals under H0, serial dependence preserved)."""
+    from scipy.stats import norm
+
+    e = np.empty((M, K), dtype=np.float32)
+    e[:, 0] = rng.standard_normal(M)
+    s = np.sqrt(1.0 - rho * rho)
+    for t in range(1, K):
+        e[:, t] = rho * e[:, t - 1] + s * rng.standard_normal(M)
+    return norm.cdf(e)
+
+
+def _exceedance_null_S(K: int, rho: float, taus: np.ndarray, B: int,
+                       rng: np.random.Generator) -> np.ndarray:
+    """Sorted ``B`` draws of ``S`` under the AR(1)-``rho`` null for a firm with ``K`` quarters."""
+    U = _ar1_uniform(B, K, rho, rng)
+    N = (U[:, :, None] <= taus[None, None, :]).sum(1)
+    z = (N - K * taus) / np.sqrt(K * taus * (1.0 - taus))
+    return np.sort(z.max(1))
+
+
+def _exceedance_firm_pvalues(
+    df: pd.DataFrame, p_col: str, firm_col: str,
+    taus: np.ndarray, rho: float, B: int, seed: int,
+) -> pd.Series:
+    """Empirical firm-level exceedance p-values (dependence-calibrated). Deterministic
+    given ``seed``; the null cache is built once per distinct ``K`` in sorted order."""
+    obs = df.groupby(firm_col, observed=True)[p_col].apply(
+        lambda s: _exceedance_S(s.to_numpy(dtype=float), taus)
+    )
+    S_obs = obs.apply(lambda t: t[0])
+    K = obs.apply(lambda t: t[1]).astype(int)
+    rng = np.random.default_rng(seed)
+    cache = {k: _exceedance_null_S(k, rho, taus, B, rng)
+             for k in sorted(int(x) for x in K.unique() if x > 0)}
+    p = pd.Series(np.nan, index=obs.index, dtype=float)
+    for k, a in cache.items():
+        idx = K.index[(K == k).to_numpy()]
+        S = S_obs.loc[idx].to_numpy(dtype=float)
+        ge = len(a) - np.searchsorted(a, S, side="left")
+        p.loc[idx] = (1.0 + ge) / (B + 1.0)
+    return p
+
+
+def _panel_firm_pvalues(df: pd.DataFrame, p_col: str, firm_col: str, method: str) -> pd.Series:
+    """One valid firm-level p-value per firm under a named p-merger (sensitivity panel)."""
+    eps = 1e-12
+    mergers = {"bonferroni": bonferroni, "hommel": hommel,
+               "harmonic": lambda v: harmonic(v, "conservative"),
+               "harmonic_sharp": harmonic_sharp}
+    if method in mergers:
+        fn = mergers[method]
+
+        def _agg(s: pd.Series) -> float:
+            v = np.clip(s.to_numpy(dtype=float), eps, 1.0 - eps)
+            v = v[np.isfinite(v)]
+            return float(fn(v)) if v.size else float("nan")
+
+        return df.groupby(firm_col, observed=True)[p_col].apply(_agg)
+    # fisher / cauchy / sidak reuse the existing omnibus/ACAT variants
+    return _firm_aggregate_variant(df, p_col=p_col, firm_col=firm_col, method=method)
 
 
 def run_phase7(
@@ -217,22 +313,57 @@ def run_phase7(
         ),
     }
 
-    # M4 — firm-aggregation sensitivity. The headline above stays min-p/BH; here
-    # we re-aggregate each composite with conservative/omnibus combinations so a
-    # reader can see how much the very-low-q counts depend on the aggregator.
-    sensitivity: dict = {}
-    for method in _SENSITIVITY_METHODS:
-        per_comp: dict = {}
-        for p_col in fdr.composites:
-            if p_col not in composites.columns:
-                continue
-            fp = _firm_aggregate_variant(
-                composites, p_col=p_col, firm_col=schema.firm_id, method=method
-            )
+    # ── Firm-level HEADLINE: episodic exceedance on the headline composite ──
+    # The valid firm-level claim. min-p above is kept only as a diagnostic.
+    hc = fdr.exceedance_headline_composite
+    if fdr.firm_headline == "exceedance" and hc in composites.columns:
+        fp = _exceedance_firm_pvalues(
+            composites, p_col=hc, firm_col=schema.firm_id,
+            taus=np.asarray(fdr.exceedance_taus, dtype=float),
+            rho=fdr.exceedance_rho_cal, B=fdr.exceedance_B, seed=fdr.exceedance_seed,
+        )
+        q = _benjamini_hochberg(fp.to_numpy(dtype=float))
+        summary["firm_level_headline"] = {
+            "method": "exceedance",
+            "composite": hc,
+            "label": _FIRM_LABELS["exceedance"],
+            "scope": (
+                "type-I control is at the firm-aggregation stage, conditional on the "
+                "calibrated row-level p-values, not the full end-to-end pipeline."
+            ),
+            "params": {
+                "rho_cal": fdr.exceedance_rho_cal, "B": fdr.exceedance_B,
+                "taus": list(fdr.exceedance_taus), "seed": fdr.exceedance_seed,
+            },
+            "primary_claim": {"q<=0.01": int((q <= 0.01).sum())},
+            "secondary": {
+                "q<=0.05": int((q <= 0.05).sum()),
+                "caveat": "controlled up to the calibration rho (~0.30); q<=0.05 is "
+                          "fragile above that.",
+            },
+            "discoveries": _discovery_counts(pd.Series(q), fdr.q_levels),
+        }
+
+    # ── Firm-level aggregator PANEL (labelled) — min-p stays a diagnostic ──
+    # Reported on the headline composite so no single aggregator silently defines the
+    # scientific question; every entry carries its validity label.
+    panel_methods = ("min_pvalue", "bonferroni", "hommel", "harmonic",
+                     "harmonic_sharp", "fisher", "cauchy")
+    panel: dict = {}
+    if hc in composites.columns:
+        for method in panel_methods:
+            if method == "min_pvalue":
+                fp = _firm_aggregate(composites, p_col=hc, firm_col=schema.firm_id,
+                                     method="min_pvalue")
+            else:
+                fp = _panel_firm_pvalues(composites, p_col=hc,
+                                         firm_col=schema.firm_id, method=method)
             q = _benjamini_hochberg(fp.to_numpy(dtype=float))
-            per_comp[p_col] = _discovery_counts(pd.Series(q), fdr.q_levels)
-        sensitivity[method] = per_comp
-    summary["firm_level_discoveries_sensitivity"] = sensitivity
+            panel[method] = {
+                "label": _FIRM_LABELS.get(method, method),
+                "discoveries": _discovery_counts(pd.Series(q), fdr.q_levels),
+            }
+    summary["firm_level_panel"] = {"composite": hc, "aggregators": panel}
 
     paths: dict[str, Path] = {}
     if write_outputs:

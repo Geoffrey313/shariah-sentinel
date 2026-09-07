@@ -1651,8 +1651,43 @@ class FDRSettings(BaseModel):
     firm_aggregation: str = Field(
         default="min_pvalue",
         description="How to collapse each firm's row-level p-values into a "
-        "single firm-level p before applying BH. ``'min_pvalue'`` keeps the "
-        "worst (most significant) row — conservative per framework §7.",
+        "single firm-level p before applying BH. ``'min_pvalue'`` is kept as a "
+        "DIAGNOSTIC only (anti-conservative; rewards long panels); the valid "
+        "firm-level HEADLINE is the exceedance test below.",
+    )
+    # Firm-level HEADLINE: episodic exceedance test. A firm is flagged for suspicious
+    # accounting *episodes*, not persistent anomaly: S_i = max_tau standardized
+    # exceedance count over a pre-registered tau grid, calibrated under a
+    # dependence-preserving AR(1) null whose autocorrelation is set conservatively
+    # above the reference-sample estimate. Type-I control is at the firm-aggregation
+    # stage, conditional on the calibrated row-level p-values.
+    firm_headline: str = Field(
+        default="exceedance",
+        description="Valid firm-level headline statistic. ``'exceedance'``.",
+    )
+    exceedance_taus: tuple[float, ...] = Field(
+        default=(0.005, 0.01, 0.02, 0.05, 0.10),
+        description="Pre-registered exceedance thresholds; S_i = max over this grid "
+        "(the max is calibrated jointly, no per-tau multiplicity leak).",
+    )
+    exceedance_rho_cal: float = Field(
+        default=0.30,
+        description="AR(1) null autocorrelation for calibration -- conservative "
+        "(above the reference-sample estimated null autocorrelation) so type-I "
+        "control is robust to the null-dependence estimate.",
+    )
+    exceedance_B: int = Field(
+        default=100_000,
+        description="Monte-Carlo replicates for the exceedance null (resolves the "
+        "BH p-value floor across the firm panel; 1e5 minimum).",
+    )
+    exceedance_seed: int = Field(
+        default=11,
+        description="Seed for the exceedance null calibration -- determinism.",
+    )
+    exceedance_headline_composite: str = Field(
+        default="p_t_iut",
+        description="Composite the firm-level headline claim is made on.",
     )
 
 
