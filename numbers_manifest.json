@@ -43,32 +43,6 @@
       },
       "firm_quarters": 92872,
       "firms": 1356,
-      "fdr_firm_level": {
-        "p_z_plus": {
-          "q<=0.05": 793,
-          "q<=0.01": 206
-        },
-        "p_z_plus_renorm": {
-          "q<=0.05": 882,
-          "q<=0.01": 0
-        },
-        "p_z_mahalanobis_sq": {
-          "q<=0.05": 744,
-          "q<=0.01": 204
-        },
-        "p_t_iut": {
-          "q<=0.05": 661,
-          "q<=0.01": 319
-        },
-        "p_z_plus_softmax": {
-          "q<=0.05": 906,
-          "q<=0.01": 0
-        },
-        "p_z_plus_orth": {
-          "q<=0.05": 953,
-          "q<=0.01": 0
-        }
-      },
       "fdr_row_level": {
         "p_z_plus": {
           "q<=0.05": 0,
@@ -92,6 +66,115 @@
         },
         "p_z_plus_orth": {
           "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      },
+      "fdr_firm_level_headline": {
+        "method": "exceedance",
+        "composite": "p_t_iut",
+        "label": "HEADLINE \u2014 episodic exceedance, dependence-calibrated (firm-aggregation stage)",
+        "scope": "type-I control is at the firm-aggregation stage, conditional on the calibrated row-level p-values, not the full end-to-end pipeline.",
+        "params": {
+          "rho_cal": 0.3,
+          "B": 100000,
+          "taus": [
+            0.005,
+            0.01,
+            0.02,
+            0.05,
+            0.1
+          ],
+          "seed": 11
+        },
+        "primary_claim": {
+          "q<=0.01": 324
+        },
+        "secondary": {
+          "q<=0.05": 421,
+          "caveat": "controlled up to the calibration rho (~0.30); q<=0.05 is fragile above that."
+        },
+        "discoveries": {
+          "q<=0.05": 421,
+          "q<=0.01": 324
+        }
+      },
+      "fdr_firm_level_panel": {
+        "composite": "p_t_iut",
+        "aggregators": {
+          "min_pvalue": {
+            "label": "diagnostic \u2014 min-p over quarters (anti-conservative, not valid)",
+            "discoveries": {
+              "q<=0.05": 661,
+              "q<=0.01": 319
+            }
+          },
+          "bonferroni": {
+            "label": "valid, arbitrary-dependence, any-quarter (sparse)",
+            "discoveries": {
+              "q<=0.05": 0,
+              "q<=0.01": 0
+            }
+          },
+          "hommel": {
+            "label": "valid, arbitrary-dependence, any-quarter (sparse)",
+            "discoveries": {
+              "q<=0.05": 0,
+              "q<=0.01": 0
+            }
+          },
+          "harmonic": {
+            "label": "valid, persistence (Vovk-Wang harmonic, conservative e*ln K)",
+            "discoveries": {
+              "q<=0.05": 0,
+              "q<=0.01": 0
+            }
+          },
+          "harmonic_sharp": {
+            "label": "valid, persistence (Vovk-Wang harmonic, sharp finite a_{-1,K})",
+            "discoveries": {
+              "q<=0.05": 0,
+              "q<=0.01": 0
+            }
+          },
+          "fisher": {
+            "label": "independence-only (not valid under dependence)",
+            "discoveries": {
+              "q<=0.05": 452,
+              "q<=0.01": 383
+            }
+          },
+          "cauchy": {
+            "label": "sensitivity / heavy-tail (not a headline guarantee without local calibration)",
+            "discoveries": {
+              "q<=0.05": 134,
+              "q<=0.01": 0
+            }
+          }
+        }
+      },
+      "fdr_firm_level_minp_diagnostic": {
+        "p_z_plus": {
+          "q<=0.05": 793,
+          "q<=0.01": 206
+        },
+        "p_z_plus_renorm": {
+          "q<=0.05": 882,
+          "q<=0.01": 0
+        },
+        "p_z_mahalanobis_sq": {
+          "q<=0.05": 744,
+          "q<=0.01": 204
+        },
+        "p_t_iut": {
+          "q<=0.05": 661,
+          "q<=0.01": 319
+        },
+        "p_z_plus_softmax": {
+          "q<=0.05": 906,
+          "q<=0.01": 0
+        },
+        "p_z_plus_orth": {
+          "q<=0.05": 953,
           "q<=0.01": 0
         }
       }
@@ -1449,5 +1532,10 @@
       "python reproduce.py figure-data",
       "python reproduce.py numbers"
     ]
+  },
+  "_firm_headline_note": {
+    "date": "2026-09-07",
+    "change": "Firm-level headline is the dependence-calibrated episodic exceedance test (324 firms at q<=0.01, 421 at q<=0.05); min-p is kept as fdr_firm_level_minp_diagnostic (319), not the headline.",
+    "scope": "Type-I control is at the firm-aggregation stage, conditional on the calibrated row-level p-values. Reproducing these numbers requires the licensed Compustat panels under data/ (see README); the figures were verified against those panels."
   }
 }
