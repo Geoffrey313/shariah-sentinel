@@ -99,6 +99,12 @@ COMPOSITE_P_COLUMNS: tuple[str, ...] = (
     COL_P_Z_PLUS_SOFTMAX,
     COL_P_Z_PLUS_ORTH,
 )
+# Agnostic p-value merging baselines: simple combiners of the per-detector
+# marginal p-values, benchmarked on the same testbed against the covariance-aware
+# composites. Simes assumes PRDS; kept for reference.
+BENCH_BASELINE_METHODS: tuple[str, ...] = (
+    "bonferroni", "simes", "hommel", "arithmetic", "harmonic", "harmonic_sharp",
+)
 KEY_COVERAGE_COLUMNS: tuple[str, ...] = (
     "cogsq",
     "xrdq",
@@ -445,6 +451,54 @@ def _family2_auc_table(family2: pd.DataFrame) -> pd.DataFrame:
     return pivot
 
 
+# Agnostic p-value mergers scored on the same contamination rows as the
+# covariance-aware composites (see _merged_pvalue_metrics). They enter family2
+# with entity_type "composite" and entity_name "merge_<method>"; everything else
+# with entity_type "composite" is a covariance-aware composite lens.
+_MERGER_PREFIX = "merge_"
+
+
+def _family2_baselines_table(family2: pd.DataFrame) -> pd.DataFrame:
+    """Per mechanism, best covariance-aware composite vs best agnostic p-value
+    merger (Bonferroni/Simes/Hommel/Vovk--Wang), on mean AUC over the
+    contamination-rate grid. One row per completed mechanism (mechanisms with no
+    completed contamination cases, i.e. all-NaN AUC, are dropped)."""
+    if family2.empty:
+        return pd.DataFrame()
+    work = family2[
+        (family2.get("entity_type") == "composite") & family2["auc"].notna()
+    ].copy()
+    if work.empty:
+        return pd.DataFrame()
+    work["_is_merger"] = work["entity_name"].astype(str).str.startswith(_MERGER_PREFIX)
+    # mean AUC over the rho grid, per (mechanism, entity)
+    means = (
+        work.groupby(["method", "entity_name", "_is_merger"])["auc"].mean().reset_index()
+    )
+    rows: list[dict[str, object]] = []
+    for method, grp in means.groupby("method"):
+        comp = grp[~grp["_is_merger"]]
+        merg = grp[grp["_is_merger"]]
+        if comp.empty or merg.empty:
+            continue
+        c_best = comp.loc[comp["auc"].idxmax()]
+        m_best = merg.loc[merg["auc"].idxmax()]
+        rows.append(
+            {
+                "Mechanism": str(method),
+                "Best composite": round(float(c_best["auc"]), 3),
+                "Composite lens": str(c_best["entity_name"]),
+                "Best p-merger": round(float(m_best["auc"]), 3),
+                "Merger": str(m_best["entity_name"]).replace(_MERGER_PREFIX, ""),
+                "Delta": round(float(c_best["auc"]) - float(m_best["auc"]), 3),
+            }
+        )
+    out = pd.DataFrame(rows)
+    if not out.empty:
+        out = out.sort_values("Delta", ascending=False).reset_index(drop=True)
+    return out
+
+
 def _detector_contribution_table(
     panel: pd.DataFrame,
     zscores: pd.DataFrame,
@@ -663,6 +717,7 @@ def _write_paper_outputs(
     coverage_df = _coverage_table(panel)
     scoreboard_df = _scoreboard_table(family1, family2, family3, family4)
     contam_auc_df = _family2_auc_table(family2)
+    contam_baselines_df = _family2_baselines_table(family2)
     detector_contrib_df = _detector_contribution_table(panel, zscores, composites, family2, settings)
     availability_df = _method_availability_table(panel, settings, family2)
     family3_df = family3_summary_table(family3)
@@ -689,6 +744,7 @@ def _write_paper_outputs(
     coverage_df.to_csv(paper_dir / "coverage_table.csv", index=False)
     scoreboard_df.to_csv(paper_dir / "scoreboard_table.csv", index=False)
     contam_auc_df.to_csv(paper_dir / "contamination_auc_table.csv", index=False)
+    contam_baselines_df.to_csv(paper_dir / "contamination_baselines_table.csv", index=False)
     detector_contrib_df.to_csv(paper_dir / "detector_contribution_table.csv", index=False)
     availability_df.to_csv(paper_dir / "method_availability_table.csv", index=False)
     family3_df.to_csv(paper_dir / "family3_summary_table.csv", index=False)
@@ -737,6 +793,10 @@ def _write_paper_outputs(
     )
     (paper_dir / "contamination_auc_table.tex").write_text(
         _to_latex_table(contam_auc_df, caption=r"Contamination AUC ($Z^2_{Mah}$) by method and contamination rate.", label="tab:contam_modern", float_format="%.2f"),
+        encoding="utf-8",
+    )
+    (paper_dir / "contamination_baselines_table.tex").write_text(
+        _to_latex_table(contam_baselines_df, caption=r"Contamination AUC: best covariance-aware composite vs best agnostic p-value merger, mean over the contamination-rate grid.", label="tab:contam_baselines", float_format="%.3f"),
         encoding="utf-8",
     )
     (paper_dir / "detector_contribution_table.tex").write_text(
@@ -1207,6 +1267,61 @@ def _composite_metrics(
     return rows
 
 
+def _merged_pvalue_metrics(
+    zscores: pd.DataFrame,
+    active: tuple[str, ...],
+    labels: np.ndarray,
+    alpha: float,
+    *,
+    rho: float,
+    delta: float,
+    method: str,
+    extra: dict[str, object] | None = None,
+) -> list[dict[str, object]]:
+    """AUC / detection metrics for the p-value merging baselines: each
+    combiner merges the per-detector marginal p-values ``p_j = 1 - Phi(z_j)`` row-wise
+    into one firm-quarter p-value, benchmarked like a composite. The AUC score is
+    ``1 - merged_p`` (higher = more anomalous); a detection is ``merged_p < alpha``.
+    NaN per-detector p-values (silent detectors) are dropped per row (variable K)."""
+    from scipy.stats import norm
+
+    from src.analysis.pvalue_merging import merge
+
+    extra = extra or {}
+    cols = [c for c in active if c in zscores.columns]
+    if not cols:
+        return []
+    Z = pd.DataFrame(zscores)[cols].apply(pd.to_numeric, errors="coerce").to_numpy(dtype=float)
+    P = 1.0 - norm.cdf(Z)  # marginal upper-tail p-values; NaN where z is NaN
+    rows: list[dict[str, object]] = []
+    for name in BENCH_BASELINE_METHODS:
+        merged = np.full(P.shape[0], np.nan, dtype=float)
+        for i in range(P.shape[0]):
+            row = P[i][np.isfinite(P[i])]
+            if row.size:
+                merged[i] = merge(row, name)
+        finite = np.isfinite(merged)
+        if finite.sum() == 0:
+            continue
+        flags = merged[finite] < alpha
+        y = labels[finite]
+        row = {
+            "method": method,
+            "rho": rho,
+            "delta": delta,
+            "entity_type": "composite",
+            "entity_name": f"merge_{name}",
+            "pvalue_col": f"merge_{name}",
+            "n_finite": int(finite.sum()),
+            "auc": _safe_auc(y, 1.0 - merged[finite]),
+            "detection_rate": float(flags[y == 1].mean()) if (y == 1).any() else float("nan"),
+            "fpr": float(flags[y == 0].mean()) if (y == 0).any() else float("nan"),
+        }
+        row.update(extra)
+        rows.append(row)
+    return rows
+
+
 def _build_primary_null(
     complete_c: np.ndarray,
     sigma: np.ndarray,
@@ -1427,15 +1542,24 @@ def _score_family1_job(
         null_override=null_override,
         sigma_override=sigma_override,
     )
-    return _composite_metrics(
+    extra = {"baseline_phase5_systematic_detection_rate": baseline_rates}
+    rows = _composite_metrics(
         scored.composites,
         labels,
         settings.robustness_benchmark.alpha,
         rho=rho,
         delta=delta,
         method="correlated_gaussian",
-        extra={"baseline_phase5_systematic_detection_rate": baseline_rates},
+        extra=extra,
     )
+    rows.extend(
+        _merged_pvalue_metrics(
+            scored.zscores, scored.active, labels,
+            settings.robustness_benchmark.alpha,
+            rho=rho, delta=delta, method="correlated_gaussian", extra=extra,
+        )
+    )
+    return rows
 
 
 def _score_family2_job(
@@ -1458,6 +1582,11 @@ def _score_family2_job(
     )
     result_rows.extend(
         _composite_metrics(ctx.composites, labels, rb.alpha, rho=rho, delta=delta, method=method)
+    )
+    result_rows.extend(
+        _merged_pvalue_metrics(
+            ctx.zscores, ctx.active, labels, rb.alpha, rho=rho, delta=delta, method=method
+        )
     )
     return result_rows
 
