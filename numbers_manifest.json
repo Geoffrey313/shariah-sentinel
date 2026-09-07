@@ -72,7 +72,7 @@
       "fdr_firm_level_headline": {
         "method": "exceedance",
         "composite": "p_t_iut",
-        "label": "HEADLINE \u2014 episodic exceedance, dependence-calibrated (firm-aggregation stage)",
+        "label": "HEADLINE — episodic exceedance, dependence-calibrated (firm-aggregation stage)",
         "scope": "type-I control is at the firm-aggregation stage, conditional on the calibrated row-level p-values, not the full end-to-end pipeline.",
         "params": {
           "rho_cal": 0.3,
@@ -102,7 +102,7 @@
         "composite": "p_t_iut",
         "aggregators": {
           "min_pvalue": {
-            "label": "diagnostic \u2014 min-p over quarters (anti-conservative, not valid)",
+            "label": "diagnostic — min-p over quarters (anti-conservative, not valid)",
             "discoveries": {
               "q<=0.05": 661,
               "q<=0.01": 319
@@ -554,6 +554,77 @@
           "$\\rho = 10\\%$": 0.6683414483758089
         }
       ],
+      "contamination_baselines": [
+        {
+          "Mechanism": "threshold_clustering_m1_v2",
+          "best_composite_auc": 0.715,
+          "best_composite_lens": "z_plus",
+          "best_pmerger_auc": 0.679,
+          "best_pmerger": "arithmetic",
+          "delta": 0.036
+        },
+        {
+          "Mechanism": "temporal_spike_m2b",
+          "best_composite_auc": 0.582,
+          "best_composite_lens": "z_plus",
+          "best_pmerger_auc": 0.553,
+          "best_pmerger": "simes",
+          "delta": 0.029
+        },
+        {
+          "Mechanism": "benford_m3_v2",
+          "best_composite_auc": 0.867,
+          "best_composite_lens": "z_mahalanobis_sq",
+          "best_pmerger_auc": 0.825,
+          "best_pmerger": "simes",
+          "delta": 0.042
+        },
+        {
+          "Mechanism": "interstatement_m4_v2",
+          "best_composite_auc": 0.66,
+          "best_composite_lens": "breadth",
+          "best_pmerger_auc": 0.607,
+          "best_pmerger": "arithmetic",
+          "delta": 0.052
+        },
+        {
+          "Mechanism": "m5_cod_break",
+          "best_composite_auc": 0.51,
+          "best_composite_lens": "z_mahalanobis_sq",
+          "best_pmerger_auc": 0.471,
+          "best_pmerger": "arithmetic",
+          "delta": 0.039
+        },
+        {
+          "Mechanism": "m6_seasonal",
+          "best_composite_auc": 0.495,
+          "best_composite_lens": "z_mahalanobis_sq",
+          "best_pmerger_auc": 0.482,
+          "best_pmerger": "hommel",
+          "delta": 0.013
+        },
+        {
+          "Mechanism": "abn_prod_full",
+          "best_composite_auc": 0.581,
+          "best_composite_lens": "breadth",
+          "best_pmerger_auc": 0.522,
+          "best_pmerger": "simes",
+          "delta": 0.059
+        },
+        {
+          "Mechanism": "abn_disx_partial",
+          "best_composite_auc": 0.564,
+          "best_composite_lens": "breadth",
+          "best_pmerger_auc": 0.525,
+          "best_pmerger": "simes",
+          "delta": 0.039
+        }
+      ],
+      "_contamination_baselines_note": {
+        "date": "2026-09-07",
+        "change": "p-value-merger baseline comparison: per contamination mechanism, best covariance-aware composite lens vs best agnostic p-value merger (Bonferroni/Simes/Hommel/Vovk-Wang arithmetic + harmonic in both conservative and sharp finite-factor forms), mean AUC over the contamination-rate grid. The composite family records the best AUC on all 8 completed mechanisms; substantive gains (best AUC>=0.65) on threshold clustering, digit distortion and cross-statement inconsistency; cost-of-debt and seasonal mechanisms stay near chance. abn_disx_full omitted (no completed contamination cases).",
+        "source": "robustness_benchmark/paper_ready/contamination_baselines_table.csv"
+      },
       "family3_evasion_summary": [
         {
           "n_rows": 5,

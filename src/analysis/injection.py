@@ -53,6 +53,7 @@ from src.engine.bootstrap import (
     run_parametric_bootstrap,
     upper_tail_pvalue,
 )
+from src.analysis.pvalue_merging import merge
 from src.engine.composites import (
     breadth,
     iut_statistic,
@@ -78,6 +79,11 @@ COMPOSITE_COLUMNS: tuple[str, ...] = (
     COL_Z_PLUS, COL_Z_PLUS_RENORM, COL_BREADTH, COL_Z_MAHALANOBIS, COL_T_IUT,
     COL_Z_PLUS_SOFTMAX, COL_Z_PLUS_ORTH,
 )
+
+# Agnostic p-value merging baselines: simple combiners of the per-detector
+# marginal p-values, benchmarked against the covariance-aware composites above.
+# Names dispatch through pvalue_merging.merge (harmonic = conservative e*ln K).
+BASELINE_METHODS: tuple[str, ...] = ("bonferroni", "simes", "hommel", "arithmetic", "harmonic", "harmonic_sharp")
 
 
 @dataclass(frozen=True)
@@ -214,6 +220,12 @@ def _per_detector_pvalues(z_rows: np.ndarray) -> np.ndarray:
     """
     p = 1.0 - norm.cdf(z_rows)
     return p
+
+
+def _merge_rows(per_det_p: np.ndarray, method: str) -> np.ndarray:
+    """Apply a p-value merging combiner (:mod:`pvalue_merging`) row-wise across the
+    per-detector marginal p-values, one merged p-value per injected row."""
+    return np.array([merge(row, method) for row in per_det_p], dtype=float)
 
 
 def _theoretical_iut_power(
@@ -508,13 +520,22 @@ def run_phase5(
             injected = _inject_zscores(base_rows, affected, delta)
             composites = _composites_matrix(injected, sigma, weights, settings)
             pvals = _pvalues_for_composites(composites, null)
+            per_det_p = _per_detector_pvalues(injected)
 
-            for composite, alpha in ((c, a) for c in COMPOSITE_COLUMNS for a in inj.alpha_grid):
+            # Agnostic p-value merging baselines over the per-detector marginal
+            # p-values, scored on the same injected rows. Injection rows are complete on
+            # C, so K is constant and no NaN handling is needed.
+            method_pvals = dict(pvals)
+            for m in BASELINE_METHODS:
+                method_pvals[m] = _merge_rows(per_det_p, m)
+
+            for method, alpha in (
+                (mth, a) for mth in COMPOSITE_COLUMNS + BASELINE_METHODS for a in inj.alpha_grid
+            ):
                 power_rows.append(
-                    _power_row(arch.name, delta, composite, alpha, pvals[composite])
+                    _power_row(arch.name, delta, method, alpha, method_pvals[method])
                 )
 
-            per_det_p = _per_detector_pvalues(injected)
             for j, name in enumerate(active):
                 for alpha in inj.alpha_grid:
                     specificity_rows.append(
