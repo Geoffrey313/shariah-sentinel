@@ -1201,6 +1201,92 @@
       },
       "decomposition_rule": "max relative exceedance r=max_j (ratio_j-cap_j)/cap_j; r>0.25 = large source discrepancy / likely filing-data mismatch; r<=0.25 = candidate statistical anomaly; pre-registered, robustness at 0.10 and 0.50",
       "_note": "Scoped ratio-cap exclusion sensitivity. Retaining the ~13% ratio-violating rows (require_ratio_compliance=False) widens the null in this run -> a more conservative count (284/360 vs the canonical 324/421), so the exclusion sharpens power rather than manufacturing discoveries. 90% of retained rows stay GREEN; the 62 that flag RED are dominated by large source discrepancies / likely filing-data mismatches (47 at the pre-registered 25% cut), with a small residual of candidate statistical anomalies among borderline exceedances (15). Reported beside the canonical run; the 324-firm headline is unchanged."
+    },
+    "cluster_bootstrap_robustness": {
+      "scope": "Firm-cluster vs i.i.d.-row resample of the row-level bootstrap null, reported alongside the canonical run; the exceedance calibration (rho_cal) and the headline are NOT changed.",
+      "config": {
+        "rho_cal": 0.3,
+        "exceedance_B": 100000,
+        "bootstrap_B": 10000,
+        "n_outer": 300,
+        "holm_cut_per_composite": 0.0025,
+        "headline_composite": "p_t_iut",
+        "n_ref_C": 9979,
+        "n_firms_C": 1134,
+        "n_firms_obs": 1356
+      },
+      "self_check": {
+        "canonical_frozen_null_red": 2777,
+        "canonical_frozen_null_disc": {
+          "q<=0.01": 324,
+          "q<=0.05": 421
+        },
+        "reproduces_shipped_headline_exactly": true
+      },
+      "row_iid": {
+        "critical_value_t_iut": {
+          "mean": 0.3515,
+          "mc_se": 0.0018
+        },
+        "critical_value_z_mahalanobis": {
+          "mean": 44.586,
+          "mc_se": 0.071
+        },
+        "row_red_count": {
+          "mean": 2760,
+          "p5": 2468,
+          "p95": 3100
+        },
+        "firm_q<=0.01": {
+          "mean": 319.1,
+          "p5": 300,
+          "p95": 339
+        },
+        "firm_q<=0.05": {
+          "mean": 412.3,
+          "p5": 396,
+          "p95": 434
+        }
+      },
+      "firm_cluster": {
+        "critical_value_t_iut": {
+          "mean": 0.3449,
+          "mc_se": 0.0022
+        },
+        "critical_value_z_mahalanobis": {
+          "mean": 44.603,
+          "mc_se": 0.081
+        },
+        "row_red_count": {
+          "mean": 2798,
+          "p5": 2434,
+          "p95": 3216
+        },
+        "firm_q<=0.01": {
+          "mean": 321.2,
+          "p5": 292,
+          "p95": 354
+        },
+        "firm_q<=0.05": {
+          "mean": 413.9,
+          "p5": 384,
+          "p95": 450
+        }
+      },
+      "cluster_vs_row_delta": {
+        "critical_value_t_iut_rel": -0.019,
+        "critical_value_z_mahalanobis_rel": 0.0004,
+        "firm_q<=0.01_abs": 2.1,
+        "firm_q<=0.05_abs": 1.6,
+        "dispersion_widening_factor": 1.6
+      },
+      "guardrails": {
+        "rho_cal_frozen": 0.3,
+        "exceedance_cache_frozen": true,
+        "production_default_resample": "row (i.i.d.)",
+        "canonical_untouched": true
+      },
+      "_note": "Firm-cluster bootstrap robustness of the row-level null. Whole clean firms drawn with replacement (only the last cluster truncated to match B) vs the canonical i.i.d.-row resample. Central critical values and firm discovery counts statistically unchanged (firm q<=0.01 mean 319 row vs 321 cluster; canonical fixed-seed 324/421 inside both bands); MC dispersion ~1.6x wider, as expected when within-firm dependence is preserved. rho_cal=0.30 and the exceedance cache held fixed; only the row-level null varies; production default resampler untouched. Not an invalidation of the exceedance headline (the end-to-end type-I analysis carries the error control). Source: cluster_bootstrap_robustness.py + outputs/scores/mys/cluster_bootstrap/."
     }
   },
   "jurisdictions": {

@@ -89,6 +89,46 @@ def _simulate_non_parametric(
     return reference_rows[idx]
 
 
+def _simulate_non_parametric_cluster(
+    reference_rows: np.ndarray,
+    firm_ids: np.ndarray,
+    n_replicates: int,
+    rng: np.random.Generator,
+) -> np.ndarray:
+    """Resample ``B`` z-vectors from ``C`` by **firm-level cluster** resampling.
+
+    Robustness variant of :func:`_simulate_non_parametric`. Whole firms are
+    drawn with replacement — all of a firm's reference rows enter the resample
+    together — so within-firm dependence is preserved in the resampled pool,
+    instead of the i.i.d. row draw that treats firm-quarters as exchangeable.
+    Firms are sampled until at least ``n_replicates`` rows are collected; the
+    final sampled cluster is then truncated only to match ``B`` exactly, so at
+    most one cluster (the last) is partial and the two variants stay matched on
+    ``B``.
+
+    This does not enter the production pipeline; the default resampler stays the
+    i.i.d. row draw. It only backs the firm-cluster robustness comparison.
+    """
+    firm_ids = np.asarray(firm_ids)
+    if firm_ids.shape[0] != reference_rows.shape[0]:
+        raise ValueError(
+            f"firm_ids ({firm_ids.shape[0]}) must align with reference_rows "
+            f"({reference_rows.shape[0]})."
+        )
+    n_firms = int(np.unique(firm_ids).size)
+    _, inverse = np.unique(firm_ids, return_inverse=True)
+    rows_by_firm = [np.where(inverse == i)[0] for i in range(n_firms)]
+    collected: list[np.ndarray] = []
+    total = 0
+    while total < n_replicates:
+        f = int(rng.integers(0, n_firms))
+        ridx = rows_by_firm[f]
+        collected.append(ridx)
+        total += int(ridx.size)
+    idx = np.concatenate(collected)[:n_replicates]
+    return reference_rows[idx]
+
+
 def _composite_null_from_draws(
     draws: np.ndarray,
     sigma: np.ndarray,
@@ -151,6 +191,8 @@ def run_non_parametric_bootstrap(
     sigma: np.ndarray,
     weights: np.ndarray,
     settings: AnalysisSettings,
+    resample_mode: str = "row",
+    firm_ids: np.ndarray | None = None,
 ) -> BootstrapNullDistributions:
     """Generate the non-parametric joint null distribution.
 
@@ -160,19 +202,41 @@ def run_non_parametric_bootstrap(
             parametric variant so the two are comparable.
         weights: Detector weights for ``Z+`` / ``Z+_renorm``.
         settings: Configuration.
+        resample_mode: ``"row"`` (default, the production i.i.d. row draw) or
+            ``"cluster"`` (robustness: whole-firm cluster draw, requires
+            ``firm_ids``). The default reproduces the canonical pipeline exactly;
+            ``"cluster"`` is used only by the firm-cluster robustness comparison.
+        firm_ids: firm identifier per reference row, required iff
+            ``resample_mode == "cluster"``.
     """
     rng = np.random.default_rng(settings.bootstrap.random_seed)
-    draws = _simulate_non_parametric(
-        reference_rows=reference_rows,
-        n_replicates=settings.bootstrap.n_replicates,
-        rng=rng,
-    )
+    if resample_mode == "cluster":
+        if firm_ids is None:
+            raise ValueError("resample_mode='cluster' requires firm_ids.")
+        draws = _simulate_non_parametric_cluster(
+            reference_rows=reference_rows,
+            firm_ids=firm_ids,
+            n_replicates=settings.bootstrap.n_replicates,
+            rng=rng,
+        )
+        variant = "non_parametric_cluster"
+    elif resample_mode == "row":
+        draws = _simulate_non_parametric(
+            reference_rows=reference_rows,
+            n_replicates=settings.bootstrap.n_replicates,
+            rng=rng,
+        )
+        variant = "non_parametric"
+    else:
+        raise ValueError(
+            f"unknown resample_mode {resample_mode!r} (expected 'row' or 'cluster')."
+        )
     return _composite_null_from_draws(
         draws=draws,
         sigma=sigma,
         weights=weights,
         settings=settings,
-        variant="non_parametric",
+        variant=variant,
     )
 
 
