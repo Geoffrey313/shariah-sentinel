@@ -1152,6 +1152,55 @@
         }
       },
       "_note": "End-to-end type-I of the full scoring pipeline under a global null, calibration frozen from the real clean data. Row-level Holm RED controlled (0.0085<0.01). Firm-level primary claim validated end-to-end at q<=0.01 (0/1312 clean firms); secondary q<=0.05 carries a small quantified excess (2/1312, ~0.5% of 421). Parametric AR(1) sweep stable through rho_true=0.40; the residual is empirical tail structure in a few clean-firm trajectories, not a calibration collapse. rho_cal kept at 0.30 (no post-hoc recalibration)."
+    },
+    "ratio_compliance_sensitivity": {
+      "scope": "scoped sensitivity: retaining the ratio-cap-violating authority rows in C (require_ratio_compliance=False); reported BESIDE the canonical run, never a replacement of the canonical pipeline or the 324-firm headline",
+      "caps": {
+        "ratio_debt_adj": 0.33,
+        "ratio_cash_adj": 0.33,
+        "ratio_income": 0.05
+      },
+      "reference_sample_size": {
+        "canonical_C": 13086,
+        "sensitivity_C": 15458,
+        "retained": 2372
+      },
+      "firm_headline_canonical": {
+        "q<=0.01": 324,
+        "q<=0.05": 421
+      },
+      "firm_headline_sensitivity_retain": {
+        "q<=0.01": 284,
+        "q<=0.05": 360
+      },
+      "row_verdict_flips": {
+        "red_canonical": 2777,
+        "red_sensitivity": 1667,
+        "red_to_notred": 1137,
+        "notred_to_red": 27
+      },
+      "retained_rows": {
+        "n": 2372,
+        "green": 2135,
+        "amber": 175,
+        "red": 62
+      },
+      "red_decomposition_by_rel_exceedance": {
+        "0.10": {
+          "large_source_discrepancy": 55,
+          "candidate_statistical_anomaly": 7
+        },
+        "0.25": {
+          "large_source_discrepancy": 47,
+          "candidate_statistical_anomaly": 15
+        },
+        "0.50": {
+          "large_source_discrepancy": 40,
+          "candidate_statistical_anomaly": 22
+        }
+      },
+      "decomposition_rule": "max relative exceedance r=max_j (ratio_j-cap_j)/cap_j; r>0.25 = large source discrepancy / likely filing-data mismatch; r<=0.25 = candidate statistical anomaly; pre-registered, robustness at 0.10 and 0.50",
+      "_note": "Scoped ratio-cap exclusion sensitivity. Retaining the ~13% ratio-violating rows (require_ratio_compliance=False) widens the null in this run -> a more conservative count (284/360 vs the canonical 324/421), so the exclusion sharpens power rather than manufacturing discoveries. 90% of retained rows stay GREEN; the 62 that flag RED are dominated by large source discrepancies / likely filing-data mismatches (47 at the pre-registered 25% cut), with a small residual of candidate statistical anomalies among borderline exceedances (15). Reported beside the canonical run; the 324-firm headline is unchanged."
     }
   },
   "jurisdictions": {
