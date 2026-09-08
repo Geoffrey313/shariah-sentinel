@@ -74,7 +74,7 @@ integral transform, then aggregated into covariance-aware and unanimity
 composites with non-parametric bootstrap calibration on an authority-specific
 reference sample.
 
-The framework is validated across five Sharia-screening regimes: Malaysia
+The framework is applied across five Sharia-screening regimes: Malaysia
 (SC/SAC), Indonesia (OJK/DES), Pakistan (PSX/KMI), Saudi Arabia (Boubyan
 Capital, a third-party provider list, as there is no official regulator list), and
 the UAE (DFM). Together these span 3,494 firms and 224,576 firm-quarters, two
@@ -82,8 +82,9 @@ list conventions (authorities that publish non-compliant verdicts and
 authorities that publish only compliant constituents), and debt caps ranging
 from 30% to 45%. On the 27-year Malaysian anchor panel (1,356 firms, 92,872
 firm-quarters), the framework flags 2.0% of ratio-compliant firm-quarters as
-anomalous, and under firm-level Benjamini-Hochberg control the unanimity test
-flags 319 firms (23.5%) at q below 0.01. A controlled injection study yields
+anomalous, and under a dependence-calibrated episodic-exceedance test with
+firm-level Benjamini-Hochberg control the unanimity test flags 324 firms
+(23.9%) at q below 0.01 and 421 firms (31.0%) at q below 0.05. A controlled injection study yields
 detection power that is heterogeneous across archetypes, up to 99% at three-sigma
 on the systematic, scale-shift and peer-gaming archetypes, and an end-to-end
 contamination study reports an AUC of 0.86 for digit distortions, while
@@ -170,8 +171,10 @@ read data, then compute, then analyse, then figures.
 
 ## Setup
 
+Requires Python 3.11 (the version the pinned `requirements.txt` was resolved against).
+
 ```bash
-python -m venv .venv && source .venv/bin/activate
+python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
