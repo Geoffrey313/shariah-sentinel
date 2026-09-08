@@ -34,6 +34,7 @@ data/*
 
 # Generated results are reproducible by the code, never stored
 results/
+outputs/
 
 # A fresh `reproduce.py numbers` run writes here; diff it against the tracked
 # reference numbers_manifest.json. Never commit the local run.
