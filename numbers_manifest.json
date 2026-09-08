@@ -1287,6 +1287,63 @@
         "canonical_untouched": true
       },
       "_note": "Firm-cluster bootstrap robustness of the row-level null. Whole clean firms drawn with replacement (only the last cluster truncated to match B) vs the canonical i.i.d.-row resample. Central critical values and firm discovery counts statistically unchanged (firm q<=0.01 mean 319 row vs 321 cluster; canonical fixed-seed 324/421 inside both bands); MC dispersion ~1.6x wider, as expected when within-firm dependence is preserved. rho_cal=0.30 and the exceedance cache held fixed; only the row-level null varies; production default resampler untouched. Not an invalidation of the exceedance headline (the end-to-end type-I analysis carries the error control). Source: cluster_bootstrap_robustness.py + outputs/scores/mys/cluster_bootstrap/."
+    },
+    "calibration_holdout_split": {
+      "config": {
+        "boundary_year": 2019,
+        "boundary_rule": "70/30 by clean-year count (16 train / 7 test years), fixed ex ante",
+        "train_years": [
+          2003,
+          2018
+        ],
+        "test_years": [
+          2019,
+          2025
+        ],
+        "n_train_C": 8218,
+        "n_test_C": 4868,
+        "bootstrap_B": 10000,
+        "rho_cal_unchanged": 0.3
+      },
+      "in_sample_train_C": {
+        "red_rate": 0.0072,
+        "amber_rate": 0.037
+      },
+      "out_of_sample_test_C": {
+        "red_rate": 0.0064,
+        "amber_rate": 0.0362
+      },
+      "per_detector_ks_normal_is_vs_oos": {
+        "z3_mscore": {
+          "in_sample": 0.0001,
+          "out_of_sample": 0.0481
+        },
+        "z8_cost_of_debt": {
+          "in_sample": 0.0002,
+          "out_of_sample": 0.0311
+        },
+        "z57_merged": {
+          "in_sample": 0.0084,
+          "out_of_sample": 0.0347
+        },
+        "z1_benford": {
+          "in_sample": 0.0906,
+          "out_of_sample": 0.0713
+        },
+        "z4_proximity": {
+          "in_sample": 0.0965,
+          "out_of_sample": 0.1366
+        },
+        "_note_parametric": "z2, z6 are parametric detectors (not empirically PIT-normal by construction) and are not part of the drift claim."
+      },
+      "guardrails": {
+        "canonical_untouched": true,
+        "mys_only": true,
+        "bootstrap_cache_reset": true,
+        "headline_324_421_unchanged": true
+      },
+      "scope": "Chronological calibration/test split (MYS anchor): PIT + Sigma-hat + bootstrap null calibrated on the training-year clean rows only, evaluated on the held-out later-year clean rows. Reported alongside the canonical run; the headline and full-C calibration are NOT changed.",
+      "_note": "Chronological calibration/test split. Row-level calibration (empirical PIT, Ledoit-Wolf Sigma-hat, bootstrap null) trained on the training-year clean rows (2003-2018) via the _split hook (canonical pipeline untouched), evaluated on the held-out later-year clean rows (2019-2025). Decision-level calibration transfers: OOS RED 0.64% ~ IS 0.72% (held-out clean rows near the nominal rate). Detector-level PIT diagnostics show mild OOS drift (empirically PIT'd detectors move from KS~0 in-sample to 0.03-0.05 OOS), read as decision-rule stability, not time-invariant detector validity, consistent with the temporal-drift analysis. Boundary 2019 fixed ex ante (70/30 by year). Source: calibration_holdout_split.py + outputs/scores/mys/calibration_holdout/."
     }
   },
   "jurisdictions": {
