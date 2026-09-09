@@ -248,7 +248,7 @@ Writes tables and figures under `data/scores/<country>/robustness_benchmark/`.
 
 Reruns the pipeline under the full model and four ablations (no annual
 cash-flow recovery, no z5/z7 merge, no Monte-Carlo Benford calibration, no
-peer-group Mahalanobis) and reports how each one moves the discovery counts and
+empirical PIT) and reports how each one moves the discovery counts and
 the overlap with the full model.
 
 ```bash
@@ -297,6 +297,31 @@ Prints the evasion rate per epsilon level.
 ```bash
 python reproduce.py all --country mys
 ```
+
+## Robustness and audit scripts
+
+Four standalone scripts at the repository root reproduce the robustness and
+audit blocks reported in the paper. They are complementary audits, run
+separately from `python reproduce.py`, and they require the licensed
+per-country panels under `data/`; their outputs reproduce the corresponding
+blocks of `numbers_manifest.json`.
+
+```bash
+# End-to-end type-I of the full scoring pipeline under a global null
+python simulate_pipeline_typeI.py --country mys
+
+# Ratio-cap exclusion sensitivity: retain the ratio-cap violators
+python sensitivity_ratio_compliance.py --country mys
+
+# Chronological calibration/test split on the anchor
+python calibration_holdout_split.py --country mys
+
+# Firm-cluster bootstrap of the row-level null
+python cluster_bootstrap_robustness.py --country mys
+```
+
+Each script accepts `--country` and script-specific options (`--seed`,
+`--smoke` for a fast pass, and bootstrap-size flags); run with `-h` for details.
 
 ## Checking your reproduction
 
