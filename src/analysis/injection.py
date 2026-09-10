@@ -1,11 +1,11 @@
 """Phase 5 — injection-based power analysis (main research contribution).
 
-Validates the framework's detection claim:
+Validates the paper's detection claim:
 
     "theoretical bounds on detection sensitivity as a function of
      manipulation magnitude δ and sample size n" — paper abstract.
 
-First-ship approach — **z-score-level injection**. For each
+Approach: **z-score-level injection**. For each
 (archetype, δ) cell, Phase 5:
 
 1. Samples ``N_inject`` honest rows from ``C``.
@@ -17,13 +17,12 @@ First-ship approach — **z-score-level injection**. For each
    (representing ``H_0``) and measures the detection rate — the fraction
    of injected rows with ``p < α``.
 
-This validates framework §5.5 directly: with the ``systematic``
+This validates the theoretical claim directly: with the ``systematic``
 archetype (uniform shift on all detectors), the empirical ``T_IUT``
 detection rate should match the theoretical curve
-``π(δ) = Φ(δ − c_α)^k``. Raw-data-level injection (perturb Compustat →
-rebuild panel → rerun detectors) is a follow-up extension.
+``π(δ) = Φ(δ − c_α)^k``.
 
-Deliverables (under ``outputs/scores/<country>/phase5_injection/``):
+Outputs (under ``outputs/scores/<country>/phase5_injection/``):
 
 - ``power_curves.csv``       — detection rate per (archetype, δ,
   composite, α).
@@ -31,7 +30,7 @@ Deliverables (under ``outputs/scores/<country>/phase5_injection/``):
   alone flags at ``α = primary_alpha_for_mde``.
 - ``minimum_detectable_effect.csv`` — smallest δ such that detection
   rate ≥ ``power_target`` at the primary α, per (archetype, composite).
-- ``theoretical_empirical_comparison.csv`` — framework §5.5 benchmark
+- ``theoretical_empirical_comparison.csv`` — theoretical benchmark
   vs empirical ``T_IUT`` detection rate on the ``systematic`` archetype.
 - ``phase5_injection.json``  — summary + timings.
 """
@@ -233,7 +232,7 @@ def _theoretical_iut_power(
     alpha: float,
     k: int,
 ) -> np.ndarray:
-    """Framework §5.5 power formula ``π(δ) = Φ(δ − c_α)^k``.
+    """Power formula ``π(δ) = Φ(δ − c_α)^k``.
 
     ``c_α`` is the one-sided critical value from the null CDF
     ``P(T_IUT > c_α) = α`` under joint independence with ``z_j ∼ N(0, 1)``;
@@ -378,11 +377,11 @@ def _theoretical_table(
     settings: AnalysisSettings,
     k: int,
 ) -> pd.DataFrame:
-    """Empirical vs framework §5.5 power for the ``systematic`` archetype.
+    """Empirical vs theoretical power for the ``systematic`` archetype.
 
-    The framework derives ``π(δ) = Φ(δ − c_α)^k`` under independent
-    ``N(0, 1)`` detectors. Any gap is attributable to the observed
-    detector correlations (z5–z7 in particular, see Sprint 2 findings).
+    ``π(δ) = Φ(δ − c_α)^k`` holds under independent ``N(0, 1)`` detectors.
+    Any gap is attributable to the observed detector correlations (z5–z7 in
+    particular).
     """
     sub = empirical_power[
         (empirical_power["archetype"] == "systematic")
@@ -425,7 +424,7 @@ def run_phase5(
         sigma_override: Optional in-memory covariance matrix aligned either
             as a labelled DataFrame or raw ndarray. When provided, Phase 5
             does not reload the Ledoit-Wolf covariance from disk.
-        write_outputs: If ``True``, persist deliverables under
+        write_outputs: If ``True``, persist outputs under
             ``settings.output_layout.phase5_dir()``.
 
     Returns:
@@ -581,7 +580,7 @@ def run_phase5(
         mde.to_csv(paths["mde"], index=False)
         theoretical.to_csv(paths["theoretical"], index=False)
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
-        log.info("phase5: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase5: wrote %d outputs to %s", len(paths), out_dir)
 
     return Phase5Outcome(
         power_curves=power_curves,

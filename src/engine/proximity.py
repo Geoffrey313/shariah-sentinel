@@ -4,9 +4,9 @@ This detector implements the Working Paper's ``j=4`` idea: firms that manage
 their Sharia ratios to stay just below a threshold should exhibit abnormally
 small normalized distances to that threshold.
 
-Framework §9.2 D4 derives the raw statistic ``T = √(12Q)(1/2 − d̄)`` from the
-null model ``r_t ∼ Uniform(0, τ)``. That null describes unmanaged firms, not
-the SAC-compliant sample the project uses as reference ``C`` — compliant firms
+The raw statistic ``T = √(12Q)(1/2 − d̄)`` derives from the null model
+``r_t ∼ Uniform(0, τ)``. That null describes unmanaged firms, not
+the SAC-compliant sample used as reference ``C`` — compliant firms
 deliberately keep buffer below ``τ``, so ``d̄ > 1/2`` systematically and the
 raw statistic is structurally negative on ``C``.
 
@@ -42,7 +42,7 @@ SAC_THRESHOLDS: dict[str, float] = SAC_MY.ratio_thresholds()
 MIN_QUARTERS: int = 4
 
 # Minimum number of distinct-firm raw statistics required on ``C`` before the
-# empirical PIT reference is considered usable. The framework §9.2 D3 floor
+# empirical PIT reference is considered usable. The D3 floor
 # of 30 is reused here — same logic (a stable empirical CDF needs enough
 # independent samples); the detector falls back to NaN otherwise so Phase 4
 # can detect the miss.
@@ -50,7 +50,7 @@ MIN_REF_FIRMS: int = 30
 
 
 def _proximity_raw_statistic(ratios: np.ndarray, threshold: float) -> float:
-    """Raw §9.2 D4 statistic ``T = √(12Q)(1/2 − d̄)`` for one ratio history.
+    """Raw statistic ``T = √(12Q)(1/2 − d̄)`` for one ratio history.
 
     Compliant firms with ``r_t`` concentrated near 0 produce ``d̄ > 1/2`` and
     therefore negative ``T``; manipulators clustering near ``τ`` produce

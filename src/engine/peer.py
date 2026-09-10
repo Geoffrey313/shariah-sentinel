@@ -8,14 +8,10 @@ This detector implements the active ``j=7`` Working Paper detector:
 - otherwise fall back to the global cross-section on ``C``
 - apply the Hotelling/F or chi-square PIT depending on the reference regime
 
-Current peer hierarchy:
+Peer hierarchy:
 - try the configured grouping columns in order
 - use the first sufficiently populated peer bucket
 - otherwise fall back to the global cross-sectional ``C``
-
-Future extension explicitly planned:
-- super-sector mappings or grouped sectors for thin peer buckets
-- optional size-conditioned peers layered on top of sector groups
 """
 from __future__ import annotations
 
@@ -248,11 +244,6 @@ def detect_peer(df: pd.DataFrame) -> pd.Series:
     Returns:
         A series aligned on ``df.index``. Values are ``NaN`` when the reference
         set is too small or when the observation cannot be scored.
-
-    Notes:
-        The current implementation already documents the future extension path:
-        thin sectors can later be mapped to grouped sectors or super-sectors
-        before the final global fallback is used.
     """
     ratios = get_canonical_sharia_ratios(df)
     if ratios.empty:

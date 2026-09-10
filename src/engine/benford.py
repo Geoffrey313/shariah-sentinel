@@ -40,7 +40,7 @@ DEFAULT_MC_REPLICATES: int = 20_000
 DEFAULT_MC_SEED: int = 2
 
 # Minimum number of C reference z1 values required for the second-stage
-# empirical PIT. Reuses the same §9.2 D3 floor as the other detectors that
+# empirical PIT. Reuses the same D3 floor as the other detectors that
 # calibrate against C.
 _MIN_EMPIRICAL_PIT_REF: int = 30
 

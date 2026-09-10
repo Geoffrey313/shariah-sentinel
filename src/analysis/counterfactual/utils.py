@@ -234,7 +234,7 @@ class Family3FastRowEvaluator:
         # Computed once and stored so every method below (`_recompute_z4`,
         # `evaluate_details`) reads the panel's actual methodology/country
         # thresholds instead of the hardcoded Malaysia-only `SAC_THRESHOLDS`
-        # (see profiling notes) -- required for future non-MY panels.
+        # -- required for non-MY panels.
         self._thresholds = thresholds_for_panel(panel)
 
         if self._z4_idx is not None and "gvkey" in panel.columns:

@@ -1,18 +1,17 @@
 """Phase 2 — covariance estimation and dependence structure.
 
-Framework §4.2 designates Ledoit-Wolf shrinkage as the production ``Σ̂``
-consumed by:
+Ledoit-Wolf shrinkage is the production ``Σ̂`` consumed by:
 
 - the parametric joint bootstrap of Phase 4 (``z^(b) ∼ N(0, Σ̂_LW)``),
-- the Mahalanobis composite ``Z²_Mah = z' Σ̂_LW⁻¹ z`` (§4.1),
-- the IUT p-value under dependence (§5.3).
+- the Mahalanobis composite ``Z²_Mah = z' Σ̂_LW⁻¹ z``,
+- the IUT p-value under dependence.
 
 This module estimates ``Σ̂`` three ways so Phase 4 can sanity-check
 sensitivity, and exposes dependence diagnostics that detect pathological
 cases early (quasi-singular covariance, detectors dominated by sector/year
 confounds).
 
-Deliverables (under ``outputs/scores/<country>/phase2_dependence/``):
+Outputs (under ``outputs/scores/<country>/phase2_dependence/``):
 
 - ``dependence.json`` — shrinkage intensity ``λ``, ``K_eff``, Pearson/Spearman
   matrices, PCA explained-variance and singular-flag.
@@ -20,7 +19,7 @@ Deliverables (under ``outputs/scores/<country>/phase2_dependence/``):
 - ``cov_mcd.parquet`` — robust MCD covariance (sensitivity check).
 - ``pearson.parquet`` / ``spearman.parquet`` — raw correlation matrices.
 - ``partial_correlations.parquet`` — partial correlations net of configured
-  control columns (framework §4.2).
+  control columns.
 """
 from __future__ import annotations
 
@@ -109,7 +108,7 @@ def _pca_diagnostics(df: pd.DataFrame, variance_cutoff: float) -> dict:
     ``K_eff`` is the smallest number of principal components whose
     cumulative explained-variance share exceeds ``variance_cutoff``. It is
     the working definition of "how many independent directions does the
-    detector battery actually produce" (framework §4.2).
+    detector battery actually produce".
     """
     pca = PCA().fit(df.to_numpy(dtype=float))
     explained = np.asarray(pca.explained_variance_ratio_, dtype=float)
@@ -272,7 +271,7 @@ def run_phase2(
         if mcd_cov is not None:
             paths["mcd"] = out_dir / "cov_mcd.parquet"
             mcd_cov.to_parquet(paths["mcd"])
-        log.info("phase2: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase2: wrote %d outputs to %s", len(paths), out_dir)
 
     return DependenceOutcome(
         summary=summary,

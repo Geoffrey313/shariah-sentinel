@@ -1,4 +1,4 @@
-"""Unified scoring orchestrator — Sprint 1 through Sprint 5.
+"""Unified scoring orchestrator.
 
 Runs the full Phase 0–7 pipeline with optional sector exclusion.
 When ``exclude_sectors`` is set, outputs go to a separate directory
@@ -102,7 +102,7 @@ def run_full_analysis(
 
     summaries = {}
 
-    # Sprint 1 — Phase 0 + Phase 3
+    # Phase 0 + Phase 3
     log.info("run_analysis: Phase 0 — reference sample")
     p0 = run_phase0(panel=panel, settings=settings, write_outputs=True)
     summaries["phase0"] = p0.summary
@@ -112,7 +112,7 @@ def run_full_analysis(
     p3 = run_phase3(panel=p0.panel, settings=settings, write_outputs=True)
     summaries["phase3"] = p3.summary
 
-    # Sprint 2 — z-scores + Phase 1 + Phase 2
+    # z-scores + Phase 1 + Phase 2
     log.info("run_analysis: computing z-scores")
     zc = compute_zscores(panel=p0.panel, settings=settings, write_outputs=True)
 
@@ -132,7 +132,7 @@ def run_full_analysis(
     summaries["phase2"] = p2.summary
     log.info("run_analysis: K_eff = %d", p2.summary["pca"]["k_eff"])
 
-    # Sprint 3 — Phase 4 + Phase 4b
+    # Phase 4 + Phase 4b
     log.info("run_analysis: Phase 4 — composites + bootstrap")
     p4 = run_phase4(
         panel=p0.panel, settings=settings,
@@ -147,7 +147,7 @@ def run_full_analysis(
     )
     summaries["phase4b"] = p4b.summary
 
-    # Sprint 4 — Phase 5
+    # Phase 5
     log.info("run_analysis: Phase 5 — injection power study")
     p5 = run_phase5(
         panel=p0.panel, settings=settings,
@@ -155,7 +155,7 @@ def run_full_analysis(
     )
     summaries["phase5"] = p5.summary
 
-    # Sprint 5 — Phase 6 + Phase 7
+    # Phase 6 + Phase 7
     log.info("run_analysis: Phase 6 — robustness")
     p6 = run_phase6(
         panel=p0.panel, settings=settings,

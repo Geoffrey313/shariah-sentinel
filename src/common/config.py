@@ -1,19 +1,18 @@
 """Pydantic configuration for the scoring analysis pipeline.
 
 Every threshold used by Phase 0..7 lives here — the modules must not hardcode
-numerical constants of their own. Each field documents the framework section
-(``docs/math-framework/framework.md``) it derives from so a reviewer can trace
-a value back to the methodology.
+numerical constants of their own. Each field documents what it controls so a
+reviewer can trace a value back to the methodology.
 
 The settings are grouped by concern:
 
 - :class:`ReferenceSampleSettings` — Phase 0 (C / C_s / peer groups).
 - :class:`DetectorPreconditionSettings` — Phase 3 row-level preconditions
-  per detector, framework §9.2.
+  per detector.
 - :class:`PanelSchemaSettings` — column names the pipeline expects on the
   panel parquet (explicit so that a rename in ``panel_creation`` surfaces as
   a config change rather than a silent mismatch).
-- :class:`OutputLayoutSettings` — where JSON / parquet / CSV deliverables
+- :class:`OutputLayoutSettings` — where JSON / parquet / CSV outputs
   are written.
 - :class:`AnalysisSettings` — top-level composite, the only object callers
   normally instantiate.
@@ -99,11 +98,10 @@ class PanelSchemaSettings(BaseModel):
 class ReferenceSampleSettings(BaseModel):
     """Inclusion rules and size thresholds for the honest reference samples.
 
-    The framework (§9.2 D3, §9.2 D5, §9.2 D7) requires three reference
-    populations:
+    Three reference populations are required:
 
     - ``C`` — global presumed-honest sample, used for D3 empirical PIT and for
-      the non-parametric bootstrap (framework §3.3).
+      the non-parametric bootstrap.
     - ``C_s`` — sector-stratified slices of ``C``, used for D5 cross-statement
       residual standardisation and D7 peer moments.
     - Peer groups — the subset of ``C`` sharing a firm's peer key, used for
@@ -121,8 +119,8 @@ class ReferenceSampleSettings(BaseModel):
         default=True,
         description="Additionally require ``clean_sample == 1`` (no synthetic "
         "row, no ffilled balance sheet, ratios within sanity bounds). This "
-        "replaces the ``not delisted ∧ clean_sample == 1`` clause of "
-        "analysis_plan_v2.md — no delisting flag exists today.",
+        "replaces the ``not delisted ∧ clean_sample == 1`` clause — no "
+        "delisting flag exists today.",
     )
     require_ratio_compliance: bool = Field(
         default=True,
@@ -138,21 +136,21 @@ class ReferenceSampleSettings(BaseModel):
     min_global_size: int = Field(
         default=30,
         ge=1,
-        description="Minimum ``|C|``. Framework §9.2 D3 requires at least 30 "
-        "rows for a stable empirical PIT [Thomas 1989].",
+        description="Minimum ``|C|``. At least 30 rows are required for a "
+        "stable empirical PIT [Thomas 1989].",
     )
     min_sector_size: int = Field(
         default=27,
         ge=1,
-        description="Minimum ``|C_s|`` per sector. Framework §9.2 D5 requires "
-        "``|C_s| ≥ 3q`` for stable covariance estimation. With the enriched "
-        "z5 detector we now use ``q = 9`` cross-statement relations, hence 27.",
+        description="Minimum ``|C_s|`` per sector. ``|C_s| ≥ 3q`` is required "
+        "for stable covariance estimation. The enriched z5 detector uses "
+        "``q = 9`` cross-statement relations, hence 27.",
     )
     peer_group_min_size: int = Field(
         default=9,
         ge=1,
-        description="Minimum ``N_peer``. Framework §9.2 D7 recommends "
-        "``N_peer ≥ 3p`` where ``p`` is the number of ratios in the peer "
+        description="Minimum ``N_peer``. ``N_peer ≥ 3p`` is recommended "
+        "where ``p`` is the number of ratios in the peer "
         "Mahalanobis distance. Default ``p = 3`` (debt/cash/income SAC "
         "ratios) gives 9.",
     )
@@ -169,10 +167,10 @@ class ReferenceSampleSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Phase 3 — per-detector preconditions (framework §9.2)
+# Phase 3 — per-detector preconditions
 # ─────────────────────────────────────────────────────────────────────────────
 class BenfordPreconditionSettings(BaseModel):
-    """z1 Benford precondition — framework §9.2 D1.
+    """z1 Benford precondition.
 
     Supports two calibration paths:
 
@@ -185,10 +183,10 @@ class BenfordPreconditionSettings(BaseModel):
     - ``auto`` — picks MC when ``N_fig < chi2_minimum_figures`` and χ²
       otherwise. Lets a single run score small and large windows uniformly.
 
-    Sprint 1 originally found 0% z1 coverage because the 4-quarter × 22-
-    column pool never reached 109 figures. Sprint 4 confirmed no other
-    detector catches ``round_number`` manipulation well (z2 peaks at 64%
-    @ δ=2). ``auto`` mode + an 8-quarter window brings z1 online.
+    A 4-quarter × 22-column pool never reaches 109 figures, so it yields 0%
+    z1 coverage; no other detector catches ``round_number`` manipulation well
+    (z2 peaks at 64% @ δ=2). ``auto`` mode + an 8-quarter window brings z1
+    online.
     """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -213,9 +211,9 @@ class BenfordPreconditionSettings(BaseModel):
         default=8,
         ge=1,
         description="Rolling window over which figures are pooled for one "
-        "firm-quarter score. Widened from 4 → 8 after Sprint 1 — 4 × 22 "
-        "columns max = 88 figures < 109 floor (structural dead-zone). "
-        "8 × 22 = 176 max, ~60–120 typical.",
+        "firm-quarter score. 8 rather than 4 because 4 × 22 columns max = 88 "
+        "figures < 109 floor (structural dead-zone). 8 × 22 = 176 max, "
+        "~60–120 typical.",
     )
     calibration_mode: str = Field(
         default="auto",
@@ -259,7 +257,7 @@ class BenfordPreconditionSettings(BaseModel):
 
 
 class ZipfPreconditionSettings(BaseModel):
-    """z2 Zipf precondition — framework §9.2 D2."""
+    """z2 Zipf precondition."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
@@ -277,7 +275,7 @@ class ZipfPreconditionSettings(BaseModel):
 
 
 class MScorePreconditionSettings(BaseModel):
-    """z3 M-Score precondition — framework §9.2 D3."""
+    """z3 M-Score precondition."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
@@ -289,16 +287,15 @@ class MScorePreconditionSettings(BaseModel):
     )
     require_same_sector_reference: bool = Field(
         default=True,
-        description="Framework §9.2 D3 requires ``C`` to be sectorially "
-        "homogeneous — mark rows of sectors with ``|C_s| < min_reference_size``"
-        " as invalid.",
+        description="``C`` must be sectorially homogeneous — mark rows of "
+        "sectors with ``|C_s| < min_reference_size`` as invalid.",
     )
 
 
 class ThresholdProximityPreconditionSettings(BaseModel):
-    """z4 threshold-proximity precondition — framework §9.2 D4.
+    """z4 threshold-proximity precondition.
 
-    The minimum history length follows the §9.2 D4 power formula::
+    The minimum history length follows the power formula::
 
         Q_min ≈ (z_{1-α} + z_{1-β})^2 / (3 (1 - δ_m)^2)
 
@@ -336,7 +333,7 @@ class ThresholdProximityPreconditionSettings(BaseModel):
 
 
 class CrossStatementPreconditionSettings(BaseModel):
-    """z5 cross-statement precondition — framework §9.2 D5."""
+    """z5 cross-statement precondition."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
@@ -350,8 +347,8 @@ class CrossStatementPreconditionSettings(BaseModel):
     sector_reference_multiplier: int = Field(
         default=3,
         ge=1,
-        description="Multiplier ``m`` in ``|C_s| ≥ m q``. Framework §9.2 D5 "
-        "uses 3 for stable covariance estimation.",
+        description="Multiplier ``m`` in ``|C_s| ≥ m q``. 3 gives stable "
+        "covariance estimation.",
     )
 
     @property
@@ -361,7 +358,7 @@ class CrossStatementPreconditionSettings(BaseModel):
 
 
 class TemporalPreconditionSettings(BaseModel):
-    """z6 temporal-consistency precondition — framework §9.2 D6."""
+    """z6 temporal-consistency precondition."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
@@ -369,12 +366,12 @@ class TemporalPreconditionSettings(BaseModel):
         default=8,
         ge=2,
         description="Number of past quarters required to estimate moving "
-        "mean/std of Δm_i. Framework §9.2 D6 proposes 8.",
+        "mean/std of Δm_i.",
     )
 
 
 class PeerPreconditionSettings(BaseModel):
-    """z7 peer-consistency precondition — framework §9.2 D7."""
+    """z7 peer-consistency precondition."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
@@ -387,8 +384,8 @@ class PeerPreconditionSettings(BaseModel):
     peer_size_multiplier: int = Field(
         default=3,
         ge=1,
-        description="Multiplier in ``N_peer ≥ m p``. Framework §9.2 D7 uses 3 "
-        "so the ``χ²_p`` approximation of Hotelling T² is acceptable.",
+        description="Multiplier in ``N_peer ≥ m p``. 3 keeps the ``χ²_p`` "
+        "approximation of Hotelling T² acceptable.",
     )
 
     @property
@@ -398,7 +395,7 @@ class PeerPreconditionSettings(BaseModel):
 
 
 class DetectorPreconditionSettings(BaseModel):
-    """Row-level preconditions for detectors z1..z7, framework §9.2."""
+    """Row-level preconditions for detectors z1..z7."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
@@ -429,7 +426,7 @@ class DetectorPreconditionSettings(BaseModel):
 # Output layout
 # ─────────────────────────────────────────────────────────────────────────────
 class OutputLayoutSettings(BaseModel):
-    """Where Sprint 1 deliverables are written.
+    """Where pipeline outputs are written.
 
     Mirrors the ``panel_creation`` convention: one folder per country under
     ``outputs/`` and one subfolder per analysis phase.
@@ -452,7 +449,7 @@ class OutputLayoutSettings(BaseModel):
     )
     scores_relative: Path = Field(
         default=Path("scores/{country}"),
-        description="Root of scoring deliverables. Each phase writes a "
+        description="Root of scoring outputs. Each phase writes a "
         "subfolder under this path.",
     )
     phase0_subdir: str = Field(default="phase0_reference_sample")
@@ -474,11 +471,11 @@ class OutputLayoutSettings(BaseModel):
         return self.root / Path(str(self.panel_relative).format(country=self.country_code_lower))
 
     def phase0_dir(self) -> Path:
-        """Folder for Phase 0 deliverables."""
+        """Folder for Phase 0 outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase0_subdir
 
     def phase3_dir(self) -> Path:
-        """Folder for Phase 3 deliverables."""
+        """Folder for Phase 3 outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase3_subdir
 
     def zscores_dir(self) -> Path:
@@ -486,35 +483,35 @@ class OutputLayoutSettings(BaseModel):
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.zscores_subdir
 
     def phase1_dir(self) -> Path:
-        """Folder for Phase 1 (null calibration) deliverables."""
+        """Folder for Phase 1 (null calibration) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase1_subdir
 
     def phase2_dir(self) -> Path:
-        """Folder for Phase 2 (dependence) deliverables."""
+        """Folder for Phase 2 (dependence) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase2_subdir
 
     def phase4_dir(self) -> Path:
-        """Folder for Phase 4 (composites + bootstrap) deliverables."""
+        """Folder for Phase 4 (composites + bootstrap) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase4_subdir
 
     def phase4b_dir(self) -> Path:
-        """Folder for Phase 4b (confidence qualifier κ) deliverables."""
+        """Folder for Phase 4b (confidence qualifier κ) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase4b_subdir
 
     def phase5_dir(self) -> Path:
-        """Folder for Phase 5 (injection study) deliverables."""
+        """Folder for Phase 5 (injection study) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase5_subdir
 
     def phase6_dir(self) -> Path:
-        """Folder for Phase 6 (robustness) deliverables."""
+        """Folder for Phase 6 (robustness) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase6_subdir
 
     def phase7_dir(self) -> Path:
-        """Folder for Phase 7 (FDR) deliverables."""
+        """Folder for Phase 7 (FDR) outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.phase7_subdir
 
     def robustness_benchmark_dir(self) -> Path:
-        """Folder for cross-family robustness benchmark deliverables."""
+        """Folder for cross-family robustness benchmark outputs."""
         return self.root / Path(str(self.scores_relative).format(country=self.country_code_lower)) / self.robustness_benchmark_subdir
 
     def figures_dir(self) -> Path:
@@ -527,13 +524,13 @@ class OutputLayoutSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 2 — Phase 1 null calibration
+# Phase 1 null calibration
 # ─────────────────────────────────────────────────────────────────────────────
 class CalibrationSettings(BaseModel):
     """Phase 1 — per-detector null calibration on reference sample ``C``.
 
-    The framework (§9.1) claims each ``z_j`` is marginally ``N(0, 1)`` under
-    ``H_0`` once the PIT is correctly applied. Phase 1 verifies this
+    Each ``z_j`` is marginally ``N(0, 1)`` under ``H_0`` once the PIT is
+    correctly applied. Phase 1 verifies this
     empirically on ``C`` and flags any detector whose parametric null is
     rejected so Phase 4 can fall back to non-parametric bootstrap on that
     detector.
@@ -543,7 +540,7 @@ class CalibrationSettings(BaseModel):
 
     target_mean: float = Field(
         default=0.0,
-        description="Expected ``E[z_j]`` under ``H_0`` (framework §9.1).",
+        description="Expected ``E[z_j]`` under ``H_0``.",
     )
     target_std: float = Field(
         default=1.0,
@@ -580,7 +577,7 @@ class CalibrationSettings(BaseModel):
         default=99,
         ge=10,
         description="Number of evenly-spaced quantiles stored for QQ-plot "
-        "reconstruction in the deliverable JSON.",
+        "reconstruction in the output JSON.",
     )
     min_subsample_size: int = Field(
         default=30,
@@ -597,14 +594,14 @@ class CalibrationSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 2 — Phase 2 Σ̂ estimation
+# Phase 2 Σ̂ estimation
 # ─────────────────────────────────────────────────────────────────────────────
 class DependenceSettings(BaseModel):
     """Phase 2 — covariance estimation and dependence structure.
 
-    Framework §4.2 designates Ledoit-Wolf shrinkage as the production ``Σ̂``;
-    MCD is kept as a robustness sensitivity check. PCA flags quasi-singular
-    covariance structures that would destabilise ``Z²_Mah`` (§4.1).
+    Ledoit-Wolf shrinkage is the production ``Σ̂``; MCD is kept as a
+    robustness sensitivity check. PCA flags quasi-singular covariance
+    structures that would destabilise ``Z²_Mah``.
     """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -648,18 +645,18 @@ class DependenceSettings(BaseModel):
         default=("sector", "fyearq"),
         description="Panel columns regressed out before partial-correlation "
         "estimation — reveals residual detector dependence net of sector/year"
-        " confounds (framework §4.2 mentions this explicitly).",
+        " confounds.",
     )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 2 — z-score cache
+# z-score cache
 # ─────────────────────────────────────────────────────────────────────────────
 class DetectorMergeRule(BaseModel):
     """One post-computation merge of correlated detectors into a single column.
 
-    Sprint 2 + Sprint 4 findings identified z5 (cross-statement coherence) and
-    z7 (peer consistency) as structurally collinear (ρ=0.82 Pearson, 0.83
+    z5 (cross-statement coherence) and z7 (peer consistency) are structurally
+    collinear (ρ=0.82 Pearson, 0.83
     partial). Both are Mahalanobis-style scores on sector-relative ratio
     vectors. Merging them avoids double-counting the shared direction in the
     joint bootstrap and composites.
@@ -723,7 +720,7 @@ class ZScoreSettings(BaseModel):
     temporal_mode: str = Field(
         default="diagonal",
         description="Mode passed to ``detect_temporal`` — ``'diagonal'`` is "
-        "the phase-1 ``sum(Z_i²)`` variant (framework §9.2 D6, solution 2).",
+        "the phase-1 ``sum(Z_i²)`` variant.",
     )
     include_detectors: tuple[str, ...] = Field(
         default=("z1", "z2", "z3", "z4", "z5", "z6", "z7", "z8"),
@@ -741,8 +738,8 @@ class ZScoreSettings(BaseModel):
             ),
         ),
         description="Post-computation merges applied to the raw z-score "
-        "frame. Default merges z5+z7 → z57 (max) — see Sprint 2/4 findings "
-        "on the structural collinearity of peer-style detectors.",
+        "frame. Default merges z5+z7 → z57 (max) given the structural "
+        "collinearity of peer-style detectors.",
     )
 
     def active_detectors(self) -> tuple[str, ...]:
@@ -763,20 +760,20 @@ class ZScoreSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 3 — Phase 4 composites + joint bootstrap
+# Phase 4 composites + joint bootstrap
 # ─────────────────────────────────────────────────────────────────────────────
 class CompositeSettings(BaseModel):
-    """Phase 4 — composite aggregation across detectors (framework §3–§6).
+    """Phase 4 — composite aggregation across detectors.
 
     The four composites live side-by-side so each question they answer can
     be reported independently:
 
-    - ``Z+``              — §3.2 truncated sum (sensitive to any single
+    - ``Z+``              — truncated sum (sensitive to any single
       strong signal, diluted by silent detectors).
-    - ``Z+_renorm``       — §6.2 dilution-free intensity on active set.
-    - ``B_A``             — §6.4 breadth (share of detectors that fired).
-    - ``Z²_Mah``          — §4.1 covariance-aware joint anomaly.
-    - ``T_IUT``           — §5.2 unanimity test.
+    - ``Z+_renorm``       — dilution-free intensity on active set.
+    - ``B_A``             — breadth (share of detectors that fired).
+    - ``Z²_Mah``          — covariance-aware joint anomaly.
+    - ``T_IUT``           — unanimity test.
 
     All five share the same detector ordering and the same Σ̂ (when needed),
     so one joint bootstrap simultaneously calibrates all of them.
@@ -788,15 +785,14 @@ class CompositeSettings(BaseModel):
         default="uniform",
         description="Weight scheme for ``Z+`` / ``Z+_renorm``. ``'uniform'`` "
         "sets ``w_j = 1 / k`` on the detectors that produced any finite "
-        "score on ``C``. Other modes to be added once a "
-        "calibration strategy is finalised (framework §8 task 4).",
+        "score on ``C``.",
     )
     active_set_threshold: float = Field(
         default=0.0,
         description="Z-score above which a detector is counted as active in "
-        "``A = {j : z_j > active_set_threshold}`` (framework §6.2). The "
-        "framework uses 0; kept configurable in case a stricter lower bound "
-        "is needed to suppress noise.",
+        "``A = {j : z_j > active_set_threshold}``. Defaults to 0; kept "
+        "configurable in case a stricter lower bound is needed to suppress "
+        "noise.",
     )
     min_active_for_renorm: int = Field(
         default=1,
@@ -820,7 +816,7 @@ class CompositeSettings(BaseModel):
 
 
 class BootstrapSettings(BaseModel):
-    """Phase 4 joint bootstrap — framework §3.3, §5.3, §6.3.
+    """Phase 4 joint bootstrap.
 
     One bootstrap simultaneously feeds the null distributions of all five
     composites. The parametric variant assumes joint normality and uses
@@ -833,8 +829,8 @@ class BootstrapSettings(BaseModel):
     n_replicates: int = Field(
         default=10_000,
         ge=100,
-        description="Number of bootstrap replicates ``B``. The plan of "
-        "record uses 10,000; lower only for smoke tests.",
+        description="Number of bootstrap replicates ``B``. 10,000 in "
+        "production; lower only for smoke tests.",
     )
     parametric: bool = Field(
         default=True,
@@ -865,15 +861,15 @@ class BootstrapSettings(BaseModel):
 
 
 class ConfidenceSettings(BaseModel):
-    """Phase 4b — confidence qualifier κ (framework §A.3).
+    """Phase 4b — confidence qualifier κ.
 
     The qualifier turns the *shape* of the active-set z-score vector into a
     tag ``κ ∈ {targeted, mixed, systematic}``. Low entropy on the active
     set means one detector dominates (targeted manipulation); high entropy
     means the signal is spread across many detectors (systematic
-    manipulation). The exact ``S_F*`` definition is flagged as TBD —
-    the implementation uses the proposal in ``analysis_plan_v2.md`` and is
-    easy to swap once the final definition lands.
+    manipulation). ``S_F*`` is the normalised entropy of the active-set
+    z-scores, isolated in one place so it can be redefined without touching
+    the labelling logic.
     """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -919,21 +915,16 @@ class ConfidenceSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 4 — Phase 5 injection study
+# Phase 5 injection study
 # ─────────────────────────────────────────────────────────────────────────────
 class ArchetypeSettings(BaseModel):
     """One injection archetype.
 
     An archetype names a manipulation pattern and the detectors it is
-    expected to affect. Phase 5 (first ship) injects the ``δ`` signal
-    directly into the z-scores of ``affected_detectors`` on the sampled
-    honest rows — this validates the framework's theoretical-power claims
-    (§5.5) without the combinatorial cost of re-running every detector on
-    a perturbed panel.
-
-    Raw-data-level injection (modify Compustat fields → rebuild panel →
-    rerun detectors) is a follow-up extension and only needs this
-    registry to be augmented with field-level perturbation rules.
+    expected to affect. Phase 5 injects the ``δ`` signal directly into the
+    z-scores of ``affected_detectors`` on the sampled honest rows, which
+    validates the theoretical-power claims without the combinatorial cost of
+    re-running every detector on a perturbed panel.
     """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -942,14 +933,14 @@ class ArchetypeSettings(BaseModel):
     description: str = Field(description="One-sentence summary for reports.")
     affected_detectors: tuple[str, ...] = Field(
         description="Detectors whose z-score the injection lifts by ``δ``. "
-        "Framework §9.2 defines each detector's sensitivity target — "
-        "``scale_shift`` propagates across the ratio family (z3–z7), "
-        "``round_number`` is isolated to digit-based detectors (z1–z2), etc.",
+        "Each detector has a sensitivity target — ``scale_shift`` propagates "
+        "across the ratio family (z3–z7), ``round_number`` is isolated to "
+        "digit-based detectors (z1–z2), etc.",
     )
 
 
 def _default_archetypes() -> tuple[ArchetypeSettings, ...]:
-    """Archetype roster described in ``docs/scores/analysis_plan_v2.md``."""
+    """Default injection-archetype roster."""
     return (
         ArchetypeSettings(
             name="scale_shift",
@@ -987,8 +978,8 @@ def _default_archetypes() -> tuple[ArchetypeSettings, ...]:
         ArchetypeSettings(
             name="systematic",
             description="Uniform positive shift on every detector — the "
-                        "benchmark archetype from framework §5.5 used to "
-                        "verify the theoretical T_IUT power table.",
+                        "benchmark archetype used to verify the theoretical "
+                        "T_IUT power table.",
             affected_detectors=("z1", "z2", "z3", "z4", "z5", "z6", "z7"),
         ),
     )
@@ -997,11 +988,10 @@ def _default_archetypes() -> tuple[ArchetypeSettings, ...]:
 class InjectionSettings(BaseModel):
     """Phase 5 — power analysis via controlled injection.
 
-    Framework §5.5 gives a theoretical power table for ``T_IUT`` (α=0.05,
-    k=7, uniform ``δ`` on all detectors): ``π(1)=0.01, π(2)=0.53,
-    π(3)=0.97``. Phase 5 validates that table empirically via the
-    ``systematic`` archetype, while the five other archetypes
-    characterise per-detector specificity.
+    The theoretical power table for ``T_IUT`` (α=0.05, k=7, uniform ``δ``
+    on all detectors) is ``π(1)=0.01, π(2)=0.53, π(3)=0.97``. Phase 5
+    validates that table empirically via the ``systematic`` archetype,
+    while the five other archetypes characterise per-detector specificity.
     """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -1010,12 +1000,12 @@ class InjectionSettings(BaseModel):
         default=500,
         ge=10,
         description="Number of honest rows perturbed per "
-        "(archetype, δ) cell. Plan of record uses 500.",
+        "(archetype, δ) cell.",
     )
     delta_grid: tuple[float, ...] = Field(
         default=(0.5, 1.0, 1.5, 2.0, 3.0),
         description="Grid of δ magnitudes (unit: z-score shift). The "
-        "framework §5.5 table is defined at δ ∈ {1, 1.5, 2, 3}; 0.5 is "
+        "theoretical table is defined at δ ∈ {1, 1.5, 2, 3}; 0.5 is "
         "added to detect early-onset sensitivity.",
     )
     alpha_grid: tuple[float, ...] = Field(
@@ -1067,7 +1057,7 @@ class InjectionSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 5 — Phase 6 robustness / external validation
+# Phase 6 robustness / external validation
 # ─────────────────────────────────────────────────────────────────────────────
 class RobustnessSettings(BaseModel):
     """Phase 6 — external validation and sensitivity checks.
@@ -1082,8 +1072,7 @@ class RobustnessSettings(BaseModel):
     - **Sector false-positive rate** — RED rate per sector on
       ``sac_shariah == 1`` rows. A single sector capturing a large share of
       the RED-in-C rows indicates a business-model mismatch (e.g. Financial
-      Services). The plan of record flagged Financial Services in
-      particular; this check scales.
+      Services); this check scales to whichever sector dominates.
     - **Integrity sensitivity** — rank the composites once on the full
       panel and once on ``bs_any_ffilled == 0`` (strict integrity). Large
       rank shifts indicate the composites rely on forward-filled cells.
@@ -1119,7 +1108,7 @@ class RobustnessSettings(BaseModel):
         gt=0.0,
         lt=1.0,
         description="Threshold used to count RED rows per sector in the "
-        "sector-false-positive table (matches framework §A.3).",
+        "sector-false-positive table.",
     )
     stability_min_quarters: int = Field(
         default=8,
@@ -1300,7 +1289,7 @@ class RobustnessBenchmarkSettings(BaseModel):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sprint 5 — Phase 7 multiple-testing correction
+# Phase 7 multiple-testing correction
 # ─────────────────────────────────────────────────────────────────────────────
 
     # ── Family-3 counterfactual (XAI) knobs ──────────────────────────────
@@ -1618,7 +1607,7 @@ class RobustnessBenchmarkSettings(BaseModel):
     family3_firm_aggregation: str = Field(
         default="min_pvalue",
         description=(
-            "How `local_firm_single` / future firm-level Family 3 modes collapse "
+            "How firm-level Family 3 modes (e.g. `local_firm_single`) collapse "
             "multiple firm-quarter target p-values into one firm-level target. "
             "Supported values: `min_pvalue`."
         ),
@@ -1627,11 +1616,11 @@ class RobustnessBenchmarkSettings(BaseModel):
 class FDRSettings(BaseModel):
     """Phase 7 — Benjamini-Hochberg FDR control.
 
-    Framework §7 downgraded this from high priority because ``T_IUT``
-    produces tiny p-values under independence (``≤ 10^{-9}``) when it
-    rejects. Still useful for ``Z+`` / ``Z+_renorm`` / ``Z²_Mah``, and for
-    the firm-level aggregation that prevents a single persistent outlier
-    from counting as many "independent" discoveries.
+    ``T_IUT`` produces tiny p-values under independence (``≤ 10^{-9}``)
+    when it rejects, so BH correction matters mainly for ``Z+`` /
+    ``Z+_renorm`` / ``Z²_Mah``, and for the firm-level aggregation that
+    prevents a single persistent outlier from counting as many
+    "independent" discoveries.
     """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
@@ -1732,8 +1721,7 @@ class FigureSettings(BaseModel):
         default=0.01,
         gt=0.0,
         lt=1.0,
-        description="`min p` threshold for the RED verdict in the figures "
-        "(matches framework §A.3).",
+        description="`min p` threshold for the RED verdict in the figures.",
     )
     amber_threshold: float = Field(
         default=0.05,
@@ -1789,8 +1777,7 @@ class DashboardSettings(BaseModel):
     primary_composite_q: str = Field(
         default="p_z_mahalanobis_sq",
         description="Which firm-level BH q-value column drives the default "
-        "triage sort. ``p_z_mahalanobis_sq`` is the headline composite "
-        "(Sprint 4 finding).",
+        "triage sort. ``p_z_mahalanobis_sq`` is the headline composite.",
     )
     title: str = Field(
         default="Shariah-compliance anomaly triage",
@@ -1861,7 +1848,7 @@ class AnalysisSettings(BaseModel):
 
     @model_validator(mode="after")
     def _check_cross_section_consistency(self) -> "AnalysisSettings":
-        """Guard against contradictions between §9.2 D5 and Phase 0."""
+        """Guard against contradictions between the D5 floor and Phase 0."""
         ref_min = self.reference_sample.min_sector_size
         d5_min = self.detector_preconditions.cross_statement.min_sector_reference
         if ref_min < d5_min:

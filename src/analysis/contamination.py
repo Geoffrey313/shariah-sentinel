@@ -714,7 +714,7 @@ def apply_contamination_bundle(
 ) -> ContaminationResult:
     """Apply multiple row-level mechanisms on the same selected lines.
 
-    For now, bundles are restricted to row-level mechanisms (`m1`, `m3`, `m4`).
+    Bundles are restricted to row-level mechanisms (`m1`, `m3`, `m4`).
     `m2b` remains separate because it operates on temporal firm sequences.
     """
     cleaned = [m.lower() for m in mechanisms]

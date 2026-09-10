@@ -1,18 +1,18 @@
-"""Composite statistics from the seven (k ≤ 7) z-scores — framework §3–§6.
+"""Composite statistics from the seven (k ≤ 7) z-scores.
 
 Five composites are computed side-by-side:
 
-- ``Z+``        (§3.2)  ``Σ w_j max(z_j, 0)``                 — targeted, dilution-prone.
-- ``Z+_renorm`` (§6.2)  ``(Σ_A w_j z_j) / (Σ_A w_j)``         — dilution-free intensity.
-- ``B_A``       (§6.4)  ``|A| / k``                           — breadth.
-- ``Z²_Mah``    (§4.1)  ``z' Σ̂⁻¹ z``                          — joint anomaly.
-- ``T_IUT``     (§5.2)  ``min_j z_j``                         — unanimity test.
+- ``Z+``        ``Σ w_j max(z_j, 0)``                 — targeted, dilution-prone.
+- ``Z+_renorm`` ``(Σ_A w_j z_j) / (Σ_A w_j)``         — dilution-free intensity.
+- ``B_A``       ``|A| / k``                           — breadth.
+- ``Z²_Mah``    ``z' Σ̂⁻¹ z``                          — joint anomaly.
+- ``T_IUT``     ``min_j z_j``                         — unanimity test.
 
 All functions accept a 2-D ``numpy`` z-matrix of shape ``(n, k)`` and
 return a 1-D array of length ``n`` (scalar per row). The module stays free
 of I/O — Phase 4 / Phase 4b wrap it with panel data and persistence.
 
-NaN handling matches framework semantics:
+NaN handling:
 
 - ``Z+``        — a silent detector contributes ``0``; a NaN detector is
   treated as silent.
@@ -42,7 +42,7 @@ def _validate_weights(weights: np.ndarray, k: int) -> np.ndarray:
     if w.shape != (k,):
         raise ValueError(f"weights shape {w.shape} ≠ ({k},).")
     if np.any(w < 0):
-        raise ValueError("weights must be non-negative (framework §3.2).")
+        raise ValueError("weights must be non-negative.")
     s = w.sum()
     if not np.isfinite(s) or abs(s - 1.0) > 1e-9:
         raise ValueError(f"weights must sum to 1 (got {s}).")
@@ -50,7 +50,7 @@ def _validate_weights(weights: np.ndarray, k: int) -> np.ndarray:
 
 
 def truncated_sum(z: np.ndarray, weights: np.ndarray) -> np.ndarray:
-    """``Z+ = Σ w_j max(z_j, 0)`` (framework §3.2).
+    """``Z+ = Σ w_j max(z_j, 0)``.
 
     Silent detectors (``z_j ≤ 0`` or NaN) contribute ``0``; a row where
     every detector is NaN returns NaN so downstream reports can distinguish
@@ -72,7 +72,7 @@ def active_set_indicator(z: np.ndarray, threshold: float = 0.0) -> np.ndarray:
 
 
 def breadth(z: np.ndarray, threshold: float = 0.0) -> np.ndarray:
-    """``B_A = |A| / k`` (framework §6.4)."""
+    """``B_A = |A| / k``."""
     active = active_set_indicator(z, threshold=threshold)
     k = active.shape[1]
     return active.sum(axis=1).astype(float) / float(k)
@@ -84,7 +84,7 @@ def renormalised_truncated_sum(
     threshold: float = 0.0,
     min_active: int = 1,
 ) -> np.ndarray:
-    """``Z+_renorm = Σ_A w_j z_j / Σ_A w_j`` (framework §6.2).
+    """``Z+_renorm = Σ_A w_j z_j / Σ_A w_j``.
 
     Rows with fewer than ``min_active`` active detectors (``z_j > threshold``)
     return NaN — ``|A|`` is random, and the denominator is undefined at
@@ -104,7 +104,7 @@ def renormalised_truncated_sum(
 
 
 def mahalanobis_squared(z: np.ndarray, sigma: np.ndarray) -> np.ndarray:
-    """``Z²_Mah = z' Σ̂⁻¹ z`` (framework §4.1).
+    """``Z²_Mah = z' Σ̂⁻¹ z``.
 
     Rows with any NaN entry are returned as NaN — the quadratic form is
     only defined on a complete z-vector. The quadratic form is evaluated
@@ -131,7 +131,7 @@ def mahalanobis_squared(z: np.ndarray, sigma: np.ndarray) -> np.ndarray:
 
 
 def iut_statistic(z: np.ndarray, min_active: int = 1) -> np.ndarray:
-    """``T_IUT = min_j z_j`` (framework §5.2).
+    """``T_IUT = min_j z_j``.
 
     Computed over finite entries only. When fewer than ``min_active``
     detectors produced a finite score the test is undefined → NaN. Under

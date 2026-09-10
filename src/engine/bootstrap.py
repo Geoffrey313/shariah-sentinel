@@ -1,4 +1,4 @@
-"""Joint bootstrap — framework §3.3, §5.3, §6.3.
+"""Joint bootstrap.
 
 One bootstrap produces the simultaneous null distributions of all five
 composites (``Z+``, ``Z+_renorm``, ``B_A``, ``Z²_Mah``, ``T_IUT``). This
@@ -245,7 +245,7 @@ def upper_tail_pvalue(
     null_sorted: np.ndarray,
     n_replicates: int,
 ) -> np.ndarray:
-    """Framework §3.3 p-value ``(1 + Σ 1{sim ≥ obs}) / (B + 1)``.
+    """Bootstrap p-value ``(1 + Σ 1{sim ≥ obs}) / (B + 1)``.
 
     Uses ``np.searchsorted`` on the sorted null for ``O(n log B)`` speed
     rather than ``O(n · B)``. NaN observed → NaN p-value.
@@ -267,8 +267,8 @@ def lower_tail_pvalue(
     n_replicates: int,
 ) -> np.ndarray:
     """Lower-tail variant — used for ``T_IUT`` where the rejection region
-    is ``T > c_α`` under the §5.2 convention but the *null* distribution
-    is still one-sided. Kept symmetric for completeness.
+    is ``T > c_α`` but the *null* distribution is still one-sided. Kept
+    symmetric for completeness.
     """
     # For the IUT we still want P(T_null ≥ T_obs); provided separately so
     # the caller's intent stays explicit.

@@ -1,9 +1,8 @@
 """Phase 7 — Benjamini-Hochberg FDR correction.
 
-Framework §7 downgraded this to a finishing touch: ``T_IUT`` already
-produces p-values in the ``10^{-9}`` range under independence when it
-rejects, so FDR is only meaningful for the other composites. Two
-corrections are reported side-by-side:
+``T_IUT`` already produces p-values in the ``10^{-9}`` range under
+independence when it rejects, so FDR is only meaningful for the other
+composites. Two corrections are reported side-by-side:
 
 - **Row-level BH** — classic Benjamini-Hochberg on the full column of
   row-level p-values. The output ``q_<composite>`` column is the usual
@@ -14,7 +13,7 @@ corrections are reported side-by-side:
   vector. This prevents a single persistently-flagged firm from counting
   as many independent discoveries.
 
-Deliverables (under ``outputs/scores/<country>/phase7_fdr/``):
+Outputs (under ``outputs/scores/<country>/phase7_fdr/``):
 
 - ``fdr_row_level.parquet`` — per-row raw p + BH q per composite.
 - ``fdr_firm_level.parquet`` — one row per firm with the aggregated p
@@ -379,7 +378,7 @@ def run_phase7(
         row_level.to_parquet(paths["row_level"], index=False)
         firm_level.to_parquet(paths["firm_level"], index=False)
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
-        log.info("phase7: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase7: wrote %d outputs to %s", len(paths), out_dir)
 
     return Phase7Outcome(
         row_level=row_level,

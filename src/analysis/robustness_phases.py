@@ -7,13 +7,13 @@ computed on the outputs of Phase 4:
    the panel end are a proxy for "delisted". Compare their composites in
    the trailing N quarters against their own earlier history. If the
    detectors catch genuine issues, flagged rates should rise near
-   delisting. Framework §6 plan, operationalised via the heuristic
-   (no delisting flag exists on the panel).
+   delisting. Operationalised via the heuristic (no delisting flag
+   exists on the panel).
 2. **Sector false-positive rate** — RED rate per sector on the honest
    ``C`` sample. A single sector capturing a disproportionate share of
    the "SAC-compliant but flagged RED" cohort points to a business-model
-   bias. The Sprint 4 interpretation doc flagged Financial Services and
-   Islamic insurance as candidates — this table scales the check.
+   bias — Financial Services and Islamic insurance are common candidates;
+   this table scales the check.
 3. **Integrity sensitivity** — rank composites once on the full panel
    and once on ``bs_any_ffilled == 0``. Large rank shifts indicate the
    composite relies on forward-filled balance-sheet values.
@@ -21,7 +21,7 @@ computed on the outputs of Phase 4:
    composite. Near-zero means noisy quarter-to-quarter; near-one means a
    firm is persistently flagged (sector artefact or chronic issue).
 
-Deliverables (under ``outputs/scores/<country>/phase6_robustness/``):
+Outputs (under ``outputs/scores/<country>/phase6_robustness/``):
 
 - ``delisting_proxy.csv`` — per-firm mean composite in early vs late
   periods, plus the delta used for ranking.
@@ -194,7 +194,7 @@ def _sector_false_positive(
     )
     grouped["red_share"] = grouped["n_red"] / grouped["n_rows"]
     # Separate "large enough to matter" sectors from noise. 30 matches the
-    # framework §9.2 D3 reference-sample floor used throughout the pipeline.
+    # D3 reference-sample floor used throughout the pipeline.
     grouped["is_n_sufficient"] = grouped["n_rows"] >= 30
     grouped = grouped.sort_values(
         ["is_n_sufficient", "red_share"], ascending=[False, False],
@@ -380,7 +380,7 @@ def run_phase6(
         integrity.to_csv(paths["integrity"], index=False)
         stability.to_csv(paths["stability"], index=False)
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
-        log.info("phase6: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase6: wrote %d outputs to %s", len(paths), out_dir)
 
     return Phase6Outcome(
         delisting=delisting,

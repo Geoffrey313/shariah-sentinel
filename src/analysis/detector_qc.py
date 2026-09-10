@@ -1,8 +1,6 @@
 """Phase 3 — detector QC + validity-condition enforcement.
 
-Implements the Sprint 1 second deliverable of
-``docs/scores/analysis_plan_v2.md``: check the row-level validity
-preconditions listed in framework §9.2 per detector z₁..z₇ and emit a
+Checks the row-level validity preconditions per detector z₁..z₇ and emits a
 ``(row, detector)`` boolean mask so downstream phases mark invalid rows as
 ``NaN`` rather than running a detector on insufficient data.
 
@@ -10,14 +8,14 @@ The module works on the output of Phase 0 — specifically, it expects the
 ``_split`` column so that sector/peer reference sizes are measured on ``C``
 only, not on the full (potentially non-honest) panel.
 
-Preconditions implemented (framework §9.2):
+Preconditions implemented:
 
 - z₁ Benford         — pooled ``N_fig ≥ min_figures`` over the rolling window.
 - z₂ Zipf            — same pooled window must reach ``min_points`` positive
   magnitudes.
 - z₃ M-Score         — the row's sector has ``|C_s| ≥ min_reference_size``.
 - z₄ Threshold       — quarters per firm available up to the row satisfy the
-  §9.2 D4 power formula.
+  D4 power formula.
 - z₅ Cross-stmt      — ``|C_s| ≥ m q`` on the row's sector.
 - z₆ Temporal        — ``Q_hist`` past quarters exist for this firm.
 - z₇ Peer            — peer group of the row satisfies ``N_peer ≥ m p``.
@@ -75,7 +73,7 @@ def _count_positive_figures_per_row(
 ) -> pd.Series:
     """Number of finite, strictly positive monetary figures available per row.
 
-    Benford (§9.2 D1) and Zipf (§9.2 D2) pool figures over a rolling firm
+    Benford (z₁) and Zipf (z₂) pool figures over a rolling firm
     window. The per-row count is the elementary building block; the rolling
     sum is computed separately per detector.
     """
@@ -190,7 +188,7 @@ def _mask_mscore(
 def _min_history_for_threshold(
     preconds: AnalysisSettings,
 ) -> int:
-    """Compute ``Q_min`` from the §9.2 D4 power formula.
+    """Compute ``Q_min`` from the D4 power formula.
 
     ``Q_min ≈ (z_{1-α} + z_{1-β})^2 / (3 (1 - δ_m)^2)``, subject to the
     configured absolute floor.
@@ -402,6 +400,6 @@ def run_phase3(
         mask.to_parquet(paths["mask_parquet"], index=False)
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
         coverage.to_csv(paths["coverage_csv"], index=False)
-        log.info("phase3: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase3: wrote %d outputs to %s", len(paths), out_dir)
 
     return DetectorQCOutcome(mask=mask, summary=summary, paths=paths)

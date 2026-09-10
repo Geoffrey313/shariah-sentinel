@@ -1,31 +1,26 @@
 """Phase 0 — reference sample curation.
 
-Implements the Sprint 1 prerequisite of ``docs/scores/analysis_plan_v2.md`` and
-the reference populations defined in the math framework
-(``docs/math-framework/framework.md``).
-
-The framework requires three populations:
+Curates the three reference populations the pipeline needs:
 
 - ``C`` — global presumed-honest sample. Used for the empirical PIT of z₃
-  (framework §9.2 D3) and for the non-parametric bootstrap of Phase 4
-  composites (§3.3, §6.3).
+  (D3) and for the non-parametric bootstrap of Phase 4 composites.
 - ``C_s`` — sector-stratified slices of ``C``. Used for z₅ cross-statement
-  residual standardisation (§9.2 D5) and z₇ peer moments (§9.2 D7).
+  residual standardisation (D5) and z₇ peer moments (D7).
 - Peer groups — subsets of ``C`` sharing a firm's peer key. Used for
-  Hotelling's T² on each row (§9.2 D7).
+  Hotelling's T² on each row (D7).
 
 The module is deliberately data-only: it emits labels and diagnostic
 artefacts, but does not mutate the panel parquet. Downstream phases read the
 diagnostic JSON / parquet and apply the labels on their own copy of the panel.
 
-Deliverables (under ``outputs/scores/<country>/phase0_reference_sample/``):
+Outputs (under ``outputs/scores/<country>/phase0_reference_sample/``):
 
 - ``reference_sample.json`` — summary statistics and the per-sector
-  / per-peer-group coverage tables the plan calls for.
+  / per-peer-group coverage tables.
 - ``panel_with_split.parquet`` — the input panel plus two added columns
   ``_split`` (``"C"`` or ``"NOT_C"``) and ``_split_reason`` (why a row was
   excluded from ``C``). The detector modules already consume ``_split``.
-- ``C_sector_sizes.csv`` — rows per sector of ``C``; the plan calls it this.
+- ``C_sector_sizes.csv`` — rows per sector of ``C``.
 - ``peer_group_sizes.csv`` — size per peer group (z₇).
 - ``C_definition.md`` — human-readable summary of the inclusion rule and
   contamination notes; written once per run so a reviewer can audit the
@@ -88,7 +83,7 @@ class ReferenceSampleOutcome:
         summary: Dictionary serialised to ``reference_sample.json``.
         sector_sizes: Size of ``C_s`` per sector.
         peer_group_sizes: Size of each peer group within ``C``.
-        paths: Resolved output paths, keyed by deliverable name.
+        paths: Resolved output paths, keyed by output name.
     """
 
     panel: pd.DataFrame
@@ -173,7 +168,7 @@ def _tabulate_sector_sizes(
     """Return per-sector counts with the D5 / sample-level thresholds attached.
 
     ``meets_min_sector_size``  → precondition from Phase 0 rules.
-    ``meets_d5_floor``         → precondition from framework §9.2 D5.
+    ``meets_d5_floor``         → the D5 sector-reference floor.
     """
     schema = settings.panel_schema
     rules = settings.reference_sample
@@ -236,9 +231,9 @@ def _write_c_definition_markdown(
     lines.append("")
     lines.append("## Size thresholds")
     lines.append("")
-    lines.append(f"- min |C|      = {rules.min_global_size}  (framework §9.2 D3)")
-    lines.append(f"- min |C_s|    = {rules.min_sector_size}  (framework §9.2 D5)")
-    lines.append(f"- min N_peer   = {rules.peer_group_min_size}  (framework §9.2 D7)")
+    lines.append(f"- min |C|      = {rules.min_global_size}  (D3)")
+    lines.append(f"- min |C_s|    = {rules.min_sector_size}  (D5)")
+    lines.append(f"- min N_peer   = {rules.peer_group_min_size}  (D7)")
     lines.append("")
     lines.append("## Observed sizes")
     lines.append("")
@@ -252,12 +247,10 @@ def _write_c_definition_markdown(
     lines.append("")
     lines.append(
         "The current panel does not expose a delisting flag, so the "
-        "`not delisted` clause of analysis_plan_v2.md is replaced by "
+        "`not delisted` clause is replaced by "
         "`clean_sample == 1` (flag written by `add_clean_sample_flag` in "
         "`panel_creation/build_panel.py`). Known restated firms are not "
-        "excluded — if an audit-report list becomes available, extend "
-        "`ReferenceSampleSettings` with a `restated_firms` deny-list rather "
-        "than filtering inline."
+        "excluded."
     )
     path.write_text("\n".join(lines), encoding="utf-8")
 
@@ -276,10 +269,9 @@ def run_phase0(
     Args:
         panel: Quarterly panel produced by ``panel_creation.main`` — must
             contain the columns named in ``settings.panel_schema``.
-        settings: Configuration. Defaults to :class:`AnalysisSettings` with
-            the plan-of-record values.
+        settings: Configuration. Defaults to :class:`AnalysisSettings`.
         write_outputs: If ``True``, persist the JSON / parquet / CSV / MD
-            deliverables under ``settings.output_layout.phase0_dir()``.
+            outputs under ``settings.output_layout.phase0_dir()``.
 
     Returns:
         A :class:`ReferenceSampleOutcome` with the split-labelled panel,
@@ -288,7 +280,7 @@ def run_phase0(
 
     Raises:
         KeyError: If required schema columns are missing from ``panel``.
-        ValueError: If ``|C| < min_global_size`` (framework §9.2 D3 floor).
+        ValueError: If ``|C| < min_global_size`` (D3 floor).
     """
     settings = settings or AnalysisSettings()
     schema = settings.panel_schema
@@ -336,7 +328,7 @@ def run_phase0(
             f"phase0: |C| = {len(panel_c)} < min_global_size = "
             f"{settings.reference_sample.min_global_size}. Loosen the "
             f"inclusion rule or rebuild the panel; no detector can calibrate "
-            f"below the §9.2 D3 floor."
+            f"below the D3 floor."
         )
 
     sector_sizes = _tabulate_sector_sizes(panel_c, settings)
@@ -392,7 +384,7 @@ def run_phase0(
         peer_group_sizes.to_csv(paths["peer_group_sizes_csv"], index=False)
         _write_c_definition_markdown(paths["c_definition_md"], settings, summary)
 
-        log.info("phase0: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase0: wrote %d outputs to %s", len(paths), out_dir)
 
     return ReferenceSampleOutcome(
         panel=out,

@@ -1,14 +1,14 @@
 """Phase 1 — per-detector null calibration on reference sample ``C``.
 
-Framework §9.1 claims each ``z_j`` is marginally ``N(0, 1)`` under ``H_0`` once
-the PIT is correctly applied. That claim depends on ``F_j`` being well-
+Each ``z_j`` is marginally ``N(0, 1)`` under ``H_0`` once the PIT is correctly
+applied. That claim depends on ``F_j`` being well-
 specified; several detectors (z₂ with plug-in ``σ̂_0²``, z₃ empirical on
 ``C``, z₅ / z₆ with approximate ``χ²_q`` calibrations, z₇ Hotelling ``T²``)
 only achieve this asymptotically or approximately. Phase 1 checks the claim
 empirically on ``C`` and flags any detector whose parametric null is
 rejected — that detector is forced to non-parametric bootstrap in Phase 4.
 
-Deliverables (under ``outputs/scores/<country>/phase1_null_calibration/``):
+Outputs (under ``outputs/scores/<country>/phase1_null_calibration/``):
 
 - ``null_calibration.json`` — per-detector moments, KS/AD stats, bias
   verdict, variance-ratio verdict, list of detectors flagged for bootstrap.
@@ -149,8 +149,7 @@ def _subsample_moments(
 ) -> pd.DataFrame:
     """Per-year and per-sector moments for each detector.
 
-    The framework recommends faceted distributions (§9.1 bullet "Sub-sample
-    calibration"). Sub-samples smaller than
+    Sub-samples smaller than
     :attr:`CalibrationSettings.min_subsample_size` are dropped so the report
     doesn't amplify noise.
     """
@@ -202,7 +201,7 @@ def run_phase1(
         zscores: Optional pre-computed z-score frame. When ``None`` the
             cache produced by :func:`compute_zscores` is loaded from disk.
         write_outputs: If ``True``, persist the JSON / parquet / CSV
-            deliverables under ``settings.output_layout.phase1_dir()``.
+            outputs under ``settings.output_layout.phase1_dir()``.
 
     Returns:
         A :class:`CalibrationOutcome` wrapping the JSON summary, QQ-plot
@@ -279,7 +278,7 @@ def run_phase1(
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
         qq_df.to_parquet(paths["qq_parquet"], index=False)
         subsample.to_csv(paths["subsample_csv"], index=False)
-        log.info("phase1: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase1: wrote %d outputs to %s", len(paths), out_dir)
 
     return CalibrationOutcome(
         summary=summary,

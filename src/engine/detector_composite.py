@@ -71,7 +71,7 @@ def compute_composite(
     B_A = active.sum(axis=1).astype(float) / float(k)
     B_A = np.where(k_valid > 0, B_A, np.nan)
 
-    # T_IUT is the minimum over valid detector z-scores only (§5.2).
+    # T_IUT is the minimum over valid detector z-scores only.
     Z_for_min = np.where(finite_mask, Z, np.inf)
     T_IUT = np.min(Z_for_min, axis=1)
     T_IUT = np.where(np.isinf(T_IUT), np.nan, T_IUT)
@@ -484,7 +484,7 @@ def _null_pvalue_df(index: pd.Index) -> pd.DataFrame:
     )
 
 
-# ── Smooth Z⁺ extensions (extensions_Z_score.md) ─────────────────────────────
+# ── Smooth Z⁺ extensions ─────────────────────────────────────────────────────
 
 def compute_extensions(
     z_df: pd.DataFrame,

@@ -965,11 +965,9 @@ def _write_paper_outputs(
                 fig.savefig(paper_dir / "anoshift_fpr_bar.png", dpi=180)
                 plt.close(fig)
 
-        # TODO(family3): these plots consume the retired PGD epsilon-grid schema
-        # (epsilon_rel / median_cost / pvalue_by_eps_json). The counterfactual
-        # package emits an epoch-based schema instead; the guards below skip
-        # cleanly until epoch-based equivalents are rebuilt against
-        # epoch_log_json.
+        # These plots consume the retired PGD epsilon-grid schema
+        # (epsilon_rel / median_cost / pvalue_by_eps_json); the counterfactual
+        # package now emits an epoch-based schema, so the guards below skip cleanly.
         if not family3_df.empty and {"epsilon_rel", "evasion_rate"}.issubset(family3_df.columns):
             family3_plot = family3_df.dropna(subset=["epsilon_rel", "evasion_rate"]).copy()
             if not family3_plot.empty:
@@ -1025,11 +1023,9 @@ def _write_paper_outputs(
                 fig.savefig(paper_dir / "family3_pvalue_by_eps.png", dpi=180)
                 plt.close(fig)
 
-        # TODO(family3): the per-row loss/ratio/raw trajectory diagnostics below
-        # read the retired epoch-history columns (loss, ratio_debt_adj, dlttq,
-        # ...). The counterfactual package's epoch_log_json expands to a
-        # different column set, so this block is guarded on the legacy `loss`
-        # column and skips until rebuilt against the epoch schema.
+        # The per-row loss/ratio/raw trajectory diagnostics below read the
+        # retired epoch-history columns (loss, ratio_debt_adj, dlttq, ...);
+        # this block is guarded on the legacy `loss` column and skips cleanly.
         if not family3_hist_df.empty and "loss" in family3_hist_df.columns:
             diag_dir = paper_dir / "family3_diagnostics"
             diag_dir.mkdir(parents=True, exist_ok=True)

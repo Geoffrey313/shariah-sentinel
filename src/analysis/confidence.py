@@ -1,4 +1,4 @@
-"""Phase 4b — confidence qualifier κ (framework §A.3).
+"""Phase 4b — confidence qualifier κ.
 
 The qualifier turns the *shape* of the active-set z-score vector into a
 categorical tag:
@@ -10,13 +10,12 @@ categorical tag:
   the tag is uninformative — reported as a distinct label.
 - ``inactive``   — no active detector; κ undefined.
 
-Following ``analysis_plan_v2.md`` the working definition of ``S_F*`` is
+The working definition of ``S_F*`` is
 
     S_F*(z) = - Σ_{j ∈ A} p_j log p_j,  p_j = z_j / Σ_{j' ∈ A} z_{j'}
 
-normalised by ``log|A|`` so ``S_F* ∈ [0, 1]``. The exact formulation is
-flagged as TBD — it is isolated in :func:`_normalized_entropy_row` so
-it can be swapped in one place once the definition is finalised.
+normalised by ``log|A|`` so ``S_F* ∈ [0, 1]``. The formula is isolated in
+:func:`_normalized_entropy_row` so it can be redefined in one place.
 
 Thresholds for the ``targeted``/``mixed``/``systematic`` split are taken
 from quantiles of ``S_F*`` evaluated on the reference sample ``C`` — the
@@ -211,6 +210,6 @@ def run_phase4b(
         paths["json"] = out_dir / "phase4b_confidence.json"
         kappa_frame.to_parquet(paths["kappa_parquet"], index=False)
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
-        log.info("phase4b: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase4b: wrote %d outputs to %s", len(paths), out_dir)
 
     return Phase4bOutcome(kappa_frame=kappa_frame, summary=summary, paths=paths)

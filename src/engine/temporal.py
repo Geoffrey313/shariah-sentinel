@@ -10,9 +10,9 @@ Sharia ratios:
   - or an optional joint Mahalanobis statistic using the temporal covariance
 - map ``T6`` to the anomaly-oriented z-scale with a chi-square PIT
 
-The diagonal variant remains the active default because it is the most stable
-for short histories. The joint variant is implemented and ready for future use
-when longer firm histories justify a covariance-aware score.
+The diagonal variant is the active default because it is the most stable
+for short histories. The joint variant is also implemented, for
+covariance-aware scoring when longer firm histories are available.
 """
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def _compute_joint_t6(
 ) -> tuple[float, int]:
     """Compute the optional covariance-aware temporal statistic.
 
-    This is the future-ready joint alternative to the active diagonal phase-1
+    This is the joint alternative to the active diagonal phase-1
     score. It uses only dimensions that are finite at the scoring date and
     whose historical deltas are jointly estimable.
     """
@@ -153,8 +153,8 @@ def _t6_per_firm(
 
     Notes:
         The active diagonal mode is more stable on short firm histories.
-        The joint mode is implemented for future covariance-aware runs once the
-        project decides to promote it from optional to active.
+        The joint mode is available as an optional covariance-aware
+        alternative.
     """
     n = len(ratios_firm)
     t6 = np.full(n, np.nan)

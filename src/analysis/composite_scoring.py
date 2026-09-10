@@ -499,6 +499,6 @@ def run_phase4(
         null_quantiles.to_csv(paths["null_quantiles"], index=False)
         concordance.to_csv(paths["concordance"], index=False)
         paths["json"].write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
-        log.info("phase4: wrote %d deliverables to %s", len(paths), out_dir)
+        log.info("phase4: wrote %d outputs to %s", len(paths), out_dir)
 
     return Phase4Outcome(composites=composites, summary=summary, paths=paths)
