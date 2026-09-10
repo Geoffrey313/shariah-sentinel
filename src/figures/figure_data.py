@@ -140,11 +140,16 @@ def main() -> None:
 
     # 6. U-shape (compliant [0,0.33] / non-compliant (0.33,1.0]) ------------
     comp_path = o.phase4_dir() / "composites_panel.parquet"
+    # Prefer the full reconstructed panel when present (on-request); otherwise
+    # read the shipped de-identified per-firm debt ratio, which carries only the
+    # keys and ``ratio_debt_adj`` this figure needs.
     p0_path = o.phase0_dir() / "panel_with_split.parquet"
-    if comp_path.exists() and p0_path.exists():
+    debt_path = o.phase0_dir() / "debt_ratio.parquet"
+    ratio_src = p0_path if p0_path.exists() else debt_path
+    if comp_path.exists() and ratio_src.exists():
         comp = pd.read_parquet(comp_path)
         comp["is_red"] = (_verdict(comp, red_thr, amber_thr) == "RED").astype(float)
-        ratio_df = pd.read_parquet(p0_path, columns=["gvkey", "datacqtr", "ratio_debt_adj"])
+        ratio_df = pd.read_parquet(ratio_src, columns=["gvkey", "datacqtr", "ratio_debt_adj"])
         comp = comp.merge(ratio_df, on=["gvkey", "datacqtr"], how="left")
         fit_rows = []
         for name, lo, hi in [("compliant", 0.0, 0.33), ("noncompliant", 0.33, 1.0)]:
@@ -177,7 +182,7 @@ def main() -> None:
             written.append("ushape_fit_summary.csv")
             print("  ushape fit:", fit_rows)
     else:
-        _skip("ushape_*", "missing composites_panel / panel_with_split")
+        _skip("ushape_*", "missing composites_panel / debt_ratio (or panel_with_split)")
 
     print(f"\nDONE. {len(written)} CSVs in {OUT}")
 
