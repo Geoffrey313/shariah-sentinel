@@ -11,7 +11,7 @@ placed here.
 
 The reconstructed panels can be shared on a motivated request: state who you
 are and the intended research use, and send it to the corresponding author
-(contact withheld for double-blind review). Data will be shared to the extent
+(contact withheld for single-blind review). Data will be shared to the extent
 the S&P Compustat license allows.
 
 ## Expected layout

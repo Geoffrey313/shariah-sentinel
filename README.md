@@ -135,7 +135,7 @@ vendor data, and the reconstructed panels still carry licensed Compustat fields,
 so **this repository ships code only**: neither the raw source nor the
 reconstructed panels are included. The reconstructed panels can be shared on a
 motivated request: state who you are and the intended research use, and send it
-to the corresponding author (contact withheld for double-blind review). Data
+to the corresponding author (contact withheld for single-blind review). Data
 will be shared to the extent the S&P Compustat license allows.
 
 To reproduce, obtain the panels and place them under `data/` as shown in the
@@ -320,8 +320,9 @@ python calibration_holdout_split.py --country mys
 python cluster_bootstrap_robustness.py --country mys
 ```
 
-Each script accepts `--country` and script-specific options (`--seed`,
-`--smoke` for a fast pass, and bootstrap-size flags); run with `-h` for details.
+Each script accepts `--country`; the audit scripts additionally expose options
+such as `--seed`, `--smoke` (a fast pass), and bootstrap-size flags. Run each
+script with `-h` for its exact options.
 
 ## Checking your reproduction
 
