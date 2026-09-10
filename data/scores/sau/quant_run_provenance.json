@@ -1,0 +1,14 @@
+{
+  "country": "SAU",
+  "source": {
+    "path": "data/raw/compustat/SAU.csv",
+    "size": 38872253,
+    "mtime": 1784178214,
+    "rows": 17852,
+    "max_quarter": "2025Q4",
+    "sha256": "f196e27b91598203f941c82b3f04c6adc7871572316b3c795538dc61b2962c7e"
+  },
+  "ran_at": "2026-07-17T13:04:50+00:00",
+  "started_at": "2026-07-17T13:04:23+00:00",
+  "reference_c_size": 893
+}

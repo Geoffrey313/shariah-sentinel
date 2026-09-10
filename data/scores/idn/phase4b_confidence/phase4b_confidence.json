@@ -1,0 +1,17 @@
+{
+  "cutoffs": {
+    "targeted_quantile": 0.3333333333333333,
+    "systematic_quantile": 0.6666666666666666,
+    "targeted_threshold_value": 0.7228316309209795,
+    "systematic_threshold_value": 0.8647955346292351
+  },
+  "kappa_counts": {
+    "targeted": 16577,
+    "mixed": 17711,
+    "systematic": 17733,
+    "single": 4824,
+    "inactive": 1187
+  },
+  "n_rows": 58032,
+  "n_rows_with_defined_kappa": 52021
+}

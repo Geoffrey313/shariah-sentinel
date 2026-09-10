@@ -1,0 +1,74 @@
+{
+  "panel_rows": 92872,
+  "c_rows": 13086,
+  "thresholds": {
+    "benford_min_figures": 109,
+    "benford_pooling_window": 8,
+    "zipf_min_points": 8,
+    "zipf_pooling_window": 4,
+    "mscore_min_reference_size": 30,
+    "threshold_q_min": 4,
+    "threshold_alpha": 0.05,
+    "threshold_power_target": 0.8,
+    "threshold_delta_m": 0.05,
+    "cross_statement_min_sector": 27,
+    "temporal_min_history": 8,
+    "peer_min_size": 9
+  },
+  "coverage": [
+    {
+      "detector": "z1_valid",
+      "n_valid": 86087,
+      "n_total": 92872,
+      "share_valid": 0.9269424584374193
+    },
+    {
+      "detector": "z2_valid",
+      "n_valid": 90452,
+      "n_total": 92872,
+      "share_valid": 0.9739426307175467
+    },
+    {
+      "detector": "z3_valid",
+      "n_valid": 92872,
+      "n_total": 92872,
+      "share_valid": 1.0
+    },
+    {
+      "detector": "z4_valid",
+      "n_valid": 88804,
+      "n_total": 92872,
+      "share_valid": 0.9561977775863554
+    },
+    {
+      "detector": "z5_valid",
+      "n_valid": 92872,
+      "n_total": 92872,
+      "share_valid": 1.0
+    },
+    {
+      "detector": "z6_valid",
+      "n_valid": 82029,
+      "n_total": 92872,
+      "share_valid": 0.8832479111034542
+    },
+    {
+      "detector": "z7_valid",
+      "n_valid": 92872,
+      "n_total": 92872,
+      "share_valid": 1.0
+    },
+    {
+      "detector": "z8_valid",
+      "n_valid": 65638,
+      "n_total": 92872,
+      "share_valid": 0.7067576880006892
+    },
+    {
+      "detector": "z9_valid",
+      "n_valid": 61911,
+      "n_total": 92872,
+      "share_valid": 0.6666271858041175
+    }
+  ]
+}

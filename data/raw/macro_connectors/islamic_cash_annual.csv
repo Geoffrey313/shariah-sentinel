@@ -1,0 +1,19 @@
+year,islamic_deposits_ia_Bn_MYR,islamic_cash_ratio_t,cash_ratio_status,cash_source
+2006,,0.147,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2007,,0.168,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2008,,0.188,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2009,,0.207,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2010,,0.226,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2011,,0.244,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2012,,0.256,Reconstructed from BNM balance sheet aggregates,BNM Islamic Banking Statistics (via SESRIC presentation)
+2013,,0.267,Observed,BNM Statistical Table zcp07_table_A.04
+2014,,0.282,Observed,BNM Financial Stability Report
+2015,,0.3,Observed,BNM Financial Stability Report
+2016,,0.317,Observed,BNM Financial Stability Report
+2017,,0.343,Observed,BNM Annual Report / Financial Stability Report
+2018,,0.363,Observed,BNM Financial Stability Report
+2019,771.114,0.377,Observed,BNM Financial Stability Report 2H 2019
+2020,826.167,0.389,Observed,BNM Financial Stability Report 2H 2020
+2021,889.951,0.398,Observed,BNM Financial Stability Report 2H 2021
+2022,968.909,0.416,Observed,BNM Financial Stability Report 2H 2022
+2023,1122,0.42,Observed,BNM Financial Stability Report 2H 2023

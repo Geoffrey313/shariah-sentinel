@@ -1,0 +1,8 @@
+sector,n_rows,n_red,red_share,is_n_sufficient
+Financials,65,5,0.0769230769230769,True
+Industrials,73,2,0.0273972602739726,True
+Real Estate,50,1,0.02,True
+Consumer Staples,35,0,0.0,True
+Consumer Discretionary,18,9,0.5,False
+Communication Services,13,0,0.0,False
+Utilities,10,0,0.0,False

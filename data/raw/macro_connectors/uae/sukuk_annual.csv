@@ -1,0 +1,15 @@
+year,sukuk_outstanding_Bn_USD,bonds_outstanding_Bn_USD,total_DCM_Bn_USD,R_t,R_t_operational_fill,sukuk_status,sukuk_source,method_class,recommended_use,audit_note
+2012,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2013,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2014,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2015,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2016,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2017,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2018,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2019,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2020,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2021,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2022,Na,Na,Na,Na,0.2,Na,Na,Na,Na,Na
+2023,58.609,211.391,270,0.217069,0.217069,NONOFFICIAL_PROXY_SECONDARY,"Numerator: CBUAE UAE Islamic Finance Report 2023 (LSEG), sukuk outstanding AED215.24bn in H1 2023. Denominator: Fitch-reported UAE DCM outstanding USD270bn at end-2023. Scope is total UAE DCM, not corporate-only; timing mismatch H1/end-year. URLs: https://www.centralbank.ae/media/djmorepc/cbuae_uae-islamic-finance-report-2023.pdf ; https://www.fitchratings.com/research/islamic-finance/uae-debt-capital-market-2024-prospects-positive-sukuk-dirham-share-to-rise-23-01-2024",PURE_DATA_COLLECTION_WITH_TIMING_MISMATCH,DO_NOT_USE_FOR_OFFICIAL_PANEL,Secondary-country proxy only: CBUAE/LSEG sukuk outstanding combined with Fitch total DCM end-2023; timing mismatch and non-corporate scope.
+2024,58.88,235.52,294.4,0.2,0.2,NONOFFICIAL_PROXY_SECONDARY,"Fitch-cited public reports: UAE DCM USD294.4bn by end-Q3 2024 / 13.1% YoY growth; sukuk share around 20% retained as secondary proxy. Scope total UAE DCM, not corporate-only. URLs: https://www.wam.ae/en/article/b61k4zm-uaes-debt-capital-markets-demonstrated-robust ; https://economymiddleeast.com/news/uaes-debt-capital-markets-grow-13-1-percent-yoy-to-294-4-billion-fitch/",PURE_DATA_COLLECTION_RATIO_PROXY,DO_NOT_USE_FOR_OFFICIAL_PANEL,Secondary-country proxy only: total UAE DCM outstanding and sukuk share from Fitch-cited public reporting; not corporate-only.
+2025,62.499,246.901,309.4,0.202,0.202,NONOFFICIAL_PROXY_SECONDARY,"WAM citing Fitch: UAE outstanding bonds and sukuk USD309.4bn by Q1 2025, up 8.3% YoY; sukuk about 20.2%. Scope total UAE DCM, not corporate-only. URL: https://www.wam.ae/en/article/bj249fd-uae%E2%80%99s-outstanding-bonds-sukuk-reach-3094-billion",PURE_DATA_COLLECTION_RATIO_PROXY,DO_NOT_USE_FOR_OFFICIAL_PANEL,Secondary-country proxy only: total UAE DCM outstanding and sukuk share from Fitch-cited public reporting; not corporate-only.

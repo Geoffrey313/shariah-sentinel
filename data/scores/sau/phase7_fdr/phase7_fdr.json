@@ -1,0 +1,64 @@
+{
+  "q_levels": [
+    0.05,
+    0.01
+  ],
+  "firm_aggregation": "min_pvalue",
+  "row_level_discoveries": {
+    "p_z_plus": {
+      "q<=0.05": 0,
+      "q<=0.01": 0
+    },
+    "p_z_plus_renorm": {
+      "q<=0.05": 192,
+      "q<=0.01": 192
+    },
+    "p_z_mahalanobis_sq": {
+      "q<=0.05": 620,
+      "q<=0.01": 600
+    },
+    "p_t_iut": {
+      "q<=0.05": 157,
+      "q<=0.01": 0
+    },
+    "p_z_plus_softmax": {
+      "q<=0.05": 490,
+      "q<=0.01": 490
+    },
+    "p_z_plus_orth": {
+      "q<=0.05": 245,
+      "q<=0.01": 245
+    }
+  },
+  "firm_level_discoveries": {
+    "p_z_plus": {
+      "q<=0.05": 218,
+      "q<=0.01": 68
+    },
+    "p_z_plus_renorm": {
+      "q<=0.05": 217,
+      "q<=0.01": 94
+    },
+    "p_z_mahalanobis_sq": {
+      "q<=0.05": 157,
+      "q<=0.01": 42
+    },
+    "p_t_iut": {
+      "q<=0.05": 181,
+      "q<=0.01": 74
+    },
+    "p_z_plus_softmax": {
+      "q<=0.05": 210,
+      "q<=0.01": 115
+    },
+    "p_z_plus_orth": {
+      "q<=0.05": 252,
+      "q<=0.01": 170
+    }
+  },
+  "row_count": 19295,
+  "firm_count": 396,
+  "bootstrap_pvalue_floor": 9.999000099990002e-05,
+  "row_level_best_achievable_q": 1.9293070692930707,
+  "row_level_note": "Row-level BH saturates at q_min = m / (B+1) = 1.929. With B=10000, m=19295, no row can achieve q \u2264 0.05 purely from the bootstrap floor. Raise B or rely on firm-level aggregation."
+}

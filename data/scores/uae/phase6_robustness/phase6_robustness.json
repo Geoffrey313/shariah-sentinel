@@ -1,0 +1,129 @@
+{
+  "delisting_cohort_size": 41,
+  "delisting_mean_delta_z_mahalanobis_sq": 3.4569191572777624,
+  "sector_top_red": [
+    {
+      "sector": "Financials",
+      "n_rows": 65,
+      "n_red": 5,
+      "red_share": 0.07692307692307693,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Industrials",
+      "n_rows": 73,
+      "n_red": 2,
+      "red_share": 0.0273972602739726,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Real Estate",
+      "n_rows": 50,
+      "n_red": 1,
+      "red_share": 0.02,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Consumer Staples",
+      "n_rows": 35,
+      "n_red": 0,
+      "red_share": 0.0,
+      "is_n_sufficient": true
+    }
+  ],
+  "integrity_sensitivity": [
+    {
+      "composite": "z_plus",
+      "n_strict_rows": 9088,
+      "jaccard_top_n": 0.6,
+      "share_of_full_top_n_in_strict": 0.75,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_renorm",
+      "n_strict_rows": 8832,
+      "jaccard_top_n": 0.41843971631205673,
+      "share_of_full_top_n_in_strict": 0.59,
+      "top_n": 100
+    },
+    {
+      "composite": "breadth",
+      "n_strict_rows": 9088,
+      "jaccard_top_n": 0.7094017094017094,
+      "share_of_full_top_n_in_strict": 0.83,
+      "top_n": 100
+    },
+    {
+      "composite": "z_mahalanobis_sq",
+      "n_strict_rows": 4709,
+      "jaccard_top_n": 0.6528925619834711,
+      "share_of_full_top_n_in_strict": 0.79,
+      "top_n": 100
+    },
+    {
+      "composite": "t_iut",
+      "n_strict_rows": 9088,
+      "jaccard_top_n": 0.8348623853211009,
+      "share_of_full_top_n_in_strict": 0.91,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_softmax",
+      "n_strict_rows": 8832,
+      "jaccard_top_n": 0.42857142857142855,
+      "share_of_full_top_n_in_strict": 0.6,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_orth",
+      "n_strict_rows": 8832,
+      "jaccard_top_n": 0.42857142857142855,
+      "share_of_full_top_n_in_strict": 0.6,
+      "top_n": 100
+    }
+  ],
+  "stability_summary": {
+    "z_plus": {
+      "n_firms": 183,
+      "mean_lag1": 0.46736479024986366,
+      "median_lag1": 0.5090334565944763,
+      "share_above_half": 0.5136612021857924
+    },
+    "z_plus_renorm": {
+      "n_firms": 183,
+      "mean_lag1": 0.398092772978518,
+      "median_lag1": 0.4100748124061524,
+      "share_above_half": 0.3442622950819672
+    },
+    "breadth": {
+      "n_firms": 183,
+      "mean_lag1": 0.4753623372110682,
+      "median_lag1": 0.4858947066241328,
+      "share_above_half": 0.4426229508196721
+    },
+    "z_mahalanobis_sq": {
+      "n_firms": 134,
+      "mean_lag1": 0.2980378272041547,
+      "median_lag1": 0.31191618436135526,
+      "share_above_half": 0.2835820895522388
+    },
+    "t_iut": {
+      "n_firms": 183,
+      "mean_lag1": 0.5852956595283644,
+      "median_lag1": 0.6417059379801677,
+      "share_above_half": 0.6939890710382514
+    },
+    "z_plus_softmax": {
+      "n_firms": 183,
+      "mean_lag1": 0.41889689211389186,
+      "median_lag1": 0.45001909483693914,
+      "share_above_half": 0.43169398907103823
+    },
+    "z_plus_orth": {
+      "n_firms": 183,
+      "mean_lag1": 0.41494947827961665,
+      "median_lag1": 0.44266085166458286,
+      "share_above_half": 0.43169398907103823
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "c_rows": 264,
+  "complete_rows": 176,
+  "ledoit_wolf_shrinkage": 0.11934882711099601,
+  "shrinkage_warning": false,
+  "pca": {
+    "explained_variance_ratio": [
+      0.31912577441545004,
+      0.2555742587817723,
+      0.17521438361774347,
+      0.09679876302825764,
+      0.06409674416124543,
+      0.056946861572796006,
+      0.032243214422734895
+    ],
+    "cumulative_variance": [
+      0.31912577441545004,
+      0.5747000331972223,
+      0.7499144168149657,
+      0.8467131798432234,
+      0.9108099240044688,
+      0.9677567855772649,
+      0.9999999999999998
+    ],
+    "k_eff": 6,
+    "variance_cutoff": 0.95
+  },
+  "k_eff_warning": false,
+  "partial_correlation_controls_used": [
+    "sector",
+    "fyearq"
+  ],
+  "partial_correlation_controls_missing": [],
+  "detectors": [
+    "z1",
+    "z2",
+    "z3",
+    "z4",
+    "z6",
+    "z8",
+    "z57"
+  ],
+  "dropped_detectors_all_nan": []
+}

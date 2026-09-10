@@ -25,16 +25,22 @@ review/
 *.toc
 *.synctex.gz
 
-# Data is NOT shipped. The reconstructed panels carry licensed S&P Compustat
-# fields, so neither they nor any run output are tracked. Obtain the panels on
-# motivated request (see the README) and place them under data/ to reproduce.
-# Only data/README.md, which documents the expected schema, is versioned.
+# The reconstructed PANELS carry licensed S&P Compustat fields, so they are not
+# tracked (obtain them on motivated request; see the README). What IS shipped:
+#  - data/README.md (schema documentation);
+#  - data/raw/macro_connectors/ (Islamic-correction macro series; public sources);
+#  - data/scores/ (de-identified derived outputs: z-scores, composite p/q-values,
+#    verdicts and reduced tables, firm keys replaced by synthetic ids, no Compustat
+#    fields) — enough to regenerate every reported result without the panels.
 data/*
 !data/README.md
+!data/scores/
+!data/raw/
 
 # Generated results are reproducible by the code, never stored
 results/
 outputs/
+figures/data/
 
 # A fresh `reproduce.py numbers` run writes here; diff it against the tracked
 # reference numbers_manifest.json. Never commit the local run.

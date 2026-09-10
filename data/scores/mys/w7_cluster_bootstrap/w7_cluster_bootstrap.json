@@ -1,0 +1,149 @@
+{
+  "scope": "C5/W7 robustness \u2014 firm-cluster vs i.i.d.-row resample of the row-level bootstrap null. Reported alongside the canonical run; the exceedance calibration (rho_cal) and the headline are NOT changed.",
+  "guardrails": {
+    "rho_cal_frozen": 0.3,
+    "exceedance_cache_frozen": true,
+    "production_default_resample": "row (i.i.d.)",
+    "canonical_untouched": true
+  },
+  "config": {
+    "country": "mys",
+    "n_outer": 300,
+    "seed": 20260908,
+    "bootstrap_B": 10000,
+    "exceedance_B": 100000,
+    "taus": [
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1
+    ],
+    "red_threshold": 0.01,
+    "amber_threshold": 0.05,
+    "holm_m": 4,
+    "holm_cut_per_composite": 0.0025,
+    "q_levels": [
+      0.01,
+      0.05
+    ],
+    "headline_composite": "p_t_iut",
+    "smoke": false,
+    "panel_sha256": "4aa84830cef94041a8fb4978a4043e0bc088d8be597a3792fbe99f5ef1c901ba",
+    "n_ref_C": 9979,
+    "n_firms_C": 1134,
+    "n_firms_obs": 1356
+  },
+  "canonical_selfcheck": {
+    "red_count": 2777,
+    "disc": {
+      "q<=0.01": 324,
+      "q<=0.05": 421
+    }
+  },
+  "schemes": {
+    "row": {
+      "scheme": "row",
+      "n_outer": 300,
+      "B": 10000,
+      "seconds": 272.5,
+      "row_red_count": {
+        "mean": 2760.4466666666667,
+        "p5": 2467.95,
+        "p95": 3099.9500000000003,
+        "mc_se": 11.364044957675691,
+        "min": 2293.0,
+        "max": 3614.0
+      },
+      "critical_value_t_iut": {
+        "mean": 0.3514652659271135,
+        "p5": 0.3000600461393135,
+        "p95": 0.4022043432422661,
+        "mc_se": 0.0018032948390289878,
+        "min": 0.2761881630449046,
+        "max": 0.4478777208807429
+      },
+      "critical_value_z_mahalanobis": {
+        "mean": 44.58587129885292,
+        "p5": 42.756295049045654,
+        "p95": 46.43131617214325,
+        "mc_se": 0.07114301297422512,
+        "min": 40.693420194749926,
+        "max": 47.83595295557585
+      },
+      "firm_discoveries": {
+        "q<=0.01": {
+          "mean": 319.14666666666665,
+          "p5": 300.0,
+          "p95": 339.0,
+          "mc_se": 0.6695773693801391,
+          "min": 297.0,
+          "max": 351.0
+        },
+        "q<=0.05": {
+          "mean": 412.30333333333334,
+          "p5": 396.0,
+          "p95": 434.0,
+          "mc_se": 0.6647301584664856,
+          "min": 390.0,
+          "max": 449.0
+        }
+      }
+    },
+    "cluster": {
+      "scheme": "cluster",
+      "n_outer": 300,
+      "B": 10000,
+      "seconds": 272.9,
+      "row_red_count": {
+        "mean": 2798.29,
+        "p5": 2434.3,
+        "p95": 3215.8500000000004,
+        "mc_se": 14.52466927343914,
+        "min": 2171.0,
+        "max": 3773.0
+      },
+      "critical_value_t_iut": {
+        "mean": 0.34486755642592776,
+        "p5": 0.28143750495369224,
+        "p95": 0.40220893561970383,
+        "mc_se": 0.002207202376350204,
+        "min": 0.25061292764772464,
+        "max": 0.4478777208807429
+      },
+      "critical_value_z_mahalanobis": {
+        "mean": 44.60277974310644,
+        "p5": 42.49767772639824,
+        "p95": 46.47278020750897,
+        "mc_se": 0.0814938309914221,
+        "min": 40.69437938192111,
+        "max": 48.762592304070324
+      },
+      "firm_discoveries": {
+        "q<=0.01": {
+          "mean": 321.23333333333335,
+          "p5": 292.0,
+          "p95": 354.05,
+          "mc_se": 1.1233592850199043,
+          "min": 265.0,
+          "max": 383.0
+        },
+        "q<=0.05": {
+          "mean": 413.8933333333333,
+          "p5": 383.95,
+          "p95": 450.05,
+          "mc_se": 1.2164543881030603,
+          "min": 356.0,
+          "max": 478.0
+        }
+      }
+    }
+  },
+  "cluster_vs_row_delta": {
+    "critical_value_t_iut_rel": -0.01877201004139617,
+    "critical_value_z_mahalanobis_rel": 0.00037923323602173653,
+    "row_red_count_abs": 37.84333333333325,
+    "firm_disc_q<=0.01_abs": 2.0866666666667015,
+    "firm_disc_q<=0.05_abs": 1.589999999999975
+  }
+}

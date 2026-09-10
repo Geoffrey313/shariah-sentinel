@@ -1,0 +1,60 @@
+# Robustness Benchmark
+
+This benchmark complements `phase5_injection`.
+
+- `family1_correlated_gaussian.csv`: covariance-aware mean-shift benchmark.
+- `family2_threshold_clustering.csv`: raw-data manipulation benchmark (`M1_v2`, `M2b` temporal spike, `M3_v2`, `M4_v2`, REM-style variants when available).
+- `family3_adversarial_evasion.csv`: Shariah-targeted local evasion benchmark on the configured raw variables (`revtq`, `iditq`, `nopiq`, `xintq`, `niq`, `oibdpq`, `oancfq`, `ibq`, `atq`, `dlttq`, `dlcq`, `ltq`, `cheq`, `actq`, `lctq`, `rectq`, `invtq`, `xsgaq`, `ppentq`).
+- `family4_anoshift.csv`: temporal transfer benchmark using a fixed global calibration on the honest reference sample, then near/far evaluation over time.
+- `coverage_key_variables.csv`: current panel coverage of raw variables needed by the realistic manipulations.
+- `benchmark_scoreboard.csv`: compact mean metrics by family and method.
+
+The benchmark keeps `phase5_injection` as a faster z-score-level baseline.
+
+Interpretation notes:
+- `M2b` is a temporal spike / gap mechanism, not a literal ABN_CFO implementation.
+- `ABN_PROD` and `ABN_DISX` probe REM-style manipulations that may bypass the Shariah-ratio layer and therefore stress non-SAC detector dimensions.
+- `Family 3` does not test full general evasion over all accounting variables; it tests whether RED cases can be weakened through Shariah-targeted local raw-variable adjustments.
+- `Family 4` is currently reported as a fixed-calibration temporal drift stress test rather than the stricter IID-only transfer protocol from the tex.
+
+## Key Variable Coverage
+
+| column | present_in_panel | n_nonnull | pct_nonnull |
+| --- | --- | --- | --- |
+| cogsq | True | 64888 | 69.87 |
+| xrdq | True | 0 | 0.0 |
+| xsgaq | True | 46735 | 50.32 |
+| invtq | True | 76277 | 82.13 |
+| oibdpq | True | 69883 | 75.25 |
+| revtq | True | 79097 | 85.17 |
+| dlttq | True | 79974 | 86.11 |
+| dlcq | True | 84345 | 90.82 |
+| cheq | True | 90203 | 97.13 |
+| iditq | True | 49342 | 53.13 |
+
+## Scoreboard
+
+| family | method | entity_type | mean_auc | mean_detection_rate | mean_fpr | median_cost | p90_cost |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| family1 | correlated_gaussian | composite | 0.6025 | 0.0509 | 0.0614 |  |  |
+| family2 | abn_disx_full | composite |  |  | 0.0613 |  |  |
+| family2 | abn_disx_full | detector |  |  | 0.1216 |  |  |
+| family2 | abn_disx_partial | composite | 0.5251 | 0.0549 | 0.0618 |  |  |
+| family2 | abn_disx_partial | detector | 0.4994 | 0.1218 | 0.1214 |  |  |
+| family2 | abn_prod_full | composite | 0.5254 | 0.0509 | 0.0619 |  |  |
+| family2 | abn_prod_full | detector | 0.5058 | 0.1196 | 0.1216 |  |  |
+| family2 | benford_m3_v2 | composite | 0.7517 | 0.2569 | 0.0536 |  |  |
+| family2 | benford_m3_v2 | detector | 0.6076 | 0.278 | 0.1144 |  |  |
+| family2 | interstatement_m4_v2 | composite | 0.6109 | 0.0742 | 0.061 |  |  |
+| family2 | interstatement_m4_v2 | detector | 0.5683 | 0.1935 | 0.1192 |  |  |
+| family2 | m5_cod_break | composite | 0.4729 | 0.0358 | 0.0614 |  |  |
+| family2 | m5_cod_break | detector | 0.5006 | 0.1164 | 0.1216 |  |  |
+| family2 | m6_seasonal | composite | 0.4835 | 0.0539 | 0.0614 |  |  |
+| family2 | m6_seasonal | detector | 0.4875 | 0.1123 | 0.1218 |  |  |
+| family2 | temporal_spike_m2b | composite | 0.5506 | 0.0841 | 0.061 |  |  |
+| family2 | temporal_spike_m2b | detector | 0.5093 | 0.1381 | 0.1216 |  |  |
+| family2 | threshold_clustering_m1_v2 | composite | 0.6439 | 0.0829 | 0.0552 |  |  |
+| family2 | threshold_clustering_m1_v2 | detector | 0.5906 | 0.1957 | 0.1137 |  |  |
+| family4 | anoshift_correlated_gaussian | composite | 0.5001 | 0.0438 | 0.0365 |  |  |
+| family4 | anoshift_threshold_clustering_m1_v2 | composite |  |  | 0.0613 |  |  |
+| family3 | adversarial_evasion | row_attack |  | 0.3333 |  | 0.0816 | 0.1417 |

@@ -1,0 +1,64 @@
+{
+  "scope": "scoped sensitivity: retaining the ratio-cap-violating authority rows in C (require_ratio_compliance=False); reported BESIDE the canonical run, never a replacement of the canonical pipeline or the 324-firm headline",
+  "caps": {
+    "ratio_debt_adj": 0.33,
+    "ratio_income": 0.05,
+    "ratio_cash_adj": 0.33
+  },
+  "reference_sample_size": {
+    "canonical_C": 13086,
+    "sensitivity_C": 15458,
+    "retained": 2372
+  },
+  "firm_headline_canonical": {
+    "q<=0.01": 324,
+    "q<=0.05": 421
+  },
+  "firm_headline_sensitivity": {
+    "q<=0.01": 284,
+    "q<=0.05": 360
+  },
+  "row_verdict_flips": {
+    "n_common_rows": 92872,
+    "red_canonical": 2777,
+    "red_sensitivity": 1667,
+    "red_to_notred": 1137,
+    "notred_to_red": 27
+  },
+  "retained_row_decomposition": {
+    "n_retained_violating_rows": 2372,
+    "verdict_under_sensitivity": {
+      "RED": 62,
+      "AMBER": 175,
+      "GREEN": 2135,
+      "NO_DATA": 0
+    },
+    "rel_exceedance_quantiles": {
+      "10": 0.043,
+      "25": 0.119,
+      "50": 0.325,
+      "75": 0.924,
+      "90": 2.651
+    },
+    "threshold_10pct": {
+      "n_large_source_discrepancy": 1860,
+      "n_candidate_statistical_anomaly": 512,
+      "red_among_large_source_discrepancy": 55,
+      "red_among_candidate_statistical_anomaly": 7
+    },
+    "threshold_25pct": {
+      "n_large_source_discrepancy": 1370,
+      "n_candidate_statistical_anomaly": 1002,
+      "red_among_large_source_discrepancy": 47,
+      "red_among_candidate_statistical_anomaly": 15
+    },
+    "threshold_50pct": {
+      "n_large_source_discrepancy": 908,
+      "n_candidate_statistical_anomaly": 1464,
+      "red_among_large_source_discrepancy": 40,
+      "red_among_candidate_statistical_anomaly": 22
+    }
+  },
+  "decomposition_rule": "max relative exceedance r=max_j (ratio_j-cap_j)/cap_j; r>0.25 = large source discrepancy / likely filing-data mismatch; r<=0.25 = candidate statistical anomaly; pre-registered, robustness at 0.10 and 0.50",
+  "seconds": 123.1
+}

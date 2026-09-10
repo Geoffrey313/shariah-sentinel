@@ -1,0 +1,74 @@
+{
+  "panel_rows": 11499,
+  "c_rows": 264,
+  "thresholds": {
+    "benford_min_figures": 109,
+    "benford_pooling_window": 8,
+    "zipf_min_points": 8,
+    "zipf_pooling_window": 4,
+    "mscore_min_reference_size": 30,
+    "threshold_q_min": 4,
+    "threshold_alpha": 0.05,
+    "threshold_power_target": 0.8,
+    "threshold_delta_m": 0.05,
+    "cross_statement_min_sector": 27,
+    "temporal_min_history": 8,
+    "peer_min_size": 9
+  },
+  "coverage": [
+    {
+      "detector": "z1_valid",
+      "n_valid": 10618,
+      "n_total": 11499,
+      "share_valid": 0.923384642142795
+    },
+    {
+      "detector": "z2_valid",
+      "n_valid": 11281,
+      "n_total": 11499,
+      "share_valid": 0.9810418297243239
+    },
+    {
+      "detector": "z3_valid",
+      "n_valid": 8901,
+      "n_total": 11499,
+      "share_valid": 0.774067310200887
+    },
+    {
+      "detector": "z4_valid",
+      "n_valid": 10950,
+      "n_total": 11499,
+      "share_valid": 0.9522567179754762
+    },
+    {
+      "detector": "z5_valid",
+      "n_valid": 8901,
+      "n_total": 11499,
+      "share_valid": 0.774067310200887
+    },
+    {
+      "detector": "z6_valid",
+      "n_valid": 10035,
+      "n_total": 11499,
+      "share_valid": 0.8726845812679364
+    },
+    {
+      "detector": "z7_valid",
+      "n_valid": 10037,
+      "n_total": 11499,
+      "share_valid": 0.8728585094356031
+    },
+    {
+      "detector": "z8_valid",
+      "n_valid": 6122,
+      "n_total": 11499,
+      "share_valid": 0.5323941212279328
+    },
+    {
+      "detector": "z9_valid",
+      "n_valid": 6904,
+      "n_total": 11499,
+      "share_valid": 0.6004000347856335
+    }
+  ]
+}

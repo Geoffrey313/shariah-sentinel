@@ -1,0 +1,13 @@
+year,islamic_deposits_Bn_PKR,islamic_cash_ratio_t,cash_ratio_status,cash_source
+2014,1070,0.116,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2014, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2014/IBB-Dec-2014.pdf"
+2015,1375,0.132,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2015, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2015/IBB-Dec-2015.pdf"
+2016,1573,0.133,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2016, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2016/Dec.pdf"
+2017,1885,0.145,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2017, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2017/Dec.pdf"
+2018,2203,0.155,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2018, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2018/Dec.pdf"
+2019,2652,0.166,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2019, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2019/Dec.pdf"
+2020,3389,0.183,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2020, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2020/Dec.pdf"
+2021,4211,0.194,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2021, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/Bulletin/2021/Dec.pdf"
+2022,5161,0.22,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2022, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/bulletin/2022/Dec.pdf"
+2023,6749,0.232,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2023, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/Bulletin/2023/Bulletin-Oct-Dec-2023.pdf"
+2024,7905,0.249,OBSERVED_PRIMARY,"SBP Islamic Banking Bulletin December 2024, Industry Progress/Market Share or Key Indicators table; https://www.sbp.org.pk/ibd/Bulletin/2024/Islamic%20Banking%20Bulletin%20December%202024.pdf"
+2025,9533,0.255,OBSERVED_PRIMARY_WITH_DATE_BREAK,"SBP Islamic Banking Bulletin June 2025, Industry Progress/Market Share table, as of 2025-06-30; mid-year snapshot, not directly comparable to the December year-end 2014-2024 series; https://www.sbp.org.pk/ibd/Bulletin/2025/Islamic-Banking-Bulletin-Jun-2025-Final.pdf"

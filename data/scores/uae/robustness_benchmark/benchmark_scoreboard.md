@@ -1,0 +1,24 @@
+| family | method | entity_type | mean_auc | mean_detection_rate | mean_fpr | median_cost | p90_cost |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| family1 | correlated_gaussian | composite | 0.4515 | 0.0584 | 0.1892 |  |  |
+| family2 | abn_disx_full | composite |  |  | 0.1892 |  |  |
+| family2 | abn_disx_full | detector |  |  | 0.1733 |  |  |
+| family2 | abn_disx_partial | composite | 0.4866 | 0.1364 | 0.1935 |  |  |
+| family2 | abn_disx_partial | detector | 0.4892 | 0.155 | 0.1744 |  |  |
+| family2 | abn_prod_full | composite | 0.4784 | 0.1135 | 0.194 |  |  |
+| family2 | abn_prod_full | detector | 0.4913 | 0.1492 | 0.1744 |  |  |
+| family2 | benford_m3_v2 | composite | 0.7463 | 0.4696 | 0.1724 |  |  |
+| family2 | benford_m3_v2 | detector | 0.6266 | 0.3894 | 0.1641 |  |  |
+| family2 | interstatement_m4_v2 | composite | 0.6104 | 0.2434 | 0.1813 |  |  |
+| family2 | interstatement_m4_v2 | detector | 0.5821 | 0.2636 | 0.1691 |  |  |
+| family2 | m5_cod_break | composite | 0.5466 | 0.1558 | 0.1891 |  |  |
+| family2 | m5_cod_break | detector | 0.5333 | 0.2002 | 0.1732 |  |  |
+| family2 | m6_seasonal | composite | 0.4333 | 0.1341 | 0.1897 |  |  |
+| family2 | m6_seasonal | detector | 0.4724 | 0.1322 | 0.174 |  |  |
+| family2 | temporal_spike_m2b | composite | 0.5032 | 0.1858 | 0.189 |  |  |
+| family2 | temporal_spike_m2b | detector | 0.4967 | 0.1618 | 0.1737 |  |  |
+| family2 | threshold_clustering_m1_v2 | composite | 0.5704 | 0.1571 | 0.1698 |  |  |
+| family2 | threshold_clustering_m1_v2 | detector | 0.553 | 0.2506 | 0.1718 |  |  |
+| family4 | anoshift_correlated_gaussian | composite | 0.5155 | 0.0866 | 0.0507 |  |  |
+| family4 | anoshift_threshold_clustering_m1_v2 | composite |  |  | 0.1892 |  |  |
+| family3 | adversarial_evasion | row_attack |  | 0.24 |  | 0.0479 | 0.1035 |

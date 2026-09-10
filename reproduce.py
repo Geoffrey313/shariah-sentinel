@@ -160,6 +160,16 @@ def cmd_figure_data(args) -> None:
     figure_data_main()
 
 
+def cmd_results(args) -> None:
+    """Regenerate every reported result from the shipped de-identified score
+    bundle under ``data/scores/`` — no reconstructed panel needed. Runs the
+    numbers manifest then the figure-data reshape (both read-only). The only
+    output that still needs the on-request panel is the leverage U-shape figure,
+    which reads a per-firm debt ratio and is skipped here."""
+    cmd_numbers(args)
+    cmd_figure_data(args)
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -182,6 +192,7 @@ def main() -> None:
     sp.add_argument("--no-resume", action="store_true"); sp.set_defaults(func=cmd_all)
     sub.add_parser("numbers", help="collect reproduced numbers -> numbers_manifest.json (read-only)").set_defaults(func=cmd_numbers)
     sub.add_parser("figure-data", help="regenerate figures/data/*.csv from reproduced outputs (read-only)").set_defaults(func=cmd_figure_data)
+    sub.add_parser("results", help="regenerate all paper numbers + figure data from the shipped de-identified bundle (no panel needed)").set_defaults(func=cmd_results)
 
     args = p.parse_args()
     args.func(args)

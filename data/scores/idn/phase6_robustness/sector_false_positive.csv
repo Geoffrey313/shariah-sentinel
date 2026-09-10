@@ -1,0 +1,13 @@
+sector,n_rows,n_red,red_share,is_n_sufficient
+,99,8,0.0808080808080808,True
+Health Care,186,13,0.0698924731182795,True
+Materials,490,25,0.0510204081632653,True
+Information Technology,146,7,0.047945205479452,True
+Communication Services,190,9,0.0473684210526315,True
+Industrials,814,38,0.0466830466830466,True
+Real Estate,450,20,0.0444444444444444,True
+Consumer Staples,516,19,0.0368217054263565,True
+Consumer Discretionary,585,20,0.0341880341880341,True
+Utilities,40,1,0.025,True
+Financials,42,1,0.0238095238095238,True
+Energy,302,7,0.0231788079470198,True

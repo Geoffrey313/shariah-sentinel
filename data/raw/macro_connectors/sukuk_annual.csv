@@ -1,0 +1,21 @@
+year,sukuk_outstanding_Bn_MYR,bonds_outstanding_Bn_MYR,total_corporate_debt_Bn_MYR,R_t,sukuk_status,sukuk_source
+2006,109.0,114.0,223.0,0.4888,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2007,143.0,111.0,254.0,0.563,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2008,153.0,122.0,275.0,0.5564,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2009,169.0,126.0,295.0,0.5729,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2010,177.0,136.0,313.0,0.5655,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2011,204.0,135.0,339.0,0.6018,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2012,264.0,141.0,405.0,0.6519,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2013,288.0,141.0,429.0,0.6713,RECONSTRUCTED_SECONDARY,Cagamas Corporate Bond Market in Malaysia: Issuer Perspective (2017)
+2014,,,,0.7043,OBSERVED_RATIO_ONLY_PRIMARY,SC bulletin / text: corporate sukuk outstanding accounted for 70.43% in 2014
+2015,361.33,143.0,504.33,0.7165,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Malaysian ICM Facts and Figures (2016/2015 table); bonds = total - sukuk
+2016,393.45,139.31,532.76,0.7385,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Malaysian ICM Facts and Figures (2016/2015 table); bonds = total - sukuk
+2017,454.49,150.39,604.88,0.7514,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2018 Table 3; bonds = total - sukuk
+2018,497.21,156.9,654.11,0.7601,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2018 Table 3; bonds = total - sukuk
+2019,555.5,142.54,698.04,0.7958,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2020 Table 3; bonds = total - sukuk
+2020,593.43,138.96,732.39,0.8103,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2020 Table 3; bonds = total - sukuk
+2021,629.27,143.57,772.84,0.8142,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2022 Table 3; bonds = total - sukuk
+2022,666.0,138.1,804.1,0.8283,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2022 Table 3; bonds = total - sukuk
+2023,702.52,134.22,836.74,0.8396,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2023 Table 3; bonds = total - sukuk; note SC 2024 reprise conflicts
+2024,725.68,132.32,858.0,0.8458,OBSERVED_PRIMARY_PLUS_RECONSTRUCTED_BONDS,SC Annual Report 2024 Table 3; bonds = total - sukuk
+2025,,,,0.85,ROUNDED_GRAPH_PRIMARY,SC Capital Market Masterplan 2026-2030 Chart 8 (rounded 85%)

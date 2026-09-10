@@ -1,0 +1,12 @@
+sector,n_rows,n_red,red_share,is_n_sufficient
+Financials,109,8,0.073394495412844,True
+Materials,166,6,0.036144578313253,True
+Consumer Staples,87,3,0.0344827586206896,True
+Communication Services,33,1,0.0303030303030303,True
+Real Estate,74,2,0.027027027027027,True
+Industrials,77,2,0.0259740259740259,True
+Consumer Discretionary,98,2,0.0204081632653061,True
+Health Care,54,1,0.0185185185185185,True
+Energy,23,2,0.0869565217391304,False
+Information Technology,8,0,0.0,False
+Utilities,15,0,0.0,False

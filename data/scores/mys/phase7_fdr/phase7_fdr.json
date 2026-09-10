@@ -1,0 +1,147 @@
+{
+  "q_levels": [
+    0.05,
+    0.01
+  ],
+  "firm_aggregation": "min_pvalue",
+  "row_level_discoveries": {
+    "p_z_plus": {
+      "q<=0.05": 0,
+      "q<=0.01": 0
+    },
+    "p_z_plus_renorm": {
+      "q<=0.05": 0,
+      "q<=0.01": 0
+    },
+    "p_z_mahalanobis_sq": {
+      "q<=0.05": 137,
+      "q<=0.01": 0
+    },
+    "p_t_iut": {
+      "q<=0.05": 1248,
+      "q<=0.01": 0
+    },
+    "p_z_plus_softmax": {
+      "q<=0.05": 0,
+      "q<=0.01": 0
+    },
+    "p_z_plus_orth": {
+      "q<=0.05": 0,
+      "q<=0.01": 0
+    }
+  },
+  "firm_level_discoveries": {
+    "p_z_plus": {
+      "q<=0.05": 793,
+      "q<=0.01": 206
+    },
+    "p_z_plus_renorm": {
+      "q<=0.05": 882,
+      "q<=0.01": 0
+    },
+    "p_z_mahalanobis_sq": {
+      "q<=0.05": 744,
+      "q<=0.01": 204
+    },
+    "p_t_iut": {
+      "q<=0.05": 661,
+      "q<=0.01": 319
+    },
+    "p_z_plus_softmax": {
+      "q<=0.05": 906,
+      "q<=0.01": 0
+    },
+    "p_z_plus_orth": {
+      "q<=0.05": 953,
+      "q<=0.01": 0
+    }
+  },
+  "row_count": 92872,
+  "firm_count": 1356,
+  "bootstrap_pvalue_floor": 9.999000099990002e-05,
+  "row_level_best_achievable_q": 9.286271372862714,
+  "row_level_note": "Row-level BH saturates at q_min = m / (B+1) = 9.286. With B=10000, m=92872, no row can achieve q \u2264 0.05 purely from the bootstrap floor. Raise B or rely on firm-level aggregation.",
+  "firm_level_headline": {
+    "method": "exceedance",
+    "composite": "p_t_iut",
+    "label": "HEADLINE \u2014 episodic exceedance, dependence-calibrated (W4-stage-firm)",
+    "scope": "W4-stage-firm: type-I control is conditional on the calibrated row-level p-values, not yet the full end-to-end pipeline.",
+    "params": {
+      "rho_cal": 0.3,
+      "B": 100000,
+      "taus": [
+        0.005,
+        0.01,
+        0.02,
+        0.05,
+        0.1
+      ],
+      "seed": 11
+    },
+    "primary_claim": {
+      "q<=0.01": 324
+    },
+    "secondary": {
+      "q<=0.05": 421,
+      "caveat": "controlled up to the calibration rho (~0.30); q<=0.05 is fragile above that. See the W4-stage-firm type-I analysis."
+    },
+    "discoveries": {
+      "q<=0.05": 421,
+      "q<=0.01": 324
+    }
+  },
+  "firm_level_panel": {
+    "composite": "p_t_iut",
+    "aggregators": {
+      "min_pvalue": {
+        "label": "diagnostic \u2014 min-p over quarters (anti-conservative, not valid; referee C2)",
+        "discoveries": {
+          "q<=0.05": 661,
+          "q<=0.01": 319
+        }
+      },
+      "bonferroni": {
+        "label": "valid, arbitrary-dependence, any-quarter (sparse)",
+        "discoveries": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      },
+      "hommel": {
+        "label": "valid, arbitrary-dependence, any-quarter (sparse)",
+        "discoveries": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      },
+      "harmonic": {
+        "label": "valid, persistence (Vovk-Wang harmonic, conservative e*ln K)",
+        "discoveries": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      },
+      "harmonic_sharp": {
+        "label": "valid, persistence (Vovk-Wang harmonic, sharp finite a_{-1,K})",
+        "discoveries": {
+          "q<=0.05": 0,
+          "q<=0.01": 0
+        }
+      },
+      "fisher": {
+        "label": "independence-only (not valid under dependence)",
+        "discoveries": {
+          "q<=0.05": 452,
+          "q<=0.01": 383
+        }
+      },
+      "cauchy": {
+        "label": "sensitivity / heavy-tail (not a headline guarantee without local calibration)",
+        "discoveries": {
+          "q<=0.05": 134,
+          "q<=0.01": 0
+        }
+      }
+    }
+  }
+}

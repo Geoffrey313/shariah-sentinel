@@ -1,0 +1,8 @@
+sector,n_rows,meets_min_sector_size,meets_d5_floor
+Industrials,73,True,True
+Financials,65,True,True
+Real Estate,50,True,True
+Consumer Staples,35,True,True
+Consumer Discretionary,18,False,False
+Communication Services,13,False,False
+Utilities,10,False,False

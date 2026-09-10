@@ -1,0 +1,131 @@
+{
+  "scope": "C4/W6 chronological calibration/test split (MYS anchor): PIT + Sigma-hat + bootstrap null calibrated on the training-year clean rows only, evaluated on the held-out later-year clean rows. Reported alongside the canonical run; the headline and the full-C calibration are NOT changed.",
+  "guardrails": {
+    "canonical_untouched": true,
+    "mys_only": true,
+    "bootstrap_cache_reset": true,
+    "rho_cal_unchanged": 0.3
+  },
+  "config": {
+    "country": "mys",
+    "boundary_year": 2019,
+    "seed": 20260908,
+    "bootstrap_B": 10000,
+    "smoke": false,
+    "panel_sha256": "4aa84830cef94041a8fb4978a4043e0bc088d8be597a3792fbe99f5ef1c901ba",
+    "active": [
+      "z1",
+      "z2",
+      "z3",
+      "z4",
+      "z6",
+      "z8",
+      "z57"
+    ],
+    "n_train_C": 8218,
+    "n_test_C": 4868,
+    "train_years": [
+      2003,
+      2018
+    ],
+    "test_years": [
+      2019,
+      2025
+    ],
+    "red_threshold": 0.01,
+    "amber_threshold": 0.05,
+    "canonical_full_C_flag_rate_reference": 0.02
+  },
+  "in_sample_train_C": {
+    "n_rows": 8218,
+    "red_rate": 0.007179362375273789,
+    "amber_rate": 0.03699196884886834,
+    "t_iut_p_uniformity_ks": {
+      "ks": 0.02495574243987142,
+      "p": 7.043680452677092e-05
+    },
+    "per_detector_ks_normal": {
+      "z1": {
+        "ks": 0.09056279084074714,
+        "p": 1.5719144980581447e-58,
+        "n": 8138
+      },
+      "z2": {
+        "ks": 0.21664187637767163,
+        "p": 0.0,
+        "n": 8205
+      },
+      "z3": {
+        "ks": 0.0001241773252206313,
+        "p": 1.0,
+        "n": 8053
+      },
+      "z4": {
+        "ks": 0.0964962433158097,
+        "p": 6.549634622293287e-67,
+        "n": 8200
+      },
+      "z6": {
+        "ks": 0.29549813552581883,
+        "p": 0.0,
+        "n": 7510
+      },
+      "z8": {
+        "ks": 0.00015908367801484302,
+        "p": 1.0,
+        "n": 6286
+      },
+      "z57": {
+        "ks": 0.00844346449192368,
+        "p": 0.6017876635535835,
+        "n": 8172
+      }
+    }
+  },
+  "out_of_sample_test_C": {
+    "n_rows": 4868,
+    "red_rate": 0.006368118323746919,
+    "amber_rate": 0.036154478225143796,
+    "t_iut_p_uniformity_ks": {
+      "ks": 0.038419987089212126,
+      "p": 1.1137211547524006e-06
+    },
+    "per_detector_ks_normal": {
+      "z1": {
+        "ks": 0.07132579550565266,
+        "p": 5.74566192516126e-22,
+        "n": 4865
+      },
+      "z2": {
+        "ks": 0.23229280838755106,
+        "p": 1.850512226160803e-231,
+        "n": 4868
+      },
+      "z3": {
+        "ks": 0.048108283455786105,
+        "p": 4.3381473438248907e-10,
+        "n": 4798
+      },
+      "z4": {
+        "ks": 0.13660887960187806,
+        "p": 1.0617817717521735e-79,
+        "n": 4868
+      },
+      "z6": {
+        "ks": 0.2554195910248944,
+        "p": 2.6547368186822715e-270,
+        "n": 4691
+      },
+      "z8": {
+        "ks": 0.0310669550346111,
+        "p": 0.0006258900537535421,
+        "n": 4169
+      },
+      "z57": {
+        "ks": 0.03468235042758255,
+        "p": 1.6065036435842058e-05,
+        "n": 4866
+      }
+    }
+  }
+}

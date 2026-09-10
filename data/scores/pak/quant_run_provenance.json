@@ -1,0 +1,14 @@
+{
+  "country": "PAK",
+  "source": {
+    "path": "data/raw/compustat/PAK.csv",
+    "size": 149647886,
+    "mtime": 1784178214,
+    "rows": 75496,
+    "max_quarter": "2025Q4",
+    "sha256": "bfd17a3cb924ac1c43d8bca6d064f9b1f455ba07634b0e2986f2f0dcbbb25c7f"
+  },
+  "ran_at": "2026-07-17T13:21:15+00:00",
+  "started_at": "2026-07-17T13:20:18+00:00",
+  "reference_c_size": 1393
+}

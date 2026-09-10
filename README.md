@@ -2,11 +2,14 @@
 
 This repository (*ShariaSentinel*) reproduces the empirical results of the paper on
 statistical anomaly screening for Sharia compliance. It ships the scoring and
-robustness pipeline as code only: run it against the reconstructed per-country
-panels and the tables and figures in the paper regenerate from a single command.
-It does not include the application and serving code, the unit-test suite, or the
-raw vendor data. The reconstructed panels carry licensed Compustat fields and are
-not versioned here; they are available on motivated request (see Data).
+robustness pipeline as code, together with the **de-identified derived outputs** of
+the frozen run and the **Islamic-correction macro series**, so the paper's tables
+and figures regenerate from a single command — `python reproduce.py results` —
+without any licensed vendor data. It does not include the application and serving
+code, the unit-test suite, or the raw vendor data. The reconstructed input panels
+carry licensed Compustat fields and are not versioned here; they are available on
+motivated request (see Data) and are needed only to re-run the full pipeline from
+scratch.
 
 ## In plain terms
 
@@ -132,15 +135,26 @@ Predictions:
 The firm-level financials used to build the panels come from S&P Global
 Compustat. The Compustat license does not permit redistributing the underlying
 vendor data, and the reconstructed panels still carry licensed Compustat fields,
-so **this repository ships code only**: neither the raw source nor the
-reconstructed panels are included. The reconstructed panels can be shared on a
-motivated request: state who you are and the intended research use, and send it
-to the corresponding author (contact withheld for single-blind review). Data
-will be shared to the extent the S&P Compustat license allows.
+so **the panels themselves are not shipped**. What *is* shipped is enough to
+regenerate every reported result without them:
 
-To reproduce, obtain the panels and place them under `data/` as shown in the
-Layout below, then run the pipeline. Without them the code is complete but has
-nothing to run on.
+- the **de-identified derived outputs** of the frozen run under
+  `data/scores/<country>/` — detector z-scores, composite statistics with their
+  p- and q-values, verdicts and reduced tables, with firm keys replaced by
+  stable synthetic ids, company names dropped, and no Compustat field present;
+- the **Islamic-correction macro series** under `data/raw/macro_connectors/`,
+  aggregate annual tables from public official sources.
+
+Run `python reproduce.py results` to regenerate the numbers manifest and figure
+data from these, then diff `numbers_manifest.local.json` against the published
+`numbers_manifest.json`.
+
+The reconstructed panels can be shared on a motivated request: state who you are
+and the intended research use, and send it to the corresponding author (contact
+withheld for single-blind review). Data will be shared to the extent the S&P
+Compustat license allows. The panels are needed only to re-run the full pipeline
+(`pipeline`, `score`, `benchmark`, `family3-*`) or to redraw the leverage
+U-shape figure; place them under `data/` as shown in the Layout below.
 
 ## Layout
 
@@ -155,14 +169,18 @@ src/                          the reproduction package, split by role
   analysis/                   reference sample, calibration, FDR, robustness benchmark,
                               counterfactual and SAC-projected PGD evasion, ablation
   figures/                    scripts that regenerate the figure data and the numbers manifest
-data/                         not in the repository, obtain on request (see Data)
-  README.md                   the input schema (the only versioned file here)
+data/
+  README.md                   the input schema and the shipped-bundle description
+  raw/macro_connectors/       Islamic-correction macro series (SHIPPED; public sources)
+  scores/<country>/           de-identified derived outputs (SHIPPED): z-scores,
+                              composites, p/q-values, verdicts, reduced tables —
+                              synthetic firm ids, no Compustat fields; read by
+                              `reproduce.py results`
   panel/<country>/compustat_quarterly.parquet
-                              reconstructed panel per country (mys, idn, uae, sau, pak);
-                              the pipeline regenerates every run output from it
+                              reconstructed panel per country (NOT shipped; on request)
   scores/<country>/phase0_reference_sample/panel_with_split.parquet
-                              the same panel carrying the reference-sample split,
-                              read directly by the scoring, benchmark, and counterfactual steps
+                              the panel carrying the reference-sample split (NOT shipped;
+                              on request) — needed only to re-run the pipeline
 ```
 
 The package follows the canonical role split (`common`, `data`, `engine`,
@@ -183,14 +201,17 @@ Runs on CPU. `torch` uses CUDA automatically if a GPU is available (optional).
 ## Usage
 
 Every analysis is a subcommand of `reproduce.py`. The shared option is
-`--country {mys,idn,uae,sau,pak}` (default `mys`). All results are written
-under `data/scores/<country>/` (git-ignored; only the input panels are
-versioned). Run `python reproduce.py <command> --help` for the full option list.
+`--country {mys,idn,uae,sau,pak}` (default `mys`). The heavy commands write their
+run outputs under `data/scores/<country>/`; a **de-identified copy of that tree
+is shipped**, so `reproduce.py results` reproduces the reported numbers and
+figures with no panel present. Run `python reproduce.py <command> --help` for the
+full option list.
 
 ### Quick reference
 
 | Command | Reproduces | Typical runtime |
 |---|---|---|
+| `results` | all paper numbers + figure data, from the shipped de-identified bundle (no panel needed) | seconds |
 | `pipeline` | phases 0 to 7: reference sample, flag rate, calibration, FDR tables | minutes |
 | `score` | detector z-scores (z1 to z9, then z57) | seconds to minutes |
 | `benchmark` | robustness families 1 to 4 (incl. AnoShift) | minutes to hours |
@@ -199,9 +220,12 @@ versioned). Run `python reproduce.py <command> --help` for the full option list.
 | `family3-pgd` | SAC-projected PGD adversarial-evasion result | minutes |
 | `all` | `score` then `benchmark` | as above |
 
-Start with `pipeline`: it is the command that regenerates the headline numbers
-(flag rate, reference sample, false-discovery counts) from the reconstructed
-panel. The other commands read the phase outputs it writes.
+To reproduce the reported results without any panel, run `reproduce.py results`:
+it reads the shipped de-identified bundle and rebuilds the numbers manifest and
+figure data. To rebuild those outputs from scratch instead, start with
+`pipeline` (it regenerates the headline numbers — flag rate, reference sample,
+false-discovery counts — from the reconstructed panel); the other commands read
+the phase outputs it writes.
 
 ### `pipeline`: phases 0 to 7
 

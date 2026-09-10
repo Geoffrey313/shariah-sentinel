@@ -1,0 +1,165 @@
+{
+  "c_rows": 744,
+  "targets": {
+    "mean": 0.0,
+    "std": 1.0
+  },
+  "thresholds": {
+    "bias_tolerance": 0.1,
+    "variance_ratio_tolerance": 0.2,
+    "ks_alpha": 0.01,
+    "anderson_alpha": 0.01
+  },
+  "per_detector": {
+    "z1": {
+      "moments": {
+        "n": 744,
+        "mean": 0.43323659361240074,
+        "std": 2.0282523806747457,
+        "skew": 1.8920870959429914,
+        "excess_kurtosis": 2.9587121770231395
+      },
+      "tests": {
+        "ks_stat": 0.10080645061290328,
+        "ks_pvalue": 4.918848972698489e-07,
+        "anderson_stat": 72.12847264878462,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "mis_scaled",
+        "non_normal"
+      ],
+      "verdict": "biased,mis_scaled,non_normal",
+      "forced_bootstrap": true
+    },
+    "z2": {
+      "moments": {
+        "n": 744,
+        "mean": 0.10220707654924628,
+        "std": 2.345038881364849,
+        "skew": 0.22970691496325776,
+        "excess_kurtosis": -0.11322356638714215
+      },
+      "tests": {
+        "ks_stat": 0.1998428838865864,
+        "ks_pvalue": 1.6130940628571398e-26,
+        "anderson_stat": 1.0998436470031265,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "mis_scaled",
+        "non_normal"
+      ],
+      "verdict": "biased,mis_scaled,non_normal",
+      "forced_bootstrap": true
+    },
+    "z3": {
+      "moments": {
+        "n": 698,
+        "mean": 0.012051030105237991,
+        "std": 1.0117304303785934,
+        "skew": 0.3036815962037412,
+        "excess_kurtosis": 1.322818880305551
+      },
+      "tests": {
+        "ks_stat": 0.022922636103151928,
+        "ks_pvalue": 0.8483233973328256,
+        "anderson_stat": 0.1301215721285871,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [],
+      "verdict": "ok",
+      "forced_bootstrap": false
+    },
+    "z4": {
+      "moments": {
+        "n": 744,
+        "mean": -0.1326692105679748,
+        "std": 0.9706586136610603,
+        "skew": 0.38012156725061885,
+        "excess_kurtosis": 1.573273917414637
+      },
+      "tests": {
+        "ks_stat": 0.07333750913456522,
+        "ks_pvalue": 0.000632354619737773,
+        "anderson_stat": 0.2705403957185126,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "non_normal"
+      ],
+      "verdict": "biased,non_normal",
+      "forced_bootstrap": true
+    },
+    "z6": {
+      "moments": {
+        "n": 744,
+        "mean": 0.6962851259947256,
+        "std": 2.3005807337673665,
+        "skew": 0.9553696781350621,
+        "excess_kurtosis": 0.16577964227004527
+      },
+      "tests": {
+        "ks_stat": 0.21916160005269314,
+        "ks_pvalue": 7.352978519655352e-32,
+        "anderson_stat": 22.623533609503966,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "mis_scaled",
+        "non_normal"
+      ],
+      "verdict": "biased,mis_scaled,non_normal",
+      "forced_bootstrap": true
+    },
+    "z8": {
+      "moments": {
+        "n": 525,
+        "mean": 0.01142439432305076,
+        "std": 1.023711570173686,
+        "skew": 0.35166635190378037,
+        "excess_kurtosis": 1.761949216243913
+      },
+      "tests": {
+        "ks_stat": 0.0019047619047620756,
+        "ks_pvalue": 1.0,
+        "anderson_stat": 0.12017179936697175,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [],
+      "verdict": "ok",
+      "forced_bootstrap": false
+    },
+    "z57": {
+      "moments": {
+        "n": 744,
+        "mean": 0.050017702949532394,
+        "std": 1.1782007532880316,
+        "skew": 1.5292821126212757,
+        "excess_kurtosis": 7.016259743891215
+      },
+      "tests": {
+        "ks_stat": 0.01344085921505378,
+        "ks_pvalue": 0.9990745838532613,
+        "anderson_stat": 6.640863664151425,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "mis_scaled"
+      ],
+      "verdict": "mis_scaled",
+      "forced_bootstrap": true
+    }
+  },
+  "forced_bootstrap": [
+    "z1",
+    "z2",
+    "z4",
+    "z6",
+    "z57"
+  ]
+}

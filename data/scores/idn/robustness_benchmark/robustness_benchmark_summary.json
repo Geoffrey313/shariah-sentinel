@@ -1,0 +1,90 @@
+{
+  "methods": [
+    "correlated_gaussian",
+    "threshold_clustering_m1_v2",
+    "adversarial_evasion",
+    "anoshift"
+  ],
+  "alpha": 0.05,
+  "rho_grid": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "delta_grid": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3
+  ],
+  "bootstrap_replicates": 500,
+  "key_variable_coverage": [
+    {
+      "column": "cogsq",
+      "present_in_panel": true,
+      "n_nonnull": 37447,
+      "pct_nonnull": 64.53
+    },
+    {
+      "column": "xrdq",
+      "present_in_panel": true,
+      "n_nonnull": 0,
+      "pct_nonnull": 0.0
+    },
+    {
+      "column": "xsgaq",
+      "present_in_panel": true,
+      "n_nonnull": 36200,
+      "pct_nonnull": 62.38
+    },
+    {
+      "column": "invtq",
+      "present_in_panel": true,
+      "n_nonnull": 39317,
+      "pct_nonnull": 67.75
+    },
+    {
+      "column": "oibdpq",
+      "present_in_panel": true,
+      "n_nonnull": 36420,
+      "pct_nonnull": 62.76
+    },
+    {
+      "column": "revtq",
+      "present_in_panel": true,
+      "n_nonnull": 50534,
+      "pct_nonnull": 87.08
+    },
+    {
+      "column": "dlttq",
+      "present_in_panel": true,
+      "n_nonnull": 48045,
+      "pct_nonnull": 82.79
+    },
+    {
+      "column": "dlcq",
+      "present_in_panel": true,
+      "n_nonnull": 50479,
+      "pct_nonnull": 86.98
+    },
+    {
+      "column": "cheq",
+      "present_in_panel": true,
+      "n_nonnull": 56881,
+      "pct_nonnull": 98.02
+    },
+    {
+      "column": "iditq",
+      "present_in_panel": true,
+      "n_nonnull": 44698,
+      "pct_nonnull": 77.02
+    }
+  ],
+  "family_rows": {
+    "family1_correlated_gaussian": 105,
+    "family2_threshold_clustering": 1890,
+    "family3_adversarial_evasion": 50,
+    "family4_anoshift": 2674
+  }
+}

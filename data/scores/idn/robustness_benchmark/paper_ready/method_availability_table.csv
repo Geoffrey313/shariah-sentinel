@@ -1,0 +1,5 @@
+method,required_columns,column_coverage,status,missing_columns,skip_reason
+correlated_gaussian,"ratio_debt_adj, ratio_cash_adj, ratio_income",ratio_debt_adj:78.0%; ratio_cash_adj:98.0%; ratio_income:76.1%,available,,
+threshold_clustering_m1_v2,"dlttq, dlcq, cheq",dlttq:82.8%; dlcq:87.0%; cheq:98.0%,available,,
+adversarial_evasion,"dlttq, dlcq, cheq, iditq",dlttq:82.8%; dlcq:87.0%; cheq:98.0%; iditq:77.0%,available,,
+anoshift,quarter,quarter:missing,missing_inputs,quarter,

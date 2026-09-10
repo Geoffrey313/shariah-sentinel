@@ -1,0 +1,13 @@
+sector,n_rows,meets_peer_group_min_size,meets_d7_floor
+Industrials,814,True,True
+Consumer Discretionary,585,True,True
+Consumer Staples,516,True,True
+Materials,490,True,True
+Real Estate,450,True,True
+Energy,302,True,True
+Communication Services,190,True,True
+Health Care,186,True,True
+Information Technology,146,True,True
+,99,True,True
+Financials,42,True,True
+Utilities,40,True,True

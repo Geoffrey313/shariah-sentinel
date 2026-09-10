@@ -1,0 +1,136 @@
+{
+  "delisting_cohort_size": 274,
+  "delisting_mean_delta_z_mahalanobis_sq": 6.139543134116365,
+  "sector_top_red": [
+    {
+      "sector": "Financials",
+      "n_rows": 212,
+      "n_red": 7,
+      "red_share": 0.0330188679245283,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Unknown",
+      "n_rows": 65,
+      "n_red": 1,
+      "red_share": 0.015384615384615385,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Communication Services",
+      "n_rows": 282,
+      "n_red": 4,
+      "red_share": 0.014184397163120567,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Materials",
+      "n_rows": 1760,
+      "n_red": 22,
+      "red_share": 0.0125,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Consumer Staples",
+      "n_rows": 1551,
+      "n_red": 17,
+      "red_share": 0.01096067053513862,
+      "is_n_sufficient": true
+    }
+  ],
+  "integrity_sensitivity": [
+    {
+      "composite": "z_plus",
+      "n_strict_rows": 81204,
+      "jaccard_top_n": 0.639344262295082,
+      "share_of_full_top_n_in_strict": 0.78,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_renorm",
+      "n_strict_rows": 77693,
+      "jaccard_top_n": 0.32450331125827814,
+      "share_of_full_top_n_in_strict": 0.49,
+      "top_n": 100
+    },
+    {
+      "composite": "breadth",
+      "n_strict_rows": 81207,
+      "jaccard_top_n": 0.8181818181818182,
+      "share_of_full_top_n_in_strict": 0.9,
+      "top_n": 100
+    },
+    {
+      "composite": "z_mahalanobis_sq",
+      "n_strict_rows": 52967,
+      "jaccard_top_n": 0.8691588785046729,
+      "share_of_full_top_n_in_strict": 0.93,
+      "top_n": 100
+    },
+    {
+      "composite": "t_iut",
+      "n_strict_rows": 81204,
+      "jaccard_top_n": 0.8867924528301887,
+      "share_of_full_top_n_in_strict": 0.94,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_softmax",
+      "n_strict_rows": 77693,
+      "jaccard_top_n": 0.32450331125827814,
+      "share_of_full_top_n_in_strict": 0.49,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_orth",
+      "n_strict_rows": 77693,
+      "jaccard_top_n": 0.3422818791946309,
+      "share_of_full_top_n_in_strict": 0.51,
+      "top_n": 100
+    }
+  ],
+  "stability_summary": {
+    "z_plus": {
+      "n_firms": 1354,
+      "mean_lag1": 0.5395948408845522,
+      "median_lag1": 0.5649308849056045,
+      "share_above_half": 0.6314623338257016
+    },
+    "z_plus_renorm": {
+      "n_firms": 1348,
+      "mean_lag1": 0.43786018872295923,
+      "median_lag1": 0.4725747569473222,
+      "share_above_half": 0.4629080118694362
+    },
+    "breadth": {
+      "n_firms": 1354,
+      "mean_lag1": 0.6177241913085035,
+      "median_lag1": 0.6511976145457574,
+      "share_above_half": 0.8042836041358936
+    },
+    "z_mahalanobis_sq": {
+      "n_firms": 1123,
+      "mean_lag1": 0.394732352955671,
+      "median_lag1": 0.4075202367062562,
+      "share_above_half": 0.38557435440783616
+    },
+    "t_iut": {
+      "n_firms": 1353,
+      "mean_lag1": 0.6777148268722227,
+      "median_lag1": 0.7527693743753132,
+      "share_above_half": 0.8004434589800443
+    },
+    "z_plus_softmax": {
+      "n_firms": 1348,
+      "mean_lag1": 0.4633196954599228,
+      "median_lag1": 0.508787606192481,
+      "share_above_half": 0.5133531157270029
+    },
+    "z_plus_orth": {
+      "n_firms": 1348,
+      "mean_lag1": 0.46676040263088514,
+      "median_lag1": 0.5128456539660983,
+      "share_above_half": 0.5178041543026706
+    }
+  }
+}

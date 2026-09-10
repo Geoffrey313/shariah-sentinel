@@ -1,0 +1,5 @@
+persistence,n_firms,mean_red_share
+never,263,0.0005929347186843
+episodic (<10%),478,0.0461130016767604
+intermittent (10-30%),206,0.1665423411920051
+chronic (>30%),91,0.585318485664609

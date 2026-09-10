@@ -1,0 +1,38 @@
+{
+  "inclusion_rule": {
+    "require_sac_compliant": true,
+    "require_clean_sample": true,
+    "require_ratio_compliance": true
+  },
+  "authority_label": {
+    "column": "compliance_shariah",
+    "compliant_1": 412,
+    "noncompliant_0": 0,
+    "unknown_na": 11087
+  },
+  "panel": {
+    "n_rows": 11499,
+    "n_firms": 183
+  },
+  "global": {
+    "size": 264,
+    "n_firms": 42,
+    "min_required": 30
+  },
+  "sector": {
+    "n_sectors": 7,
+    "min_sector_size": 27,
+    "n_meets_min_sector_size": 4
+  },
+  "peer_groups": {
+    "peer_group_column": "sector",
+    "n_groups": 7,
+    "peer_group_min_size": 9,
+    "n_meets_peer_group_min_size": 7
+  },
+  "exclusion_breakdown": {
+    "compliance_shariah != 1": 11087,
+    "ratio exceeds active authority threshold": 109,
+    "clean_sample != 1": 39
+  }
+}

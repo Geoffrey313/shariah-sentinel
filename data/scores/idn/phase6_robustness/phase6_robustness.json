@@ -1,0 +1,136 @@
+{
+  "delisting_cohort_size": 986,
+  "delisting_mean_delta_z_mahalanobis_sq": -0.026890375311516956,
+  "sector_top_red": [
+    {
+      "sector": NaN,
+      "n_rows": 99,
+      "n_red": 8,
+      "red_share": 0.08080808080808081,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Health Care",
+      "n_rows": 186,
+      "n_red": 13,
+      "red_share": 0.06989247311827956,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Materials",
+      "n_rows": 490,
+      "n_red": 25,
+      "red_share": 0.05102040816326531,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Information Technology",
+      "n_rows": 146,
+      "n_red": 7,
+      "red_share": 0.04794520547945205,
+      "is_n_sufficient": true
+    },
+    {
+      "sector": "Communication Services",
+      "n_rows": 190,
+      "n_red": 9,
+      "red_share": 0.04736842105263158,
+      "is_n_sufficient": true
+    }
+  ],
+  "integrity_sensitivity": [
+    {
+      "composite": "z_plus",
+      "n_strict_rows": 45625,
+      "jaccard_top_n": 0.639344262295082,
+      "share_of_full_top_n_in_strict": 0.78,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_renorm",
+      "n_strict_rows": 44759,
+      "jaccard_top_n": 0.6129032258064516,
+      "share_of_full_top_n_in_strict": 0.76,
+      "top_n": 100
+    },
+    {
+      "composite": "breadth",
+      "n_strict_rows": 45625,
+      "jaccard_top_n": 0.7699115044247787,
+      "share_of_full_top_n_in_strict": 0.87,
+      "top_n": 100
+    },
+    {
+      "composite": "z_mahalanobis_sq",
+      "n_strict_rows": 29747,
+      "jaccard_top_n": 0.639344262295082,
+      "share_of_full_top_n_in_strict": 0.78,
+      "top_n": 100
+    },
+    {
+      "composite": "t_iut",
+      "n_strict_rows": 45625,
+      "jaccard_top_n": 0.9047619047619048,
+      "share_of_full_top_n_in_strict": 0.95,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_softmax",
+      "n_strict_rows": 44759,
+      "jaccard_top_n": 0.5873015873015873,
+      "share_of_full_top_n_in_strict": 0.74,
+      "top_n": 100
+    },
+    {
+      "composite": "z_plus_orth",
+      "n_strict_rows": 44759,
+      "jaccard_top_n": 0.6129032258064516,
+      "share_of_full_top_n_in_strict": 0.76,
+      "top_n": 100
+    }
+  ],
+  "stability_summary": {
+    "z_plus": {
+      "n_firms": 1029,
+      "mean_lag1": 0.4366009378302398,
+      "median_lag1": 0.45251940133824936,
+      "share_above_half": 0.4295432458697765
+    },
+    "z_plus_renorm": {
+      "n_firms": 1029,
+      "mean_lag1": 0.37251427476850274,
+      "median_lag1": 0.40145604812685665,
+      "share_above_half": 0.34499514091350825
+    },
+    "breadth": {
+      "n_firms": 1029,
+      "mean_lag1": 0.4518756625486431,
+      "median_lag1": 0.4742116359579713,
+      "share_above_half": 0.42759961127308066
+    },
+    "z_mahalanobis_sq": {
+      "n_firms": 829,
+      "mean_lag1": 0.31864796271097146,
+      "median_lag1": 0.31965950356332645,
+      "share_above_half": 0.30639324487334135
+    },
+    "t_iut": {
+      "n_firms": 1030,
+      "mean_lag1": 0.6087741795445112,
+      "median_lag1": 0.6837295861204247,
+      "share_above_half": 0.7067961165048544
+    },
+    "z_plus_softmax": {
+      "n_firms": 1029,
+      "mean_lag1": 0.39173251366626005,
+      "median_lag1": 0.4184540063800594,
+      "share_above_half": 0.3858114674441205
+    },
+    "z_plus_orth": {
+      "n_firms": 1029,
+      "mean_lag1": 0.3946751077459118,
+      "median_lag1": 0.4195183223065739,
+      "share_above_half": 0.39067055393586003
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "mechanisms": [
+    "M1_threshold",
+    "M2_smoothing",
+    "M3_benford",
+    "M4_inconsistency",
+    "M5_cod_break"
+  ],
+  "contamination_rates": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "h0_sample_size": 100000,
+  "n_cells": 15
+}

@@ -1,0 +1,14 @@
+{
+  "country": "MYS",
+  "source": {
+    "path": "data/raw/compustat/MYS.csv",
+    "size": 220388344,
+    "mtime": 1774362619,
+    "rows": 94079,
+    "max_quarter": "2025Q4",
+    "sha256": "d9aeaefe11af9ecfe01d20abce2d030e2c4b05bf3d9a792fe65652532570bfc4"
+  },
+  "ran_at": "2026-07-17T10:15:06+00:00",
+  "started_at": "2026-07-17T10:13:23+00:00",
+  "reference_c_size": 8720
+}

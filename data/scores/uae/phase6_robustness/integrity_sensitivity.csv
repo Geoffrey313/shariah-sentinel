@@ -1,0 +1,8 @@
+composite,n_strict_rows,jaccard_top_n,share_of_full_top_n_in_strict,top_n
+z_plus,9088,0.6,0.75,100
+z_plus_renorm,8832,0.4184397163120567,0.59,100
+breadth,9088,0.7094017094017094,0.83,100
+z_mahalanobis_sq,4709,0.6528925619834711,0.79,100
+t_iut,9088,0.8348623853211009,0.91,100
+z_plus_softmax,8832,0.4285714285714285,0.6,100
+z_plus_orth,8832,0.4285714285714285,0.6,100

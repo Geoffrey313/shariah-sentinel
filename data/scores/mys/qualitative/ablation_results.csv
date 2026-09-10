@@ -1,0 +1,6 @@
+model,zmah_finite,tiut_power_d2,tiut_gap_d2,fdr_zmah_q05,fdr_tiut_q05,tiut_jaccard
+FULL MODEL,55005,0.53,-0.413,744,661,0.887
+A1: no annual cash-flow recovery,55005,0.528,-0.415,744,643,0.887
+A2: no z5/z7 merge,33406,0.636,-0.314,547,796,0.887
+A3: no MC Benford,28369,0.592,-0.351,340,633,0.515
+A4: no empirical PIT,55005,0.542,-0.401,742,700,0.887

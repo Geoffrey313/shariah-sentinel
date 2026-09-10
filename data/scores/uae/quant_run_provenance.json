@@ -1,0 +1,14 @@
+{
+  "country": "UAE",
+  "source": {
+    "path": "data/raw/compustat/UAE.csv",
+    "size": 23992125,
+    "mtime": 1783586472,
+    "rows": 10917,
+    "max_quarter": "2025Q4",
+    "sha256": "a52c35cb1db9e84500fc67dee4054064ccdafb4fa5ab24de26871d9581b3a9de"
+  },
+  "ran_at": "2026-07-17T12:40:47+00:00",
+  "started_at": "2026-07-17T12:40:28+00:00",
+  "reference_c_size": 373
+}

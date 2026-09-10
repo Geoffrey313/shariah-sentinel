@@ -1,0 +1,12 @@
+| column | present_in_panel | n_nonnull | pct_nonnull |
+| --- | --- | --- | --- |
+| cogsq | True | 37447 | 64.53 |
+| xrdq | True | 0 | 0.0 |
+| xsgaq | True | 36200 | 62.38 |
+| invtq | True | 39317 | 67.75 |
+| oibdpq | True | 36420 | 62.76 |
+| revtq | True | 50534 | 87.08 |
+| dlttq | True | 48045 | 82.79 |
+| dlcq | True | 50479 | 86.98 |
+| cheq | True | 56881 | 98.02 |
+| iditq | True | 44698 | 77.02 |

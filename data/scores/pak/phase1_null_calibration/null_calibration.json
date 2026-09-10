@@ -1,0 +1,164 @@
+{
+  "c_rows": 927,
+  "targets": {
+    "mean": 0.0,
+    "std": 1.0
+  },
+  "thresholds": {
+    "bias_tolerance": 0.1,
+    "variance_ratio_tolerance": 0.2,
+    "ks_alpha": 0.01,
+    "anderson_alpha": 0.01
+  },
+  "per_detector": {
+    "z1": {
+      "moments": {
+        "n": 927,
+        "mean": 0.20307330709726895,
+        "std": 1.5997838508814444,
+        "skew": 2.1841703208720427,
+        "excess_kurtosis": 6.147813191848961
+      },
+      "tests": {
+        "ks_stat": 0.050701185623516776,
+        "ks_pvalue": 0.016437822172254295,
+        "anderson_stat": 51.949471789974496,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "mis_scaled"
+      ],
+      "verdict": "biased,mis_scaled",
+      "forced_bootstrap": true
+    },
+    "z2": {
+      "moments": {
+        "n": 927,
+        "mean": 0.44609238631890263,
+        "std": 2.648178072681842,
+        "skew": 0.45894839359660994,
+        "excess_kurtosis": -0.44571553141277365
+      },
+      "tests": {
+        "ks_stat": 0.2570562653065792,
+        "ks_pvalue": 1.672758967309374e-54,
+        "anderson_stat": 7.593943747478647,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "mis_scaled",
+        "non_normal"
+      ],
+      "verdict": "biased,mis_scaled,non_normal",
+      "forced_bootstrap": true
+    },
+    "z3": {
+      "moments": {
+        "n": 923,
+        "mean": 0.006529852983260307,
+        "std": 1.0129280828900307,
+        "skew": 0.20671349655805477,
+        "excess_kurtosis": 1.0241922743231804
+      },
+      "tests": {
+        "ks_stat": 0.002166847237269766,
+        "ks_pvalue": 1.0,
+        "anderson_stat": 0.06633411539746703,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [],
+      "verdict": "ok",
+      "forced_bootstrap": false
+    },
+    "z4": {
+      "moments": {
+        "n": 927,
+        "mean": -0.16637215082136847,
+        "std": 0.9912429182211205,
+        "skew": 0.25720280807355433,
+        "excess_kurtosis": 1.165442617930644
+      },
+      "tests": {
+        "ks_stat": 0.08615082867510049,
+        "ks_pvalue": 1.95677714472629e-06,
+        "anderson_stat": 0.33484159629063015,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "non_normal"
+      ],
+      "verdict": "biased,non_normal",
+      "forced_bootstrap": true
+    },
+    "z6": {
+      "moments": {
+        "n": 926,
+        "mean": 1.7014501471482144,
+        "std": 2.4733935359749593,
+        "skew": 0.5085957011298016,
+        "excess_kurtosis": -0.8408010400508705
+      },
+      "tests": {
+        "ks_stat": 0.38583499343371164,
+        "ks_pvalue": 1.4638313155561954e-124,
+        "anderson_stat": 23.68221899442665,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "biased",
+        "mis_scaled",
+        "non_normal"
+      ],
+      "verdict": "biased,mis_scaled,non_normal",
+      "forced_bootstrap": true
+    },
+    "z8": {
+      "moments": {
+        "n": 639,
+        "mean": 0.009386239467295183,
+        "std": 1.0192432501562618,
+        "skew": 0.2926796155195758,
+        "excess_kurtosis": 1.463233494095281
+      },
+      "tests": {
+        "ks_stat": 0.0015649452269171915,
+        "ks_pvalue": 1.0,
+        "anderson_stat": 0.09791266807644661,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [],
+      "verdict": "ok",
+      "forced_bootstrap": false
+    },
+    "z57": {
+      "moments": {
+        "n": 927,
+        "mean": 0.06807285222903435,
+        "std": 1.2409173579373827,
+        "skew": 1.7776804067261867,
+        "excess_kurtosis": 7.588213147431411
+      },
+      "tests": {
+        "ks_stat": 0.01833872607659115,
+        "ks_pvalue": 0.9083972989314276,
+        "anderson_stat": 13.729545553871844,
+        "anderson_critical_1pct": 1.034
+      },
+      "verdict_tags": [
+        "mis_scaled"
+      ],
+      "verdict": "mis_scaled",
+      "forced_bootstrap": true
+    }
+  },
+  "forced_bootstrap": [
+    "z1",
+    "z2",
+    "z4",
+    "z6",
+    "z57"
+  ]
+}

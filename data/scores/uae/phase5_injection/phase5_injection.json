@@ -1,0 +1,38 @@
+{
+  "active_detectors": [
+    "z1",
+    "z2",
+    "z3",
+    "z4",
+    "z6",
+    "z8",
+    "z57"
+  ],
+  "n_inject": 500,
+  "delta_grid": [
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    3.0
+  ],
+  "alpha_grid": [
+    0.05,
+    0.01,
+    0.001
+  ],
+  "primary_alpha_for_mde": 0.05,
+  "power_target": 0.8,
+  "archetypes": [
+    "scale_shift",
+    "threshold_clustering",
+    "round_number",
+    "temporal_smoothing",
+    "peer_gaming",
+    "systematic"
+  ],
+  "bootstrap": {
+    "primary_mode": "non_parametric",
+    "n_replicates": 10000
+  }
+}
