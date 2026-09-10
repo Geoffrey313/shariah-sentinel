@@ -788,8 +788,8 @@ class CompositeSettings(BaseModel):
         default="uniform",
         description="Weight scheme for ``Z+`` / ``Z+_renorm``. ``'uniform'`` "
         "sets ``w_j = 1 / k`` on the detectors that produced any finite "
-        "score on ``C``. Other modes to be added once a co-author commits to a "
-        "calibration strategy (framework §8 task 4).",
+        "score on ``C``. Other modes to be added once a "
+        "calibration strategy is finalised (framework §8 task 4).",
     )
     active_set_threshold: float = Field(
         default=0.0,
@@ -871,7 +871,7 @@ class ConfidenceSettings(BaseModel):
     tag ``κ ∈ {targeted, mixed, systematic}``. Low entropy on the active
     set means one detector dominates (targeted manipulation); high entropy
     means the signal is spread across many detectors (systematic
-    manipulation). a co-author has flagged the exact ``S_F*`` definition as TBD —
+    manipulation). The exact ``S_F*`` definition is flagged as TBD —
     the implementation uses the proposal in ``analysis_plan_v2.md`` and is
     easy to swap once the final definition lands.
     """

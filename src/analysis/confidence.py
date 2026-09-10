@@ -14,9 +14,9 @@ Following ``analysis_plan_v2.md`` the working definition of ``S_F*`` is
 
     S_F*(z) = - Σ_{j ∈ A} p_j log p_j,  p_j = z_j / Σ_{j' ∈ A} z_{j'}
 
-normalised by ``log|A|`` so ``S_F* ∈ [0, 1]``. a co-author has flagged the exact
-formulation as TBD — it is isolated in :func:`_normalized_entropy_row` so
-it can be swapped in one place once he commits.
+normalised by ``log|A|`` so ``S_F* ∈ [0, 1]``. The exact formulation is
+flagged as TBD — it is isolated in :func:`_normalized_entropy_row` so
+it can be swapped in one place once the definition is finalised.
 
 Thresholds for the ``targeted``/``mixed``/``systematic`` split are taken
 from quantiles of ``S_F*`` evaluated on the reference sample ``C`` — the
