@@ -130,10 +130,17 @@ def main() -> None:
 
     # 5. near-red variable composition (needs a generated counterfactual) ---
     cfs = [p for p in o.robustness_benchmark_dir().glob("family3_cf_*top*.csv") if "top3" not in p.name]
+    shipped_nrc = o.robustness_benchmark_dir() / "near_red_composition.csv"
     if cfs:
         ms = _cf_mean_share(max(cfs, key=lambda p: p.stat().st_mtime)).head(6)
         pd.DataFrame({"variable": [VAR_LABELS.get(c, c) for c in ms.index],
                       "share_pct": ms.values}).to_csv(OUT / "near_red_composition.csv", index=False)
+        written.append("near_red_composition.csv")
+    elif shipped_nrc.exists():
+        # Panel-free path: the raw counterfactual log is a family3-cf output that needs the
+        # reconstructed panel and carries per-firm financial fields, so it is not shipped. Ship
+        # the aggregate variable-composition instead; it is what the figure plots.
+        pd.read_csv(shipped_nrc).to_csv(OUT / "near_red_composition.csv", index=False)
         written.append("near_red_composition.csv")
     else:
         _skip("near_red_composition", "no family3_cf_*.csv (run: reproduce.py family3-cf)")
