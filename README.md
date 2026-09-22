@@ -78,12 +78,12 @@ reference sample.
 
 The framework is validated across five Sharia-screening regimes: Malaysia
 (SC/SAC), Indonesia (OJK/DES), Pakistan (PSX/KMI), Saudi Arabia (Boubyan), and
-the UAE (DFM). Together these span 3,181 firms and 210,662 firm-quarters, two
+the UAE (DFM). Together these span 3,494 firms and 224,576 firm-quarters, two
 list conventions (authorities that publish non-compliant verdicts and
 authorities that publish only compliant constituents), and debt caps ranging
-from 30% to 45%. On the 27-year Malaysian anchor panel (1,043 firms, 78,958
-firm-quarters), the framework flags 5.2% of ratio-compliant firm-quarters as
-anomalous, and under firm-level Benjamini-Hochberg control 169 firms (16.2%)
+from 30% to 45%. On the 27-year Malaysian anchor panel (1,356 firms, 92,872
+firm-quarters), the framework flags 2.0% of ratio-compliant firm-quarters as
+anomalous, and under firm-level Benjamini-Hochberg control 324 firms (23.9%)
 survive at q below 0.01. A controlled injection study yields at least 89%
 detection power at three-sigma on realistic archetypes, and an end-to-end
 contamination study reports an AUC of 0.81 for digit distortions and 0.71 for
