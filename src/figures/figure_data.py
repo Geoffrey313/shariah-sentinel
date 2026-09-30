@@ -10,6 +10,7 @@ each figure is emitted independently and skips with a note if its input is absen
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -26,6 +27,10 @@ OUT = REPO / "figures" / "data"
 OUT.mkdir(parents=True, exist_ok=True)
 
 _P_COLS = ["p_z_plus", "p_z_plus_renorm", "p_z_mahalanobis_sq", "p_t_iut"]
+COUNTRY_LABELS = {
+    "uae": "UAE", "pak": "Pakistan", "sau": "Saudi Ar.",
+    "idn": "Indonesia", "mys": "Malaysia",
+}
 COMPOSITE_LABELS = {
     "z_plus": r"$Z^+$",
     "z_plus_renorm": r"$Z^+_{\mathrm{renorm}}$",
@@ -190,6 +195,27 @@ def main() -> None:
             print("  ushape fit:", fit_rows)
     else:
         _skip("ushape_*", "missing composites_panel / debt_ratio (or panel_with_split)")
+
+    # 7. flag rate by authority ---------------------------------------------
+    # Counts emitted per country by ``ratio_compliant_population.py``; the share
+    # is RED rows over the rows the authority's own caps retain.
+    rates = []
+    for code, label in COUNTRY_LABELS.items():
+        fr_path = (Path(o.root) / Path(str(o.scores_relative).format(country=code))
+                   / "qualitative" / "ratio_compliant_population.json")
+        if not fr_path.exists():
+            continue
+        block = json.loads(fr_path.read_text())["all"]
+        rates.append({"country": label,
+                      "flag_pct": round(block["red_share"] * 100, 1),
+                      "screened_n": block["n_rows"]})
+    if len(rates) == len(COUNTRY_LABELS):
+        (pd.DataFrame(rates).sort_values("flag_pct", ascending=False)
+         .to_csv(OUT / "flag_rate_by_country.csv", index=False))
+        written.append("flag_rate_by_country.csv")
+    else:
+        _skip("flag_rate_by_country",
+              "missing ratio_compliant_population.json (run: ratio_compliant_population.py --country <c>)")
 
     print(f"\nDONE. {len(written)} CSVs in {OUT}")
 

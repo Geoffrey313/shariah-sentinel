@@ -240,6 +240,10 @@ def build() -> dict:
         "sector_false_positive": sector_false_positive(ANCHOR),
     }
     jur = {c: reference_and_fdr(c) for c in JURISDICTIONS}
+    for c in JURISDICTIONS:
+        # Counts behind the cross-authority flag-rate figure.
+        jur[c]["ratio_compliant_population"] = _load_json(
+            _layout(c).phase4_dir().parent / "qualitative" / "ratio_compliant_population.json")
     totals = {
         "firms": sum((jur[c]["firms"] or 0) for c in JURISDICTIONS),
         "firm_quarters": sum((jur[c]["firm_quarters"] or 0) for c in JURISDICTIONS),

@@ -6,7 +6,12 @@ ratio_income <= 0.05), split by the authority label. The shares were readable bu
 two terms were not: the reference bundle ships the debt ratio only, so the three-cap
 restriction is not recomputable from it, and the counts appeared in no output. This
 script emits them, so every share in that paragraph carries a published numerator and
-denominator.
+denominator, and the cross-authority flag-rate figure becomes regenerable.
+
+Caps. The screened population is defined by the caps an authority actually applies,
+via ``screening_thresholds_for_panel``: Indonesia screens no cash cap, and the
+canonical registry carries a non-binding placeholder there that would drop one row.
+The two readings coincide for the four other authorities.
 
 It changes no verdict and no headline: the tri-state verdict is the canonical
 Holm/Bonferroni-corrected rule of ``compute_verdict`` applied to the scored composites
@@ -24,7 +29,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.common.config import AnalysisSettings
-from src.common.methodology import thresholds_for_panel
+from src.common.methodology import screening_thresholds_for_panel
 from src.analysis.composite_scoring import VERDICT_P_COLS, compute_verdict
 from src.analysis.reference_sample import resolve_label_column
 
@@ -61,7 +66,7 @@ def main() -> None:
     if not (panel[quarter].astype(str).values == composites[quarter].astype(str).values).all():
         raise ValueError("panel and composites are not row-aligned on the quarter column.")
 
-    caps = thresholds_for_panel(panel)
+    caps = screening_thresholds_for_panel(panel)
     ok = _ratio_compliant_mask(panel, caps)
     red = compute_verdict(
         composites, p_cols=VERDICT_P_COLS,

@@ -5,21 +5,21 @@
     "ratio_income": 0.05,
     "ratio_cash_adj": 0.33
   },
-  "label_column": "sac_shariah",
+  "label_column": "compliance_shariah",
   "all": {
-    "n_rows": 79733,
-    "n_red": 1574,
-    "red_share": 0.019741
+    "n_rows": 25315,
+    "n_red": 1271,
+    "red_share": 0.050207
   },
   "authority_labelled": {
-    "n_rows": 13668,
-    "n_red": 125,
-    "red_share": 0.009145
+    "n_rows": 976,
+    "n_red": 15,
+    "red_share": 0.015369
   },
   "unlabelled": {
-    "n_rows": 66065,
-    "n_red": 1449,
-    "red_share": 0.021933
+    "n_rows": 24339,
+    "n_red": 1256,
+    "red_share": 0.051604
   },
-  "panel_rows": 92872
+  "panel_rows": 42878
 }

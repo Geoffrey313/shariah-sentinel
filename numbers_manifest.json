@@ -1465,6 +1465,31 @@
           "q<=0.05": 0,
           "q<=0.01": 0
         }
+      },
+      "ratio_compliant_population": {
+        "scope": "RED share on the ratio-compliant population: rows breaching none of the authority caps, under the canonical tri-state verdict. Selects rows, changes no verdict and no headline.",
+        "caps": {
+          "ratio_debt_adj": 0.33,
+          "ratio_income": 0.05,
+          "ratio_cash_adj": 0.33
+        },
+        "label_column": "sac_shariah",
+        "all": {
+          "n_rows": 79733,
+          "n_red": 1574,
+          "red_share": 0.019741
+        },
+        "authority_labelled": {
+          "n_rows": 13668,
+          "n_red": 125,
+          "red_share": 0.009145
+        },
+        "unlabelled": {
+          "n_rows": 66065,
+          "n_red": 1449,
+          "red_share": 0.021933
+        },
+        "panel_rows": 92872
       }
     },
     "idn": {
@@ -1560,6 +1585,30 @@
           "q<=0.05": 0,
           "q<=0.01": 0
         }
+      },
+      "ratio_compliant_population": {
+        "scope": "RED share on the ratio-compliant population: rows breaching none of the authority caps, under the canonical tri-state verdict. Selects rows, changes no verdict and no headline.",
+        "caps": {
+          "ratio_debt_adj": 0.45,
+          "ratio_income": 0.1
+        },
+        "label_column": "compliance_shariah",
+        "all": {
+          "n_rows": 41592,
+          "n_red": 963,
+          "red_share": 0.023153
+        },
+        "authority_labelled": {
+          "n_rows": 4162,
+          "n_red": 65,
+          "red_share": 0.015617
+        },
+        "unlabelled": {
+          "n_rows": 37430,
+          "n_red": 898,
+          "red_share": 0.023991
+        },
+        "panel_rows": 58032
       }
     },
     "pak": {
@@ -1655,6 +1704,31 @@
           "q<=0.05": 0,
           "q<=0.01": 0
         }
+      },
+      "ratio_compliant_population": {
+        "scope": "RED share on the ratio-compliant population: rows breaching none of the authority caps, under the canonical tri-state verdict. Selects rows, changes no verdict and no headline.",
+        "caps": {
+          "ratio_debt_adj": 0.33,
+          "ratio_income": 0.05,
+          "ratio_cash_adj": 0.33
+        },
+        "label_column": "compliance_shariah",
+        "all": {
+          "n_rows": 25315,
+          "n_red": 1271,
+          "red_share": 0.050207
+        },
+        "authority_labelled": {
+          "n_rows": 976,
+          "n_red": 15,
+          "red_share": 0.015369
+        },
+        "unlabelled": {
+          "n_rows": 24339,
+          "n_red": 1256,
+          "red_share": 0.051604
+        },
+        "panel_rows": 42878
       }
     },
     "sau": {
@@ -1750,6 +1824,31 @@
           "q<=0.05": 245,
           "q<=0.01": 245
         }
+      },
+      "ratio_compliant_population": {
+        "scope": "RED share on the ratio-compliant population: rows breaching none of the authority caps, under the canonical tri-state verdict. Selects rows, changes no verdict and no headline.",
+        "caps": {
+          "ratio_debt_adj": 0.3333,
+          "ratio_income": 0.05,
+          "ratio_cash_adj": 0.3333
+        },
+        "label_column": "compliance_shariah",
+        "all": {
+          "n_rows": 15852,
+          "n_red": 396,
+          "red_share": 0.024981
+        },
+        "authority_labelled": {
+          "n_rows": 792,
+          "n_red": 7,
+          "red_share": 0.008838
+        },
+        "unlabelled": {
+          "n_rows": 15060,
+          "n_red": 389,
+          "red_share": 0.02583
+        },
+        "panel_rows": 19295
       }
     },
     "uae": {
@@ -1845,6 +1944,31 @@
           "q<=0.05": 241,
           "q<=0.01": 241
         }
+      },
+      "ratio_compliant_population": {
+        "scope": "RED share on the ratio-compliant population: rows breaching none of the authority caps, under the canonical tri-state verdict. Selects rows, changes no verdict and no headline.",
+        "caps": {
+          "ratio_debt_adj": 0.3,
+          "ratio_income": 0.1,
+          "ratio_cash_adj": 0.3
+        },
+        "label_column": "compliance_shariah",
+        "all": {
+          "n_rows": 6827,
+          "n_red": 413,
+          "red_share": 0.060495
+        },
+        "authority_labelled": {
+          "n_rows": 288,
+          "n_red": 17,
+          "red_share": 0.059028
+        },
+        "unlabelled": {
+          "n_rows": 6539,
+          "n_red": 396,
+          "red_share": 0.06056
+        },
+        "panel_rows": 11499
       }
     }
   },

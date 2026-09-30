@@ -1,0 +1,24 @@
+{
+  "scope": "RED share on the ratio-compliant population: rows breaching none of the authority caps, under the canonical tri-state verdict. Selects rows, changes no verdict and no headline.",
+  "caps": {
+    "ratio_debt_adj": 0.45,
+    "ratio_income": 0.1
+  },
+  "label_column": "compliance_shariah",
+  "all": {
+    "n_rows": 41592,
+    "n_red": 963,
+    "red_share": 0.023153
+  },
+  "authority_labelled": {
+    "n_rows": 4162,
+    "n_red": 65,
+    "red_share": 0.015617
+  },
+  "unlabelled": {
+    "n_rows": 37430,
+    "n_red": 898,
+    "red_share": 0.023991
+  },
+  "panel_rows": 58032
+}
