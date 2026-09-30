@@ -88,7 +88,7 @@ firm-quarters), the framework flags 2.0% of ratio-compliant firm-quarters as
 anomalous, and under a dependence-calibrated episodic-exceedance test with
 firm-level Benjamini-Hochberg control the unanimity test flags 324 firms
 (23.9%) at q below 0.01 and 421 firms (31.0%) at q below 0.05. A controlled injection study yields
-detection power that is heterogeneous across archetypes, up to 99% at three-sigma
+detection power that is heterogeneous across archetypes, up to 99.6% at three-sigma
 on the systematic, scale-shift and peer-gaming archetypes, and an end-to-end
 contamination study reports an AUC of 0.86 for digit distortions, while
 synthetic cost-of-debt breaks stay near chance. Recalibrated on each authority's reference sample,

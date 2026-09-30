@@ -979,8 +979,11 @@ def _default_archetypes() -> tuple[ArchetypeSettings, ...]:
             name="systematic",
             description="Uniform positive shift on every detector — the "
                         "benchmark archetype used to verify the theoretical "
-                        "T_IUT power table.",
-            affected_detectors=("z1", "z2", "z3", "z4", "z5", "z6", "z7"),
+                        "T_IUT power table. Lists the pre-merge names plus "
+                        "z8: z5 and z7 collapse onto z57, so all seven "
+                        "post-merge scores are shifted. Omitting z8 would cap "
+                        "T_IUT, a minimum, at the unshifted z8 draw.",
+            affected_detectors=("z1", "z2", "z3", "z4", "z5", "z6", "z7", "z8"),
         ),
     )
 
@@ -989,7 +992,9 @@ class InjectionSettings(BaseModel):
     """Phase 5 — power analysis via controlled injection.
 
     The theoretical power table for ``T_IUT`` (α=0.05, k=7, uniform ``δ``
-    on all detectors) is ``π(1)=0.01, π(2)=0.53, π(3)=0.97``. Phase 5
+    on all detectors) is ``π(δ) = Φ(δ − c_α)^k`` with
+    ``c_α = Φ⁻¹(1 − α^(1/k)) = −0.390``, hence
+    ``π(1)=0.548, π(2)=0.943, π(3)=0.998``. Phase 5
     validates that table empirically via the ``systematic`` archetype,
     while the five other archetypes characterise per-detector specificity.
     """
