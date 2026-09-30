@@ -459,8 +459,8 @@
         {
           "model": "FULL MODEL",
           "zmah_finite": 55005,
-          "tiut_power_d2": 0.53,
-          "tiut_gap_d2": -0.413,
+          "tiut_power_d2": 0.83,
+          "tiut_gap_d2": -0.113,
           "fdr_zmah_q05": 744,
           "fdr_tiut_q05": 661,
           "tiut_jaccard": 0.887
@@ -468,8 +468,8 @@
         {
           "model": "A1: no annual cash-flow recovery",
           "zmah_finite": 55005,
-          "tiut_power_d2": 0.528,
-          "tiut_gap_d2": -0.415,
+          "tiut_power_d2": 0.824,
+          "tiut_gap_d2": -0.119,
           "fdr_zmah_q05": 744,
           "fdr_tiut_q05": 643,
           "tiut_jaccard": 0.887
@@ -477,8 +477,8 @@
         {
           "model": "A2: no z5/z7 merge",
           "zmah_finite": 33406,
-          "tiut_power_d2": 0.636,
-          "tiut_gap_d2": -0.314,
+          "tiut_power_d2": 0.846,
+          "tiut_gap_d2": -0.104,
           "fdr_zmah_q05": 547,
           "fdr_tiut_q05": 796,
           "tiut_jaccard": 0.887
@@ -486,8 +486,8 @@
         {
           "model": "A3: no MC Benford",
           "zmah_finite": 28369,
-          "tiut_power_d2": 0.592,
-          "tiut_gap_d2": -0.351,
+          "tiut_power_d2": 0.896,
+          "tiut_gap_d2": -0.047,
           "fdr_zmah_q05": 340,
           "fdr_tiut_q05": 633,
           "tiut_jaccard": 0.515
@@ -495,8 +495,8 @@
         {
           "model": "A4: no empirical PIT",
           "zmah_finite": 55005,
-          "tiut_power_d2": 0.542,
-          "tiut_gap_d2": -0.401,
+          "tiut_power_d2": 0.79,
+          "tiut_gap_d2": -0.153,
           "fdr_zmah_q05": 742,
           "fdr_tiut_q05": 700,
           "tiut_jaccard": 0.887
