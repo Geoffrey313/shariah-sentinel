@@ -342,6 +342,9 @@ python calibration_holdout_split.py --country mys
 
 # Firm-cluster bootstrap of the row-level null
 python cluster_bootstrap_robustness.py --country mys
+
+# Counts behind the flag rate on the ratio-compliant population
+python ratio_compliant_population.py --country mys
 ```
 
 Each script accepts `--country`; the audit scripts additionally expose options

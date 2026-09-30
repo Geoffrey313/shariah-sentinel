@@ -162,6 +162,7 @@ def qualitative(country: str) -> dict:
         "verdict_persistence": _load_csv(q / "verdict_persistence.csv"),
         "chronic_red_firms_n": _n_rows(q / "chronic_red_firms.csv"),
         "ablation_results": _load_csv(q / "ablation_results.csv"),
+        "ratio_compliant_population": _load_json(q / "ratio_compliant_population.json"),
     }
 
 
