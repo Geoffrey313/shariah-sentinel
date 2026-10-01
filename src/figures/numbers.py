@@ -120,6 +120,9 @@ def reference_and_fdr(country: str) -> dict:
         # Firm-level HEADLINE: the valid episodic-exceedance test.
         "fdr_firm_level_headline": p7.get("firm_level_headline") if isinstance(p7, dict) else None,
         "fdr_firm_level_panel": p7.get("firm_level_panel") if isinstance(p7, dict) else None,
+        # Reference-sample serial dependence, the quantity rho_cal is set against.
+        "reference_null_autocorrelation": _load_json(
+            lay.phase7_dir() / "reference_null_autocorrelation.json"),
         # min-p per-composite is kept only as a diagnostic (anti-conservative), never the headline.
         "fdr_firm_level_minp_diagnostic": (
             p7.get("firm_level_discoveries") if isinstance(p7, dict) else None

@@ -152,6 +152,23 @@
           }
         }
       },
+      "reference_null_autocorrelation": {
+        "scope": "Reference-sample lag-1 autocorrelation of the within-firm quarterly p-values on the normal-score scale of the AR(1) copula null. Published only; the calibration rho is not changed.",
+        "composite": "p_t_iut",
+        "reference_sample_rows": 13086,
+        "firms_with_two_or_more_quarters": 1183,
+        "consecutive_pairs": 11774,
+        "rho_hat_copula": 0.4887,
+        "rho_hat_exceedance_indicators": {
+          "tau=0.005": 0.1436,
+          "tau=0.01": 0.1333,
+          "tau=0.02": 0.1613,
+          "tau=0.05": 0.1981,
+          "tau=0.1": 0.2735
+        },
+        "rho_calibration": 0.3,
+        "_note": "rho_calibration parameterises the AR(1) copula, so it compares with rho_hat_copula; the indicator autocorrelations are a different scale and are reported for the tau grid the firm statistic counts."
+      },
       "fdr_firm_level_minp_diagnostic": {
         "p_z_plus": {
           "q<=0.05": 793,
